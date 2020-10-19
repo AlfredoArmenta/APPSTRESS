@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_inicio">
+
+    <fragment
+        android:id="@+id/nav_inicio"
+        android:name="com.example.estres2.ui.inico.InicioFragment"
+        android:label="@string/menu_inicio"
+        tools:layout="@layout/fragment_inicio" />
+
+    <fragment
+        android:id="@+id/nav_graficas"
+        android:name="com.example.estres2.ui.Graficas.GraficasFragment"
+        android:label="@string/menu_gráficas"
+        tools:layout="@layout/fragment_graficas" />
+
+    <fragment
+        android:id="@+id/nav_comunicación"
+        android:name="com.example.estres2.ui.comunicacion.ComunicacionFragment"
+        android:label="@string/menu_comunicación"
+        tools:layout="@layout/fragment_comunicacion" />
+
+    <fragment
+        android:id="@+id/nav_configurar_cuenta"
+        android:name="com.example.estres2.ui.cuenta.CuentaFragment"
+        android:label="@string/menu_configurar_cuenta"
+        tools:layout="@layout/fragment_cuenta"/>
+
+    <fragment
+        android:id="@+id/nav_share"
+        android:name="com.example.estres2.ui.share.ShareFragment"
+        android:label="@string/menu_share"
+        tools:layout="@layout/fragment_share"/>
+
+    <fragment
+        android:id="@+id/nav_eliminar"
+        android:name="com.example.estres2.ui.eliminar.EliminarFragment"
+        android:label="@string/menu_eliminar"
+        tools:layout="@layout/fragment_eliminar" />
+</navigation>
