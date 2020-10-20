@@ -11,8 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Boleta"
-        android:inputType="number"
+        android:hint="@string/boleta"
         android:textSize="32sp"
         android:textAlignment="center"
         android:gravity="center_horizontal"
@@ -28,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Nombre completo"
+        android:hint="@string/nombre_completo"
         android:inputType="textPersonName"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -43,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Edad"
+        android:hint="@string/edad"
         android:inputType="number"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -57,7 +56,7 @@
         android:id="@+id/CFGenero"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Genero"
+        android:text="@string/genero"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,14 +80,14 @@
             android:id="@+id/CFMasculino"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Masculino"
+            android:text="@string/masculino"
             android:textSize="14sp" />
 
         <RadioButton
             android:id="@+id/CFFemenino"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Femenino"
+            android:text="@string/femenino"
             android:textSize="14sp" />
 
     </RadioGroup>
@@ -97,7 +96,7 @@
         android:id="@+id/CFTSemestre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Semestre"
+        android:text="@string/semestre"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -119,32 +118,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.45" />
 
-    <TextView
-        android:id="@+id/CFUnidadAprendizaje"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Unidad de Aprendizaje"
-        android:textSize="14sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.005"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
-
-    <Spinner
-        android:id="@+id/CFMateria"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dialog"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.55" />
 
     <TextView
         android:id="@+id/CFTContraseña"
@@ -163,7 +136,7 @@
         android:id="@+id/CFNumero"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1 Número"
+        android:text="@string/_1_numero"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -177,7 +150,7 @@
         android:id="@+id/CFCaracterEspecial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1 Caracter Especial"
+        android:text="@string/_1_caracter_especial"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -191,7 +164,7 @@
         android:id="@+id/CFMayuscula"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1 Mayúscula"
+        android:text="@string/_1_may_scula"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -205,7 +178,7 @@
         android:id="@+id/CFMinuscula"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1 Minúscula"
+        android:text="@string/_1_minuscula"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -219,7 +192,7 @@
         android:id="@+id/CFLongitud"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Longitud de 8-15 Caracteres"
+        android:text="@string/longitud_de_8_15_caracteres"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -234,7 +207,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Contraseña"
+        android:hint="@string/contrasena"
         android:inputType="text"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -249,13 +222,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:text="Aplicar"
+        android:text="@string/aplicar"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.01"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95" />
+        app:layout_constraintVertical_bias="0.95"
+        android:focusable="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

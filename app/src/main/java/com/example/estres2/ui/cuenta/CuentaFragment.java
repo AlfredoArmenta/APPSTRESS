@@ -1,11 +1,8 @@
 package com.example.estres2.ui.cuenta;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -18,9 +15,7 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.estres2.DB;
-import com.example.estres2.InicioSesion;
 import com.example.estres2.MenuPrincipal;
 import com.example.estres2.R;
 import com.example.estres2.Usuario;
@@ -36,7 +31,6 @@ public class CuentaFragment extends Fragment {
     private RadioButton Masculino;
     private RadioButton Femenino;
     private Spinner Semestre;
-    private Spinner UA;
     private EditText Contraseña;
 
     private TextView Requerimientos;
@@ -76,20 +70,12 @@ public class CuentaFragment extends Fragment {
         Masculino = (RadioButton) root.findViewById(R.id.CFMasculino);
         Femenino = (RadioButton) root.findViewById(R.id.CFFemenino);
         Semestre = (Spinner) root.findViewById(R.id.CFSemestre);
-        UA = (Spinner) root.findViewById(R.id.CFMateria);
         Contraseña = (EditText) root.findViewById(R.id.CFContraseña);
 
         // String que nos ayudan a llenar a los spinners que sirven para la selección del semestre y la materia
         String [] semestre = {"Selecciona tu semestre actual", "1", "2", "3", "4", "5","6", "7", "8", "9", "10","11", "12", "13", "14", "15"};
         ArrayAdapter<String> AdapterSemestre = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, semestre);
         Semestre.setAdapter(AdapterSemestre);
-
-        String [] UnidadAprendizaje = {"Selecciona una materia", "Lineas de Transmisión y Antenas", "Teoría de la Información", "Teoría de las Comunicaciones", "Variable Compleja",
-                "Protocolos de Internet", "Comunicaciones Digitales", "Sistemas Distribuidos", "Metodología", "Sistemas Celulares", "Multimedia","Señales y Sistemas", "Probabilidad",
-                "Programación de Dispositivos Móviles", "PT1", "PT2"};
-
-        ArrayAdapter<String> AdapterUnidad = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, UnidadAprendizaje);
-        UA.setAdapter(AdapterUnidad);
 
         // Elementos de texto que nos proporcionan información sobre los parametros de la contraseña
         Requerimientos = (TextView) root.findViewById(R.id.CFTContraseña);
@@ -118,7 +104,6 @@ public class CuentaFragment extends Fragment {
             Femenino.setChecked(true);
         }
         Semestre.setSelection(AdapterSemestre.getPosition(user.getSemestre()));
-        UA.setSelection(AdapterUnidad.getPosition(user.getUnidadA()));
         Contraseña.setText(user.getContraseña());
 
         // El valor númerico del color verde es = -16711936
@@ -153,16 +138,15 @@ public class CuentaFragment extends Fragment {
         user.setNombre(Nombre.getText().toString());
         user.setEdad(Edad.getText().toString());
 
-        if (Masculino.isChecked() == true) {
+        if (Masculino.isChecked()) {
             user.setGenero("Masculino");
         } else {
             user.setGenero("Femenino");
         }
         user.setSemestre(Semestre.getSelectedItem().toString());
-        user.setUnidadA(UA.getSelectedItem().toString());
         user.setContraseña(Contraseña.getText().toString());
 
-        if ( VerifyCampos() == true) {
+        if (VerifyCampos()) {
 
             if (bd.ActualizarUsuario(user) > 0) {
                 Toast.makeText(getContext(), "Se actualizo correctamente", Toast.LENGTH_SHORT).show();
@@ -208,16 +192,9 @@ public class CuentaFragment extends Fragment {
         }
 
         // Preguntamos si no se selecciona un semestre
-        if ( Semestre.getSelectedItem().toString() == "Selecciona tu semestre actual" ) {
+        if (Semestre.getSelectedItem().toString().equals("Selecciona tu semestre actual")) {
             Toast.makeText(getContext(),
                     getText(R.string.SinSemestre), Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        // Preguntamos si no se selecciona una unidad de aprendizaje
-        if ( UA.getSelectedItem().toString() == "Selecciona una materia" ) {
-            Toast.makeText(getContext(),
-                    getText(R.string.SinMateria), Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -228,13 +205,9 @@ public class CuentaFragment extends Fragment {
         }
 
         // Preguntamos si todas las restricciones para la contraseña estan en verde si es así la contraseña es valida
-        if ( !(Longitud.getCurrentTextColor() == ColorVerde && CaracterEspecial.getCurrentTextColor() == ColorVerde &&
+        return Longitud.getCurrentTextColor() == ColorVerde && CaracterEspecial.getCurrentTextColor() == ColorVerde &&
                 Numero.getCurrentTextColor() == ColorVerde && Minuscula.getCurrentTextColor() == ColorVerde &&
-                Mayuscula.getCurrentTextColor() == ColorVerde) ) {
-            return false;
-        }
-
-        return true;
+                Mayuscula.getCurrentTextColor() == ColorVerde;
     }
 
     // Función que valida los parametros con las restrigcciones de la contraseña

@@ -97,4 +97,22 @@
     <string name="menu_scan">Scan</string>
     <string name="menu_stop">Stop</string>
 
+    <string name="nombre_completo">Nombre completo</string>
+    <string name="edad">Edad</string>
+    <string name="genero">Genero</string>
+    <string name="masculino">Masculino</string>
+    <string name="femenino">Femenino</string>
+    <string name="semestre">Semestre</string>
+    <string name="la_contrase_a_debe_contener">La contraseña debe contener:</string>
+    <string name="_1_numero">1 Número</string>
+    <string name="_1_caracter_especial">1 Caracter Especial</string>
+    <string name="_1_may_scula">1 Mayúscula</string>
+    <string name="_1_minuscula">1 Minúscula</string>
+    <string name="longitud_de_8_15_caracteres">Longitud de 8-15 Caracteres</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="registrar">Registrar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="boleta">Boleta</string>
+    <string name="aplicar">Aplicar</string>
+
 </resources>
