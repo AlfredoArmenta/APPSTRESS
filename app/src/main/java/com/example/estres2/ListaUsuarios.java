@@ -34,13 +34,12 @@ public class ListaUsuarios extends RecyclerView.Adapter<ListaUsuarios.UsuariosVi
     public void onBindViewHolder(@NonNull UsuariosView holder, int position) {
 
         // Aquí asignamos los valores de las listas a los objetos TextView
-        holder.MBoleta.setText("Boleta: " + ListaUsuarios.get(position).getBoleta());
-        holder.MNombre.setText("Nombre: " + ListaUsuarios.get(position).getNombre());
-        holder.MEdad.setText("Edad: " + ListaUsuarios.get(position).getEdad());
-        holder.MGenero.setText("Genero: " + ListaUsuarios.get(position).getGenero());
-        holder.MSemestre.setText("Semestre: " + ListaUsuarios.get(position).getSemestre());
-        holder.MUA.setText("Materia: " + ListaUsuarios.get(position).getUnidadA());
-        holder.MContraseña.setText("Contraseña: " + ListaUsuarios.get(position).getContraseña());
+        holder.MBoleta.setText(String.format("Boleta: %s", ListaUsuarios.get(position).getBoleta()));
+        holder.MNombre.setText(String.format("Nombre: %s", ListaUsuarios.get(position).getNombre()));
+        holder.MEdad.setText(String.format("Edad: %s", ListaUsuarios.get(position).getEdad()));
+        holder.MGenero.setText(String.format("Genero: %s", ListaUsuarios.get(position).getGenero()));
+        holder.MSemestre.setText(String.format("Semestre: %s", ListaUsuarios.get(position).getSemestre()));
+        holder.MContraseña.setText(String.format("Contraseña: %s", ListaUsuarios.get(position).getContraseña()));
 
     }
 
@@ -52,7 +51,7 @@ public class ListaUsuarios extends RecyclerView.Adapter<ListaUsuarios.UsuariosVi
     public class UsuariosView extends RecyclerView.ViewHolder {
 
         // Creamos los objectos TextView para hacer la comunicación
-        TextView MBoleta, MNombre, MEdad, MGenero, MSemestre, MUA, MContraseña;
+        TextView MBoleta, MNombre, MEdad, MGenero, MSemestre, MContraseña;
 
         // En esta función nos permite identificar e interlazar la parte logíca con la parte visual
         public UsuariosView(@NonNull View itemView) {
@@ -62,7 +61,6 @@ public class ListaUsuarios extends RecyclerView.Adapter<ListaUsuarios.UsuariosVi
                 MEdad = itemView.findViewById(R.id.medad);
                 MGenero = itemView.findViewById(R.id.mgenero);
                 MSemestre = itemView.findViewById(R.id.msemestre);
-                MUA = itemView.findViewById(R.id.mua);
                 MContraseña = itemView.findViewById(R.id.mcontraseña);
         }
     }

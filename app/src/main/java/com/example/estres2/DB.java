@@ -25,12 +25,11 @@ public class DB extends SQLiteOpenHelper {
     private static final String COLUMNA_USUARIO_EDAD = "edad";
     private static final String COLUMNA_USUARIO_GENERO = "genero";
     private static final String COLUMNA_USUARIO_SEMESTRE = "semestre";
-    private static final String COLUMNA_USUARIO_UA = "unidadaprendizaje";
     private static final String COLUMNA_USUARIO_CONTRASEÑA = "contraseña";
 
     // Sentencia SQL para la creación de una tabla
     private static final String CREATE_TABLA_USUARIOS = "create table if not exists " + TABLA_USUARIO + "(" + COLUMNA_USUARIO_BOLETA + " text primary key, " + COLUMNA_USUARIO_NOMBRE + " text, "
-            + COLUMNA_USUARIO_EDAD + " text, " + COLUMNA_USUARIO_GENERO + " text, " + COLUMNA_USUARIO_SEMESTRE + " text, " + COLUMNA_USUARIO_UA + " text, " + COLUMNA_USUARIO_CONTRASEÑA + " text" + ");";
+            + COLUMNA_USUARIO_EDAD + " text, " + COLUMNA_USUARIO_GENERO + " text, " + COLUMNA_USUARIO_SEMESTRE + " text, " + COLUMNA_USUARIO_CONTRASEÑA + " text" + ");";
 
     // Constructor de la clase en la que se encuentra la crear base de datos
     public DB(Context context) {
@@ -63,7 +62,6 @@ public class DB extends SQLiteOpenHelper {
             values.put(COLUMNA_USUARIO_EDAD, user.getEdad());
             values.put(COLUMNA_USUARIO_GENERO, user.getGenero());
             values.put(COLUMNA_USUARIO_SEMESTRE, user.getSemestre());
-            values.put(COLUMNA_USUARIO_UA, user.getUnidadA());
             values.put(COLUMNA_USUARIO_CONTRASEÑA, user.getContraseña());
             long insert = db.insert(TABLA_USUARIO, null, values);
             db.close();
@@ -118,7 +116,7 @@ public class DB extends SQLiteOpenHelper {
     public Usuario ObtenerDatos(String Boleta) {
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Usuario AuxUsuario = new Usuario("","","","","","","");
+        Usuario AuxUsuario = new Usuario("","","","","","");
 
         Cursor fila = db.rawQuery("select *from " + TABLA_USUARIO + " where " + COLUMNA_USUARIO_BOLETA + " = " + Boleta, null);
 
@@ -130,8 +128,7 @@ public class DB extends SQLiteOpenHelper {
                     fila.getString(2),
                     fila.getString(3),
                     fila.getString(4),
-                    fila.getString(5),
-                    fila.getString(6)
+                    fila.getString(5)
             );
             db.close();
             return AuxUsuario;
@@ -154,7 +151,6 @@ public class DB extends SQLiteOpenHelper {
         values.put(COLUMNA_USUARIO_EDAD, user.getEdad());
         values.put(COLUMNA_USUARIO_GENERO, user.getGenero());
         values.put(COLUMNA_USUARIO_SEMESTRE, user.getSemestre());
-        values.put(COLUMNA_USUARIO_UA, user.getUnidadA());
         values.put(COLUMNA_USUARIO_CONTRASEÑA, user.getContraseña());
 
         long update = db.update(TABLA_USUARIO, values, COLUMNA_USUARIO_BOLETA + "=" + user.getBoleta(), null);

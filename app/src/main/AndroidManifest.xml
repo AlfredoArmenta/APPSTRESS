@@ -12,9 +12,8 @@
 
     <application
 
-        android:icon="@drawable/ic_launcher_background"
+        android:icon="@drawable/ic_icon_app"
         android:label="Stress"
-        android:roundIcon="@drawable/ic_launcher_background"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
 
@@ -32,8 +31,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <service android:name="com.example.estres2.ui.comunicacion.BluetoothLeService" android:enabled="true"/>
 
         <activity
             android:name=".Registro"

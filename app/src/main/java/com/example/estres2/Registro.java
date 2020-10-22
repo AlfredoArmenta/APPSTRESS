@@ -24,7 +24,6 @@ public class Registro extends AppCompatActivity {
     private RadioButton Masculino;
     private RadioButton Femenino;
     private Spinner Semestre;
-    private Spinner UA;
     private EditText Contraseña;
 
     private TextView Requerimientos;
@@ -54,7 +53,6 @@ public class Registro extends AppCompatActivity {
         Masculino = (RadioButton) findViewById(R.id.RMasculino);
         Femenino = (RadioButton) findViewById(R.id.RFemenino);
         Semestre = (Spinner) findViewById(R.id.RSemestre);
-        UA = (Spinner) findViewById(R.id.RMateria);
         Contraseña = (EditText) findViewById(R.id.RContraseña);
 
         Masculino.setChecked(true);
@@ -63,12 +61,6 @@ public class Registro extends AppCompatActivity {
         String [] semestre = {"Selecciona tu semestre actual", "1", "2", "3", "4", "5","6", "7", "8", "9", "10","11", "12", "13", "14", "15"};
         ArrayAdapter<String> AdapterSemestre = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, semestre);
         Semestre.setAdapter(AdapterSemestre);
-
-        String [] UnidadAprendizaje = {"Selecciona una materia", "Lineas de Transmisión y Antenas", "Teoría de la Información", "Teoría de las Comunicaciones", "Variable Compleja",
-                "Protocolos de Internet", "Comunicaciones Digitales", "Sistemas Distribuidos", "Metodología", "Sistemas Celulares", "Multimedia","Señales y Sistemas", "Probabilidad",
-                "Programación de Dispositivos Móviles", "PT1", "PT2"};
-        ArrayAdapter<String> AdapterUnidad = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, UnidadAprendizaje);
-        UA.setAdapter(AdapterUnidad);
 
         // Elementos de texto que nos proporcionan información sobre los parametros de la contraseña
         Requerimientos = (TextView) findViewById(R.id.RRContraseña);
@@ -143,7 +135,6 @@ public class Registro extends AppCompatActivity {
             user.setGenero("Femenino");
         }
         user.setSemestre(Semestre.getSelectedItem().toString());
-        user.setUnidadA(UA.getSelectedItem().toString());
         user.setContraseña(Contraseña.getText().toString());
 
         if ( VerifyCampos() == true) {
@@ -204,13 +195,6 @@ public class Registro extends AppCompatActivity {
                     getText(R.string.SinSemestre), Toast.LENGTH_SHORT).show();
             return false;
         }
-
-        /*  Preguntamos si no se selecciona una unidad de aprendizaje
-        if ( UA.getSelectedItem().toString() == "Selecciona una materia" ) {
-            Toast.makeText(getApplicationContext(),
-                    getText(R.string.SinMateria), Toast.LENGTH_SHORT).show();
-            return false;
-        }*/
 
         // Preguntamos si esta vacio el campo de Contraseña esta vacio
         if ( Contraseña.getText().toString().isEmpty() ) {
