@@ -13,17 +13,16 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_gráficas" />
         <item
-            android:id="@+id/nav_comunicación"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_comunicación" />
-
-        <item
             android:id="@+id/nav_configurar_cuenta"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/menu_configurar_cuenta" />
 
-        <item android:title="Communicate">
+        <item android:title="Herramientas">
             <menu>
+                <item
+                    android:id="@+id/nav_cerrarsesion"
+                    android:icon="@drawable/ic_menu_slideshow"
+                    android:title="@string/cerrar_sesion" />
                 <item
                     android:id="@+id/nav_eliminar"
                     android:icon="@android:drawable/ic_menu_delete"

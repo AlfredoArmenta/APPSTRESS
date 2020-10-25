@@ -1,4 +1,4 @@
-package com.example.nuevobluno;
+package com.example.estres2.Bluetooth;
 
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 

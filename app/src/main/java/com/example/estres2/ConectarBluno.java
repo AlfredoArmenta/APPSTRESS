@@ -1,4 +1,4 @@
-package com.example.estres2.Bluetooth;
+package com.example.estres2;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -11,23 +11,40 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import com.example.estres2.R;
+import com.example.estres2.Bluetooth.BlunoLibrary;
 
-public class ConectarBluno extends AppCompatActivity {
+
+public class ConectarBluno extends BlunoLibrary {
     private Button buttonScan;
     private EditText serialSendText;
     private TextView serialReceivedText;
 
+    /**************************/
+    public String BoletaRecibida;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_comunicacion);
+        setContentView(R.layout.activity_bluno);
 
-        /*int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        // Se inicializa BoletaRecibida
+        BoletaRecibida = "";
+
+        // Se genera un objeto Bundle para poder recibir los parametros entre actividades
+        Bundle BoletaR = getIntent().getExtras();
+
+        //  Se pregunta si BoletaR es distinta de null lo que quiere decir que se recibio sin ningún problema
+        if (BoletaR != null) {
+            // Se obtiene la boleta
+            BoletaRecibida = BoletaR.getString("Boleta");
+            Toast.makeText(getApplicationContext(),"Boleta recibida" + BoletaRecibida, Toast.LENGTH_SHORT).show();
+        }else {
+                Toast.makeText(getApplicationContext(),"No se pudo recuperar el usuario", Toast.LENGTH_SHORT).show();
+        }
+
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         if (permissionCheck != PackageManager.PERMISSION_GRANTED){
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
                 Toast.makeText(this, "The permission to get BLE location data is required", Toast.LENGTH_SHORT).show();
@@ -46,6 +63,15 @@ public class ConectarBluno extends AppCompatActivity {
         serialSendText= findViewById(R.id.serialSendText);			//initial the EditText of the sending data
 
         Button buttonSerialSend = findViewById(R.id.buttonSerialSend);        //initial the button for sending the data
+        Button regresar = findViewById(R.id.CSRegresar);
+
+        regresar.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Salir();
+            }
+        });
+
         buttonSerialSend.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -65,10 +91,10 @@ public class ConectarBluno extends AppCompatActivity {
 
                 buttonScanOnClickProcess();										//Alert Dialog for selecting the BLE device
             }
-        });*/
+        });
     }
 
-    /*protected void onResume(){
+    protected void onResume(){
         super.onResume();
         Toast.makeText(this,"BlUNO Activity onResume",Toast.LENGTH_LONG).show();
         System.out.println("BlUNOActivity onResume");
@@ -133,6 +159,20 @@ public class ConectarBluno extends AppCompatActivity {
         serialReceivedText.setText(String.format("%s%s", serialReceivedText.getText(), theString));	//append the text into the EditText
         //The Serial data from the BLUNO may be sub-packaged, so using a buffer to hold the String is a good choice.
         ((ScrollView)serialReceivedText.getParent()).fullScroll(View.FOCUS_DOWN);
-    }*/
+    }
+
+    public void Salir() {
+        Bundle PasarBoleta = new Bundle();
+
+        Intent siguiente = new Intent(ConectarBluno.this, MenuPrincipal.class);
+
+        // Damos una clave = Boleta y el Objeto de tipo String = RContraseña
+        PasarBoleta.putString("Boleta",BoletaRecibida);
+
+        // Pasamos el objeto de tipo Bundle como parametro a la activity siguiente.
+        siguiente.putExtras(PasarBoleta);
+        startActivity(siguiente);
+        finish();
+    }
 
 }

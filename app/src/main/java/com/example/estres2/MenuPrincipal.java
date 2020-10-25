@@ -1,18 +1,15 @@
 package com.example.estres2;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import com.example.estres2.Bluetooth.BlunoLibrary;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -57,8 +54,8 @@ public class MenuPrincipal extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_inicio, R.id.nav_graficas, R.id.nav_comunicación,
-                R.id.nav_configurar_cuenta, R.id.nav_share, R.id.nav_eliminar)
+                R.id.nav_inicio, R.id.nav_graficas, R.id.nav_cerrarsesion,
+                R.id.nav_configurar_cuenta, R.id.nav_eliminar)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -116,7 +113,15 @@ public class MenuPrincipal extends AppCompatActivity {
     }
 
     public void Salir(MenuItem item) {
-        Intent siguiente = new Intent(this, InicioSesion.class);
+        // Se crea el objeto PasarUsuario que nos permite enviar objetos de un activity a otra
+        Bundle PasarBoleta = new Bundle();
+
+        Intent siguiente = new Intent(MenuPrincipal.this, ConectarBluno.class);
+        // Damos una clave = Boleta y el Objeto de tipo String = RContraseña
+        PasarBoleta.putString("Boleta",BoletaRecibida);
+
+        // Pasamos el objeto de tipo Bundle como parametro a la activity siguiente.
+        siguiente.putExtras(PasarBoleta);
         startActivity(siguiente);
         finish();
     }

@@ -85,6 +85,7 @@ public class ComunicacionFragment extends Fragment {
         }
 
         String[] arregloArchivos = Carpeta.list();
+        assert arregloArchivos != null;
         int numArchivos = arregloArchivos.length; // NÚMERO DE ARCHIVOS EN LA CARPETA
 
         Toast.makeText(getContext(), hourdateFormat.format(new Date()), Toast.LENGTH_SHORT).show();
@@ -93,13 +94,13 @@ public class ComunicacionFragment extends Fragment {
 
         try {
             FileWriter fileWriter = new FileWriter(Archivo);
-            fileWriter.append(user.getBoleta() + "\n");
-            fileWriter.append(hourdateFormat.format(new Date()) + "\n");
+            fileWriter.append(user.getBoleta()).append("\n");
+            fileWriter.append(hourdateFormat.format(new Date())).append("\n");
             fileWriter.append("MuestraFC, TiempoFC, MuestraGSR, TiempoGSR");
             fileWriter.close();
             Toast.makeText(getContext(), "Se creo correctmente el registro de las variables.", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-
+            System.out.println(e);
         }
 
     }

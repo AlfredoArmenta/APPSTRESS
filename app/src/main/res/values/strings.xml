@@ -96,5 +96,7 @@
     <string name="menu_disconnect">Disconnect</string>
     <string name="menu_scan">Scan</string>
     <string name="menu_stop">Stop</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
+    <string name="conectar_bluetooth">Conectar Bluetooth</string>
 
 </resources>

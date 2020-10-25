@@ -31,10 +31,10 @@
         tools:layout="@layout/fragment_cuenta"/>
 
     <fragment
-        android:id="@+id/nav_share"
-        android:name="com.example.estres2.ui.share.ShareFragment"
-        android:label="@string/menu_share"
-        tools:layout="@layout/fragment_share"/>
+        android:id="@+id/nav_cerrarsesion"
+        android:name="com.example.estres2.ui.cerrar.CerrarSesionFragment"
+        android:label="@string/cerrar_sesion"
+        tools:layout="@layout/fragment_cerrar_sesion"/>
 
     <fragment
         android:id="@+id/nav_eliminar"
