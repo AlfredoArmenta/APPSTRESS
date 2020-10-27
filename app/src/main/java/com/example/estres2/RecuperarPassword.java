@@ -77,20 +77,31 @@ public class RecuperarPassword extends AppCompatActivity {
         Rboleta = Boleta.getText().toString();
         Rcontraseña = Contraseña.getText().toString();
 
-        if ( VerifyCampos() == true) {
+        if (!Rboleta.equals("") && !Rcontraseña.equals("")) {
+            if (VerifyCampos()) {
 
-            if ( bd.RecuperarContraseña(Rboleta,Rcontraseña).equals("Corregido") ) {
+                if (bd.RecuperarContraseña(Rboleta, Rcontraseña).equals("Corregido")) {
 
-                Toast.makeText(getApplicationContext(),
-                        getText(R.string.ActualizoCorrectamente), Toast.LENGTH_SHORT).show();
-                Intent siguiente = new Intent(this, InicioSesion.class);
-                startActivity(siguiente);
-                finish();
-            } else {
-
-                Toast.makeText(getApplicationContext(),
-                        getText(R.string.BoletaNoRegistrada), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),
+                            getText(R.string.ActualizoCorrectamente), Toast.LENGTH_SHORT).show();
+                    Intent siguiente = new Intent(this, InicioSesion.class);
+                    startActivity(siguiente);
+                    finish();
+                } else {
+                    Boleta.setError(getString(R.string.BoletaNoEncontrada));
+                    Toast.makeText(getApplicationContext(),
+                            getText(R.string.BoletaNoRegistrada), Toast.LENGTH_SHORT).show();
+                }
             }
+        }else if(!Rboleta.equals("")){
+            Toast.makeText(getApplicationContext(),R.string.SinContraseña, Toast.LENGTH_LONG).show();
+
+        }else if(!Rcontraseña.equals("")){
+            Toast.makeText(getApplicationContext(),R.string.SinBoleta, Toast.LENGTH_LONG).show();
+
+        }else{
+            Toast.makeText(getApplicationContext(),R.string.SinBoleta, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),R.string.SinContraseña, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -111,7 +122,7 @@ public class RecuperarPassword extends AppCompatActivity {
 
         // Preguntamos si esta vacio el campo de Contraseña esta vacio
         if ( Contraseña.getText().toString().isEmpty() ) {
-            Contraseña.setError(getString(R.string.SinContraseña));
+            Contraseña.setError(getString(R.string.SinContraseña),null);
             return false;
         }
 
@@ -133,7 +144,7 @@ public class RecuperarPassword extends AppCompatActivity {
         // Preguntamos si la longitud de la contraseña esta comprendida en un rango de 8 a 15 caracteres
         if (!Password.matches(".{8,15}")) {
             Longitud.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_too_short_password));
+            Contraseña.setError(getString(R.string.error_too_short_password),null);
         } else {
             Longitud.setTextColor(Color.GREEN);
         }
@@ -141,7 +152,7 @@ public class RecuperarPassword extends AppCompatActivity {
         // Preguntamos si se contiene algún caracter especial
         if (!Password.matches(".*[!@#$%^*+=¿?_-].*")) {
             CaracterEspecial.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_not_find_special_caracter));
+            Contraseña.setError(getString(R.string.error_not_find_special_caracter),null);
         } else {
             CaracterEspecial.setTextColor(Color.GREEN);
         }
@@ -149,7 +160,7 @@ public class RecuperarPassword extends AppCompatActivity {
         // Preguntamos si se contiene algún digito
         if (!Password.matches(".*\\d.*")) {
             Numero.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_not_find_number));
+            Contraseña.setError(getString(R.string.error_not_find_number),null);
         } else {
             Numero.setTextColor(Color.GREEN);
         }
@@ -157,7 +168,7 @@ public class RecuperarPassword extends AppCompatActivity {
         // Preguntamos si se contiene alguna minúscula
         if (!Password.matches(".*[a-z].*")) {
             Minuscula.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_not_find_lowercase_caracter));
+            Contraseña.setError(getString(R.string.error_not_find_lowercase_caracter),null);
         } else {
             Minuscula.setTextColor(Color.GREEN);
         }
@@ -165,7 +176,7 @@ public class RecuperarPassword extends AppCompatActivity {
         // Preguntamos si se contiene alguna mayúscula
         if (!Password.matches(".*[A-Z].*")) {
             Mayuscula.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_not_find_uppercase_caracter));
+            Contraseña.setError(getString(R.string.error_not_find_uppercase_caracter),null);
         } else {
             Mayuscula.setTextColor(Color.GREEN);
         }

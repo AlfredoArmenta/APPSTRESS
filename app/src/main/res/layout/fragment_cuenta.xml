@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbarThumbVertical="@drawable/scroll">
 
+<<<<<<< Updated upstream
     <TextView
         android:id="@+id/CFBoleta"
         android:layout_width="match_parent"
@@ -82,16 +84,213 @@
             android:layout_height="wrap_content"
             android:text="@string/masculino"
             android:textSize="14sp" />
+=======
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/CFFemenino"
+        <TextView
+            android:id="@+id/CFBoleta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/boleta"
+            android:textSize="32sp"
+            android:textAlignment="center"
+            android:gravity="center_horizontal"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"/>
+
+        <EditText
+            android:id="@+id/CFNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:drawableStart="?attr/actionModePasteDrawable"
+            android:ems="10"
+            android:hint="@string/nombre_completo"
+            android:inputType="textPersonName"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/CFEdad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/edad"
+            android:inputType="number"
+            android:textSize="20sp"
+            android:drawableStart="@drawable/ic_edad"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin" />
+
+        <TextView
+            android:id="@+id/CFTGenero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/genero"
+            android:textSize="14sp"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"/>
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin">
+
+            <RadioButton
+                android:id="@+id/CFMasculino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/masculino"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/CFFemenino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/femenino"
+                android:textSize="14sp" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/CFTSemestre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/semestre"
+            android:textSize="14sp"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin" />
+
+        <Spinner
+            android:id="@+id/CFSemestre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fadeScrollbars="false"
+            android:spinnerMode="dialog"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"/>
+
+        <TextView
+            android:id="@+id/CFTContraseña"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/la_contrasena_debe_contener"
+            android:textSize="14sp"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"/>
+
+        <TextView
+            android:id="@+id/CFNumero"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Debe_Contener_1_Numero"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="14sp"
+            android:layout_marginStart="@dimen/margin" />
+
+        <TextView
+            android:id="@+id/CFLongitud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Longitud_de_8_15_Caracteres"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="14sp"
+            android:layout_marginStart="@dimen/margin"  />
+
+        <TextView
+            android:id="@+id/CFMayuscula"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mayuscula"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="14sp"
+            android:layout_marginStart="@dimen/margin"  />
+
+        <TextView
+            android:id="@+id/CFMinuscula"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Minuscula"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="14sp"
+            android:layout_marginStart="@dimen/margin" />
+
+        <TextView
+            android:id="@+id/CFCaracterEspecial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Caracter_Especial"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="14sp"
+            android:layout_marginStart="@dimen/margin" />
+>>>>>>> Stashed changes
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+<<<<<<< Updated upstream
             android:text="@string/femenino"
             android:textSize="14sp" />
+=======
+            app:passwordToggleEnabled="true"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin">
 
-    </RadioGroup>
+            <EditText
+                android:id="@+id/CFContraseña"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@android:drawable/ic_lock_idle_lock"
+                android:ems="10"
+                android:hint="@string/contrasena"
+                android:inputType="textPassword"
+                android:textSize="20sp"
+                android:autofillHints="true" />
 
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/CFAplicar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:clickable="true"
+            android:text="@string/aplicar"
+            android:textSize="20sp"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:focusable="true" />
+>>>>>>> Stashed changes
+
+    </LinearLayout>
+
+<<<<<<< Updated upstream
     <TextView
         android:id="@+id/CFTSemestre"
         android:layout_width="match_parent"
@@ -233,3 +432,7 @@
         android:focusable="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+=======
+
+</ScrollView>
+>>>>>>> Stashed changes

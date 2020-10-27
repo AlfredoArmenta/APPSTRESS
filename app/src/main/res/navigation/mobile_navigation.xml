@@ -22,7 +22,7 @@
         android:id="@+id/nav_comunicación"
         android:name="com.example.estres2.ui.comunicacion.ComunicacionFragment"
         android:label="@string/menu_comunicación"
-        tools:layout="@layout/fragment_comunicacion" />
+        tools:layout="@layout/activity_bluno" />
 
     <fragment
         android:id="@+id/nav_configurar_cuenta"
@@ -31,12 +31,15 @@
         tools:layout="@layout/fragment_cuenta"/>
 
     <fragment
+<<<<<<< Updated upstream
         android:id="@+id/nav_share"
         android:name="com.example.estres2.ui.share.ShareFragment"
         android:label="@string/menu_share"
         tools:layout="@layout/fragment_share"/>
 
     <fragment
+=======
+>>>>>>> Stashed changes
         android:id="@+id/nav_eliminar"
         android:name="com.example.estres2.ui.eliminar.EliminarFragment"
         android:label="@string/menu_eliminar"

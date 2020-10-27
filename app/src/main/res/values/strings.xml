@@ -37,6 +37,7 @@
     ************************* //
     // Mensajes de Error para la Boleta
     <string name="SinBoleta">No se ingreso ninguna Boleta</string>
+    <string name="BoletaNoEncontrada">No se ha encontrado la boleta en la base de datos</string>
     <string name="LongBoleta">La boleta debe de tener una longitud de 10 caracteres</string>
     // Mensajes de Error para el Nombre
     <string name="SinNombre">No se ingreso ningún Nombre</string>
@@ -115,5 +116,37 @@
     <string name="boleta">Boleta</string>
     <string name="aplicar">Aplicar</string>
     
+
+    <!-- Strings de los datos personales, registro, cambio de contraseña, inicio de sesión y de configurar cuenta-->
+    <string name="boleta">Boleta</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="nueva_contrasena">Nueva Contraseña</string>
+    <string name="Debe_Contener_1_Numero">1 Número</string>
+    <string name="Caracter_Especial">1 Caracter Especial</string>
+    <string name="mayuscula">1 Mayúscula</string>
+    <string name="Minuscula">1 Minúscula</string>
+    <string name="Longitud_de_8_15_Caracteres">Longitud de 8–15 Caracteres</string>
+
+    <!-- Strings para los botones -->
+    <string name="Aceptar">Aceptar</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="registrar">Registrar</string>
+
+    <!-- Strings Inicio de sesión -->
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="olvidaste_tu_contrasena">¿Olvidaste tu contraseña?</string>
+
+    <!-- Strings Registro -->
+    <string name="nombre_completo">Nombre completo</string>
+    <string name="edad">Edad</string>
+    <string name="genero">Genero</string>
+    <string name="masculino">Masculino</string>
+    <string name="femenino">Femenino</string>
+    <string name="semestre">Semestre</string>
+    <string name="la_contrasena_debe_contener">La contraseña debe contener:</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="aplicar">Aplicar</string>
+    <string name="eliminar_cuenta">Eliminar Cuenta</string>
+    <string name="herramientas">Herramientas</string>
 
 </resources>

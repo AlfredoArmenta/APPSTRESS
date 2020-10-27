@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+<<<<<<< Updated upstream
+=======
+import com.example.estres2.Bluetooth.ConectarBluno;
+>>>>>>> Stashed changes
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 

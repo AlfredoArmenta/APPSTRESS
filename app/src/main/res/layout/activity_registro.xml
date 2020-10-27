@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< Updated upstream
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+=======
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+>>>>>>> Stashed changes
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Registro">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Registro"
+    android:scrollbarThumbVertical="@drawable/scroll">
 
+<<<<<<< Updated upstream
     <EditText
         android:id="@+id/RBoleta"
         android:layout_width="match_parent"
@@ -246,3 +254,233 @@
         app:layout_constraintVertical_bias="0.806" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+=======
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin">
+
+            <EditText
+                android:id="@+id/RBoleta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@android:drawable/ic_menu_edit"
+                android:ems="10"
+                android:hint="@string/boleta"
+                android:inputType="number"
+                android:textSize="24sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <EditText
+            android:id="@+id/RNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:drawableStart="?attr/actionModePasteDrawable"
+            android:ems="10"
+            android:hint="@string/nombre_completo"
+            android:inputType="textPersonName"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/REdad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/edad"
+            android:inputType="number"
+            android:textSize="20sp"
+            android:drawableStart="@drawable/ic_edad"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin" />
+
+        <TextView
+            android:id="@+id/RTGenero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/genero"
+            android:textSize="14sp"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"/>
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin">
+
+            <RadioButton
+                android:id="@+id/RMasculino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/masculino"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/RFemenino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/femenino"
+                android:textSize="14sp" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/RTSemestre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/semestre"
+            android:textSize="14sp"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin" />
+
+        <Spinner
+            android:id="@+id/RSemestre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fadeScrollbars="false"
+            android:spinnerMode="dialog"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"/>
+
+        <TextView
+            android:id="@+id/RRContraseña"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/la_contrasena_debe_contener"
+            android:textSize="14sp"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"/>
+
+        <TextView
+            android:id="@+id/RTNumero"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Debe_Contener_1_Numero"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="14sp"
+            android:layout_marginStart="@dimen/margin" />
+
+        <TextView
+            android:id="@+id/RTLongitud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Longitud_de_8_15_Caracteres"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="14sp"
+            android:layout_marginStart="@dimen/margin"  />
+
+        <TextView
+            android:id="@+id/RTMayuscula"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mayuscula"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="14sp"
+            android:layout_marginStart="@dimen/margin"  />
+
+        <TextView
+            android:id="@+id/RTMinuscula"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Minuscula"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="14sp"
+            android:layout_marginStart="@dimen/margin" />
+
+        <TextView
+            android:id="@+id/RTCaracterEspecial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Caracter_Especial"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="14sp"
+            android:layout_marginStart="@dimen/margin" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin">
+
+            <EditText
+                android:id="@+id/RContraseña"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@android:drawable/ic_lock_idle_lock"
+                android:ems="10"
+                android:hint="@string/contrasena"
+                android:inputType="textPassword"
+                android:textSize="20sp"
+                android:autofillHints="true" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin" >
+
+            <Button
+                android:id="@+id/RRegistrar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="Registrar"
+                android:text="@string/registrar"
+                android:textSize="20sp"
+                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginBottom="@dimen/margin"
+                android:layout_marginTop="@dimen/margin" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:onClick="Cancelar"
+                android:text="@string/cancelar"
+                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginBottom="@dimen/margin"
+                android:layout_marginTop="@dimen/margin" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
+>>>>>>> Stashed changes

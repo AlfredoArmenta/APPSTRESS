@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
@@ -21,8 +23,17 @@
             android:id="@+id/nav_configurar_cuenta"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/menu_configurar_cuenta" />
+        <item
+            android:id="@+id/nav_comunicación"
+            android:icon="@drawable/ic_menu_share"
+            android:title="Bluno"/>
 
+
+<<<<<<< Updated upstream
         <item android:title="Communicate">
+=======
+        <item android:title="@string/herramientas">
+>>>>>>> Stashed changes
             <menu>
                 <item
                     android:id="@+id/nav_eliminar"
