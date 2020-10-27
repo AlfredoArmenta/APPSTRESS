@@ -92,6 +92,7 @@ public class Registro extends AppCompatActivity {
         });
     }
 
+
     /**
      * This method is to initialize objects to be used
      */
@@ -128,7 +129,7 @@ public class Registro extends AppCompatActivity {
         user.setNombre(Nombre.getText().toString());
         user.setEdad(Edad.getText().toString());
 
-        if (Masculino.isChecked()) {
+        if (Masculino.isChecked() == true) {
             user.setGenero("Masculino");
         } else {
             user.setGenero("Femenino");
@@ -136,7 +137,7 @@ public class Registro extends AppCompatActivity {
         user.setSemestre(Semestre.getSelectedItem().toString());
         user.setContraseña(Contraseña.getText().toString());
 
-        if (VerifyCampos()) {
+        if ( VerifyCampos() == true) {
 
             if (bd.InsertarUsuario(user) > 0) {
                 Toast.makeText(getApplicationContext(),
@@ -148,6 +149,7 @@ public class Registro extends AppCompatActivity {
             } else {
                 Toast.makeText(getApplicationContext(),
                         getText(R.string.BoletaRegistrada), Toast.LENGTH_SHORT).show();
+
             }
 
         }
@@ -193,13 +195,6 @@ public class Registro extends AppCompatActivity {
                     getText(R.string.SinSemestre), Toast.LENGTH_SHORT).show();
             return false;
         }
-
-        /*  Preguntamos si no se selecciona una unidad de aprendizaje
-        if ( UA.getSelectedItem().toString() == "Selecciona una materia" ) {
-            Toast.makeText(getApplicationContext(),
-                    getText(R.string.SinMateria), Toast.LENGTH_SHORT).show();
-            return false;
-        }*/
 
         // Preguntamos si esta vacio el campo de Contraseña esta vacio
         if ( Contraseña.getText().toString().isEmpty() ) {
@@ -266,4 +261,3 @@ public class Registro extends AppCompatActivity {
 
     // ********************** Fin de la clase Registro ************************ //
 }
-

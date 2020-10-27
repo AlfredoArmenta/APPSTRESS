@@ -48,8 +48,7 @@ public class Mostrar extends AppCompatActivity {
                                 fila.getString(2),
                                 fila.getString(3),
                                 fila.getString(4),
-                                fila.getString(5),
-                                fila.getString(6)
+                                fila.getString(5)
                         )
                 );
             } while(fila.moveToNext());
@@ -64,3 +63,4 @@ public class Mostrar extends AppCompatActivity {
 
     // ********************** Fin de la clase Mostrar ************************ //
 }
+

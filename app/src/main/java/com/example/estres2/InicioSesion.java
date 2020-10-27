@@ -27,7 +27,7 @@ public class InicioSesion extends AppCompatActivity {
         setContentView(R.layout.activity_inicio_sesion);
         InicializarObjetos();
         Boleta.setText("2015640017");
-        Contraseña.setText("Politecnico1@");
+        Contraseña.setText("Politecnico123?");
     }
 
     private void InicializarObjetos() {

@@ -13,10 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import com.example.estres2.MenuPrincipal;
 import com.example.estres2.R;
-
 
 public class ConectarBluno extends BlunoLibrary {
     private Button buttonScan;
@@ -43,7 +41,7 @@ public class ConectarBluno extends BlunoLibrary {
             BoletaRecibida = BoletaR.getString("Boleta");
             Toast.makeText(getApplicationContext(),"Boleta recibida" + BoletaRecibida, Toast.LENGTH_SHORT).show();
         }else {
-                Toast.makeText(getApplicationContext(),"No se pudo recuperar el usuario", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"No se pudo recuperar el usuario", Toast.LENGTH_SHORT).show();
         }
 
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
@@ -178,3 +176,4 @@ public class ConectarBluno extends BlunoLibrary {
     }
 
 }
+

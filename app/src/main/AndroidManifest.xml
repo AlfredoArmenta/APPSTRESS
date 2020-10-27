@@ -5,24 +5,23 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
-    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
 
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.ACCESS_BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
 
-        android:icon="@drawable/ic_launcher_background"
+        android:icon="@drawable/ic_icon_app"
         android:label="Stress"
-        android:roundIcon="@drawable/ic_launcher_background"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
 
         <activity android:name=".Mostrar" />
-<<<<<<< Updated upstream
-=======
         <activity android:name=".Bluetooth.ConectarBluno"/>
->>>>>>> Stashed changes
 
         <activity
             android:name=".MenuPrincipal"
@@ -37,8 +36,6 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.example.estres2.ui.comunicacion.BluetoothLeService" android:enabled="true"/>
-
         <activity
             android:name=".Registro"
             android:label="Registrar Usuario" />
@@ -46,6 +43,8 @@
         <activity
             android:name=".RecuperarPassword"
             android:label="Restablecer contraseña" />
+
+        <service android:name="com.example.estres2.Bluetooth.BluetoothLeService" android:enabled="true" />
 
     </application>
 
