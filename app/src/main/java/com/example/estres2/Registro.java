@@ -129,7 +129,7 @@ public class Registro extends AppCompatActivity {
         user.setNombre(Nombre.getText().toString());
         user.setEdad(Edad.getText().toString());
 
-        if (Masculino.isChecked() == true) {
+        if (Masculino.isChecked()) {
             user.setGenero("Masculino");
         } else {
             user.setGenero("Femenino");
@@ -137,7 +137,7 @@ public class Registro extends AppCompatActivity {
         user.setSemestre(Semestre.getSelectedItem().toString());
         user.setContraseña(Contraseña.getText().toString());
 
-        if ( VerifyCampos() == true) {
+        if (VerifyCampos()) {
 
             if (bd.InsertarUsuario(user) > 0) {
                 Toast.makeText(getApplicationContext(),
@@ -162,6 +162,7 @@ public class Registro extends AppCompatActivity {
         // Preguntamos si esta vacio el campo de Boleta
         if ( Boleta.getText().toString().isEmpty() ) {
             Boleta.setError(getString(R.string.SinBoleta));
+            Toast.makeText(getApplicationContext(), getString(R.string.SinBoleta), Toast.LENGTH_SHORT).show();
             return false;
         }
 
