@@ -110,19 +110,22 @@ public class RecuperarPassword extends AppCompatActivity {
 
         // Preguntamos si esta vacio el campo de Boleta
         if ( Boleta.getText().toString().isEmpty() ) {
-            Boleta.setError(getString(R.string.SinBoleta));
+            Boleta.setError(getString(R.string.SinBoleta), null);
+            Toast.makeText(getApplicationContext(), getString(R.string.SinBoleta), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Preguntamos si la longitud es de 10
         if ( Boleta.length() != 10 ){
-            Boleta.setError(getString(R.string.LongBoleta));
+            Boleta.setError(getString(R.string.LongBoleta),null);
+            Toast.makeText(getApplicationContext(), getString(R.string.LongBoleta), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Preguntamos si esta vacio el campo de Contraseña esta vacio
         if ( Contraseña.getText().toString().isEmpty() ) {
             Contraseña.setError(getString(R.string.SinContraseña),null);
+            Toast.makeText(getApplicationContext(), getString(R.string.SinContraseña), Toast.LENGTH_SHORT).show();
             return false;
         }
 

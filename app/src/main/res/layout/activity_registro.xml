@@ -36,33 +36,46 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/RNombre"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
             android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
-            android:layout_marginBottom="@dimen/margin"
-            android:drawableStart="?attr/actionModePasteDrawable"
-            android:ems="10"
-            android:hint="@string/nombre_completo"
-            android:inputType="textPersonName"
-            android:textSize="20sp" />
+            android:layout_marginStart="@dimen/margin">
 
-        <EditText
-            android:id="@+id/REdad"
+            <EditText
+                android:id="@+id/RNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="?attr/actionModePasteDrawable"
+                android:ems="10"
+                android:hint="@string/nombre_completo"
+                android:inputType="textPersonName"
+                android:textSize="20sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/edad"
-            android:inputType="number"
-            android:textSize="20sp"
-            android:drawableStart="@drawable/ic_edad"
-            android:layout_marginEnd="@dimen/margin"
-            android:layout_marginStart="@dimen/margin"
             android:layout_marginBottom="@dimen/margin"
-            android:layout_marginTop="@dimen/margin" />
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin">
+
+            <EditText
+                android:id="@+id/REdad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/edad"
+                android:inputType="number"
+                android:textSize="20sp"
+                android:drawableStart="@drawable/ic_edad" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/RTGenero"

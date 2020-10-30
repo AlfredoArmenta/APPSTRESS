@@ -21,7 +21,7 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
 
         <activity android:name=".Mostrar" />
-        <activity android:name=".Bluetooth.ConectarBluno"/>
+        <activity android:name=".Bluetooth.ConectarBluno" android:screenOrientation="portrait"/>
 
         <activity
             android:name=".MenuPrincipal"

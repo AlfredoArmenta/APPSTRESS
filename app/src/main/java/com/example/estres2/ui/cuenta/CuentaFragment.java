@@ -1,5 +1,7 @@
 package com.example.estres2.ui.cuenta;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -40,12 +42,23 @@ public class CuentaFragment extends Fragment {
     private TextView Minuscula;
     private TextView Longitud;
 
+    private Button Boton;
+
+    private Context mContext;
+
     // Variable del color verde
     private int ColorVerde;
 
     public CuentaFragment(){
 
     };
+
+    @Override
+    public void onAttach(Activity activity) {
+        // TODO Auto-generated method stub
+        super.onAttach(activity);
+        mContext=activity;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,9 +95,9 @@ public class CuentaFragment extends Fragment {
         Mayuscula = (TextView) root.findViewById(R.id.CFMayuscula);
         Minuscula = (TextView) root.findViewById(R.id.CFMinuscula);
         Longitud = (TextView) root.findViewById(R.id.CFLongitud);
-        Button boton = (Button) root.findViewById(R.id.CFAplicar);
+        Boton = (Button) root.findViewById(R.id.CFAplicar);
 
-        boton.setOnClickListener(new View.OnClickListener() {
+        Boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ActualizarDatos();
@@ -157,55 +170,52 @@ public class CuentaFragment extends Fragment {
         }
     }
 
+    // Función que nos proporciona si se esta cumpliendo con el llenado de los paramestros para el registro
     private  boolean VerifyCampos() {
-
-        // Preguntamos si esta vacio el campo de Boleta
-        if ( Boleta.getText().toString().isEmpty() ) {
-            Boleta.setError(getString(R.string.SinBoleta));
-            return false;
-        }
-
-        // Preguntamos si la longitud es de 10
-        if ( Boleta.length() != 10 ){
-            Boleta.setError(getString(R.string.LongBoleta));
-            return false;
-        }
 
         // Preguntamos si esta vacio el campo de nombre
         if ( Nombre.getText().toString().isEmpty() ) {
-            Nombre.setError(getString(R.string.SinNombre));
+            Nombre.setError(getString(R.string.SinNombre), null);
+            Toast.makeText(mContext, getString(R.string.SinNombre), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Preguntamos si esta vacio el campo de Edad
         if ( Edad.getText().toString().isEmpty() ) {
-            Edad.setError(getString(R.string.SinEdad));
+            Edad.setError(getString(R.string.SinEdad), null);
+            Toast.makeText(mContext, getString(R.string.SinEdad), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Resteingimos la Edad en un rango de 10 a 99 años
         if ( Integer.parseInt(String.valueOf(Edad.getText())) < 20 || Integer.parseInt(String.valueOf(Edad.getText())) > 25){
-            Edad.setError(getString(R.string.RangoEdad));
+            Edad.setError(getString(R.string.RangoEdad), null);
+            Toast.makeText(mContext, getString(R.string.RangoEdad), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Preguntamos si no se selecciona un semestre
         if (Semestre.getSelectedItem().toString().equals("Selecciona tu semestre actual")) {
-            Toast.makeText(getContext(),
+            Toast.makeText(mContext,
                     getText(R.string.SinSemestre), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Preguntamos si esta vacio el campo de Contraseña esta vacio
         if ( Contraseña.getText().toString().isEmpty() ) {
-            Contraseña.setError(getString(R.string.SinContraseña));
+            Contraseña.setError(getString(R.string.SinContraseña),null);
+            Toast.makeText(mContext, getString(R.string.SinContraseña), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Preguntamos si todas las restricciones para la contraseña estan en verde si es así la contraseña es valida
-        return Longitud.getCurrentTextColor() == ColorVerde && CaracterEspecial.getCurrentTextColor() == ColorVerde &&
+        if ( !(Longitud.getCurrentTextColor() == ColorVerde && CaracterEspecial.getCurrentTextColor() == ColorVerde &&
                 Numero.getCurrentTextColor() == ColorVerde && Minuscula.getCurrentTextColor() == ColorVerde &&
-                Mayuscula.getCurrentTextColor() == ColorVerde;
+                Mayuscula.getCurrentTextColor() == ColorVerde) ) {
+            return false;
+        }
+
+        return true;
     }
 
     // Función que valida los parametros con las restrigcciones de la contraseña
@@ -216,7 +226,7 @@ public class CuentaFragment extends Fragment {
         // Preguntamos si la longitud de la contraseña esta comprendida en un rango de 8 a 15 caracteres
         if (!Password.matches(".{8,15}")) {
             Longitud.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_too_short_password));
+            Contraseña.setError(getString(R.string.error_too_short_password), null);
         } else {
             Longitud.setTextColor(Color.GREEN);
         }
@@ -224,7 +234,7 @@ public class CuentaFragment extends Fragment {
         // Preguntamos si se contiene algún caracter especial
         if (!Password.matches(".*[!@#$%^*+=¿?_-].*")) {
             CaracterEspecial.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_not_find_special_caracter));;
+            Contraseña.setError(getString(R.string.error_not_find_special_caracter),null);;
         } else {
             CaracterEspecial.setTextColor(Color.GREEN);
         }
@@ -232,7 +242,7 @@ public class CuentaFragment extends Fragment {
         // Preguntamos si se contiene algún digito
         if (!Password.matches(".*\\d.*")) {
             Numero.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_not_find_number));
+            Contraseña.setError(getString(R.string.error_not_find_number), null);
         } else {
             Numero.setTextColor(Color.GREEN);
         }
@@ -240,7 +250,7 @@ public class CuentaFragment extends Fragment {
         // Preguntamos si se contiene alguna minúscula
         if (!Password.matches(".*[a-z].*")) {
             Minuscula.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_not_find_lowercase_caracter));
+            Contraseña.setError(getString(R.string.error_not_find_lowercase_caracter),null);
         } else {
             Minuscula.setTextColor(Color.GREEN);
         }
@@ -248,11 +258,9 @@ public class CuentaFragment extends Fragment {
         // Preguntamos si se contiene alguna mayúscula
         if (!Password.matches(".*[A-Z].*")) {
             Mayuscula.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_not_find_uppercase_caracter));
+            Contraseña.setError(getString(R.string.error_not_find_uppercase_caracter),null);
         } else {
             Mayuscula.setTextColor(Color.GREEN);
         }
-
     }
-
 }

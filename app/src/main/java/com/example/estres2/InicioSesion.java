@@ -12,8 +12,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.estres2.ui.cuenta.CuentaFragment;
-
 
 // Actividad principal
 public class InicioSesion extends AppCompatActivity {
@@ -26,8 +24,8 @@ public class InicioSesion extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio_sesion);
         InicializarObjetos();
-        Boleta.setText("2015640017");
-        Contraseña.setText("Politecnico123?");
+        Boleta.setText("2015640408");
+        Contraseña.setText("Tru$tn01");
     }
 
     private void InicializarObjetos() {
@@ -104,17 +102,17 @@ public class InicioSesion extends AppCompatActivity {
     private  boolean VerifyCampos() {
 
         if ( Boleta.getText().toString().isEmpty() ) {
-            Boleta.setError(getString(R.string.SinBoleta));
+            Boleta.setError(getString(R.string.SinBoleta), null);
             return false;
         }
 
         if ( Boleta.length() != 10 ){
-            Boleta.setError(getString(R.string.LongBoleta));
+            Boleta.setError(getString(R.string.LongBoleta), null);
             return false;
         }
 
         if ( Contraseña.getText().toString().isEmpty() ) {
-            Contraseña.setError(getString(R.string.SinContraseña));
+            Contraseña.setError(getString(R.string.SinContraseña), null);
             return false;
         }
 

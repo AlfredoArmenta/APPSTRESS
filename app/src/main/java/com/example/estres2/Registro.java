@@ -161,37 +161,41 @@ public class Registro extends AppCompatActivity {
 
         // Preguntamos si esta vacio el campo de Boleta
         if ( Boleta.getText().toString().isEmpty() ) {
-            Boleta.setError(getString(R.string.SinBoleta));
+            Boleta.setError(getString(R.string.SinBoleta), null);
             Toast.makeText(getApplicationContext(), getString(R.string.SinBoleta), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Preguntamos si la longitud es de 10
         if ( Boleta.length() != 10 ){
-            Boleta.setError(getString(R.string.LongBoleta));
+            Boleta.setError(getString(R.string.LongBoleta), null);
+            Toast.makeText(getApplicationContext(), getString(R.string.LongBoleta), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Preguntamos si esta vacio el campo de nombre
         if ( Nombre.getText().toString().isEmpty() ) {
-            Nombre.setError(getString(R.string.SinNombre));
+            Nombre.setError(getString(R.string.SinNombre), null);
+            Toast.makeText(getApplicationContext(), getString(R.string.SinNombre), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Preguntamos si esta vacio el campo de Edad
         if ( Edad.getText().toString().isEmpty() ) {
-            Edad.setError(getString(R.string.SinEdad));
+            Edad.setError(getString(R.string.SinEdad), null);
+            Toast.makeText(getApplicationContext(), getString(R.string.SinEdad), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Resteingimos la Edad en un rango de 10 a 99 años
         if ( Integer.parseInt(String.valueOf(Edad.getText())) < 20 || Integer.parseInt(String.valueOf(Edad.getText())) > 25){
-            Edad.setError(getString(R.string.RangoEdad));
+            Edad.setError(getString(R.string.RangoEdad), null);
+            Toast.makeText(getApplicationContext(), getString(R.string.RangoEdad), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Preguntamos si no se selecciona un semestre
-        if ( Semestre.getSelectedItem().toString() == "Selecciona tu semestre actual" ) {
+        if (Semestre.getSelectedItem().toString().equals("Selecciona tu semestre actual")) {
             Toast.makeText(getApplicationContext(),
                     getText(R.string.SinSemestre), Toast.LENGTH_SHORT).show();
             return false;
@@ -199,7 +203,8 @@ public class Registro extends AppCompatActivity {
 
         // Preguntamos si esta vacio el campo de Contraseña esta vacio
         if ( Contraseña.getText().toString().isEmpty() ) {
-            Contraseña.setError(getString(R.string.SinContraseña));
+            Contraseña.setError(getString(R.string.SinContraseña),null);
+            Toast.makeText(getApplicationContext(), getString(R.string.SinContraseña), Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -221,7 +226,7 @@ public class Registro extends AppCompatActivity {
         // Preguntamos si la longitud de la contraseña esta comprendida en un rango de 8 a 15 caracteres
         if (!Password.matches(".{8,15}")) {
             Longitud.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_too_short_password));
+            Contraseña.setError(getString(R.string.error_too_short_password), null);
         } else {
             Longitud.setTextColor(Color.GREEN);
         }
@@ -229,7 +234,7 @@ public class Registro extends AppCompatActivity {
         // Preguntamos si se contiene algún caracter especial
         if (!Password.matches(".*[!@#$%^*+=¿?_-].*")) {
             CaracterEspecial.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_not_find_special_caracter));;
+            Contraseña.setError(getString(R.string.error_not_find_special_caracter),null);;
         } else {
             CaracterEspecial.setTextColor(Color.GREEN);
         }
@@ -237,7 +242,7 @@ public class Registro extends AppCompatActivity {
         // Preguntamos si se contiene algún digito
         if (!Password.matches(".*\\d.*")) {
             Numero.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_not_find_number));
+            Contraseña.setError(getString(R.string.error_not_find_number), null);
         } else {
             Numero.setTextColor(Color.GREEN);
         }
@@ -245,7 +250,7 @@ public class Registro extends AppCompatActivity {
         // Preguntamos si se contiene alguna minúscula
         if (!Password.matches(".*[a-z].*")) {
             Minuscula.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_not_find_lowercase_caracter));
+            Contraseña.setError(getString(R.string.error_not_find_lowercase_caracter),null);
         } else {
             Minuscula.setTextColor(Color.GREEN);
         }
@@ -253,7 +258,7 @@ public class Registro extends AppCompatActivity {
         // Preguntamos si se contiene alguna mayúscula
         if (!Password.matches(".*[A-Z].*")) {
             Mayuscula.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_not_find_uppercase_caracter));
+            Contraseña.setError(getString(R.string.error_not_find_uppercase_caracter),null);
         } else {
             Mayuscula.setTextColor(Color.GREEN);
         }
