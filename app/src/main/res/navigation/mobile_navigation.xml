@@ -16,18 +16,40 @@
         android:id="@+id/nav_graficas"
         android:name="com.example.estres2.ui.Graficas.GraficasFragment"
         android:label="@string/menu_gráficas"
-        tools:layout="@layout/fragment_graficas" />
+        tools:layout="@layout/fragment_graficas" >
+        <action
+            android:id="@+id/action_nav_graficas_to_nav_inicio"
+            app:destination="@id/nav_inicio" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_registro"
+        android:name="com.example.estres2.ui.registros.FragmentRegistro"
+        android:label="Registros"
+        tools:layout="@layout/fragment_registro">
+        <action
+            android:id="@+id/action_nav_registro_to_nav_inicio"
+            app:destination="@id/nav_inicio" />
+    </fragment>
 
 
     <fragment
         android:id="@+id/nav_configurar_cuenta"
         android:name="com.example.estres2.ui.cuenta.CuentaFragment"
         android:label="@string/menu_configurar_cuenta"
-        tools:layout="@layout/fragment_cuenta"/>
+        tools:layout="@layout/fragment_cuenta">
+        <action
+            android:id="@+id/action_nav_configurar_cuenta_to_nav_inicio"
+            app:destination="@id/nav_inicio" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_eliminar"
         android:name="com.example.estres2.ui.eliminar.EliminarFragment"
         android:label="@string/menu_eliminar"
-        tools:layout="@layout/fragment_eliminar" />
+        tools:layout="@layout/fragment_eliminar" >
+        <action
+            android:id="@+id/action_nav_eliminar_to_nav_inicio"
+            app:destination="@id/nav_inicio" />
+    </fragment>
 </navigation>

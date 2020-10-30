@@ -135,5 +135,6 @@
     <string name="aplicar">Aplicar</string>
     <string name="eliminar_cuenta">Eliminar Cuenta</string>
     <string name="herramientas">Herramientas</string>
+    <string name="registros">Registros</string>
 
 </resources>
