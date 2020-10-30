@@ -175,5 +175,8 @@ public class ConectarBluno extends BlunoLibrary {
         finish();
     }
 
+    // Se anula el botón que nos regresa
+    @Override public void onBackPressed() {}
+
 }
 
