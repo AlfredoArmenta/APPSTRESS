@@ -34,6 +34,10 @@
                     android:title="@string/menu_configurar_cuenta" />
 
                 <item
+                    android:id="@+id/nav_cerrarsesion"
+                    android:icon="@drawable/ic_menu_slideshow"
+                    android:title="@string/cerrar_sesion" />
+                <item
                     android:id="@+id/nav_eliminar"
                     android:icon="@android:drawable/ic_menu_delete"
                     android:title="@string/menu_eliminar" />

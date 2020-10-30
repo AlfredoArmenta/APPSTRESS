@@ -40,8 +40,6 @@ public class CuentaFragment extends Fragment {
     private TextView Minuscula;
     private TextView Longitud;
 
-    private Button Boton;
-
     // Variable del color verde
     private int ColorVerde;
 
@@ -84,9 +82,9 @@ public class CuentaFragment extends Fragment {
         Mayuscula = (TextView) root.findViewById(R.id.CFMayuscula);
         Minuscula = (TextView) root.findViewById(R.id.CFMinuscula);
         Longitud = (TextView) root.findViewById(R.id.CFLongitud);
-        Boton = (Button) root.findViewById(R.id.CFAplicar);
+        Button boton = (Button) root.findViewById(R.id.CFAplicar);
 
-        Boton.setOnClickListener(new View.OnClickListener() {
+        boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ActualizarDatos();

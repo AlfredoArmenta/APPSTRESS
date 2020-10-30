@@ -97,6 +97,8 @@
     <string name="menu_disconnect">Disconnect</string>
     <string name="menu_scan">Scan</string>
     <string name="menu_stop">Stop</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
+    <string name="conectar_bluetooth">Conectar Bluetooth</string>
 
     <string name="la_contrase_a_debe_contener">La contraseña debe contener:</string>
     <string name="_1_numero">1 Número</string>

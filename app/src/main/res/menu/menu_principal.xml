@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_comunicación"
         android:orderInCategory="100"
         android:title="Conectar Bluetooth"
         android:onClick="Salir"

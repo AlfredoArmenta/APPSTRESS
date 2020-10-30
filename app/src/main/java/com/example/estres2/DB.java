@@ -145,7 +145,6 @@ public class DB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         if (db != null) {
-
             ContentValues values = new ContentValues();
             values.put(COLUMNA_USUARIO_NOMBRE, user.getNombre());
             values.put(COLUMNA_USUARIO_EDAD, user.getEdad());
@@ -156,7 +155,6 @@ public class DB extends SQLiteOpenHelper {
             long update = db.update(TABLA_USUARIO, values, COLUMNA_USUARIO_BOLETA + "=" + user.getBoleta(), null);
             db.close();
             return update;
-
         }
         return 0;
     }

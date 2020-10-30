@@ -504,4 +504,3 @@ public class BluetoothLeService extends Service {
 
 
 }
-
