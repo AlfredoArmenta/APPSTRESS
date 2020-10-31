@@ -5,6 +5,8 @@ import android.os.Bundle;
 import com.example.estres2.Bluetooth.ConectarBluno;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import androidx.navigation.NavController;
@@ -122,20 +124,9 @@ public class MenuPrincipal extends AppCompatActivity {
         finish();
     }
 
-    public void Graficar(MenuItem item) {
-        Toast.makeText(this,R.string.graficar,Toast.LENGTH_LONG).show();
-    }
-
-    public void Analizar(MenuItem item) {
-        Toast.makeText(this,R.string.analizar,Toast.LENGTH_LONG).show();
-    }
-
-    public void Graficar_Analizar(MenuItem item) {
-        Toast.makeText(this,R.string.graficar_y_analizar,Toast.LENGTH_LONG).show();
-    }
-
     public void Eliminar_Registro(MenuItem item) {
-        Toast.makeText(this,R.string.eliminar_cuenta,Toast.LENGTH_LONG).show();
+        Toast.makeText(this, item.getItemId(),Toast.LENGTH_LONG).show();
+
     }
 
     public Usuario MandarUsuario() {

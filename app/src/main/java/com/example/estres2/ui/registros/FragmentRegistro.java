@@ -24,6 +24,7 @@ public class FragmentRegistro extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayaoutManager;
+    ArrayList<ListaRegistro> lRegistro = new ArrayList<>();
     private Drawable mDivider;
 
 
@@ -40,8 +41,6 @@ public class FragmentRegistro extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        ArrayList<ListaRegistro> lRegistro = new ArrayList<>();
-
         lRegistro.add(new ListaRegistro("Registro1", R.drawable.ic_sin_registro));
         lRegistro.add(new ListaRegistro("Registro2", R.drawable.ic_sin_registro));
         lRegistro.add(new ListaRegistro("Registro3", R.drawable.ic_sin_registro));
