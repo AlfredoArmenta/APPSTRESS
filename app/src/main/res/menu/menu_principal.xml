@@ -4,9 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_comunicación"
+        android:id="@+id/action_Cerrar_Sesión"
         android:orderInCategory="100"
-        android:title="Conectar Bluetooth"
+        android:title="@string/cerrar_sesion"
         android:onClick="Salir"
         app:showAsAction="never"
         />

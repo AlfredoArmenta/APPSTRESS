@@ -138,5 +138,9 @@
     <string name="eliminar_cuenta">Eliminar Cuenta</string>
     <string name="herramientas">Herramientas</string>
     <string name="registros">Registros</string>
+    <string name="graficar">Graficar</string>
+    <string name="analizar">Analizar</string>
+    <string name="graficar_y_analizar">Graficar y Analizar</string>
+    <string name="eliminar">Eliminar</string>
 
 </resources>

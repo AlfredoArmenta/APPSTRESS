@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.registros.FragmentRegistro">
+
+    <item
+        android:id="@+id/action_graficar"
+        android:orderInCategory="100"
+        android:title="@string/graficar"
+        android:onClick="Graficar"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/action_analizar"
+        android:orderInCategory="100"
+        android:title="@string/analizar"
+        android:onClick="Analizar"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/action_ambas"
+        android:orderInCategory="100"
+        android:title="@string/graficar_y_analizar"
+        android:onClick="Graficar_Analizar"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/action_eliminar"
+        android:orderInCategory="100"
+        android:title="@string/eliminar"
+        android:onClick="Eliminar_Registro"
+        app:showAsAction="never"
+        />
+</menu>

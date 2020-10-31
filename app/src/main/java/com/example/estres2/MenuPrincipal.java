@@ -40,6 +40,17 @@ public class MenuPrincipal extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Has presentado un episodio de estrés", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                // Se crea el objeto PasarUsuario que nos permite enviar objetos de un activity a otra
+                Bundle PasarBoleta = new Bundle();
+
+                Intent siguiente = new Intent(MenuPrincipal.this, ConectarBluno.class);
+                // Damos una clave = Boleta y el Objeto de tipo String = RContraseña
+                PasarBoleta.putString("Boleta",BoletaRecibida);
+
+                // Pasamos el objeto de tipo Bundle como parametro a la activity siguiente.
+                siguiente.putExtras(PasarBoleta);
+                startActivity(siguiente);
+                finish();
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -106,21 +117,28 @@ public class MenuPrincipal extends AppCompatActivity {
     }
 
     public void Salir(MenuItem item) {
-        // Se crea el objeto PasarUsuario que nos permite enviar objetos de un activity a otra
-        Bundle PasarBoleta = new Bundle();
-
-        Intent siguiente = new Intent(MenuPrincipal.this, ConectarBluno.class);
-        // Damos una clave = Boleta y el Objeto de tipo String = RContraseña
-        PasarBoleta.putString("Boleta",BoletaRecibida);
-
-        // Pasamos el objeto de tipo Bundle como parametro a la activity siguiente.
-        siguiente.putExtras(PasarBoleta);
+        Intent siguiente = new Intent(MenuPrincipal.this, InicioSesion.class);
         startActivity(siguiente);
         finish();
+    }
+
+    public void Graficar(MenuItem item) {
+        Toast.makeText(this,R.string.graficar,Toast.LENGTH_LONG).show();
+    }
+
+    public void Analizar(MenuItem item) {
+        Toast.makeText(this,R.string.analizar,Toast.LENGTH_LONG).show();
+    }
+
+    public void Graficar_Analizar(MenuItem item) {
+        Toast.makeText(this,R.string.graficar_y_analizar,Toast.LENGTH_LONG).show();
+    }
+
+    public void Eliminar_Registro(MenuItem item) {
+        Toast.makeText(this,R.string.eliminar_cuenta,Toast.LENGTH_LONG).show();
     }
 
     public Usuario MandarUsuario() {
         return this.DatosUsuario;
     }
-
 }

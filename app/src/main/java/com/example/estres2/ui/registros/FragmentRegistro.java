@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.estres2.R;
 
@@ -56,7 +57,7 @@ public class FragmentRegistro extends Fragment {
         mRecyclerView = root.findViewById(R.id.Resgistros);
         mRecyclerView.setHasFixedSize(true);
         mLayaoutManager = new LinearLayoutManager(this.getContext());
-        mAdapter = new ListaRegistroAdapter(lRegistro);
+        mAdapter = new ListaRegistroAdapter(lRegistro, getContext());
         mRecyclerView.setLayoutManager(mLayaoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
