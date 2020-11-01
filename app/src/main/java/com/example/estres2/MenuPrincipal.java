@@ -3,6 +3,7 @@ package com.example.estres2;
 import android.content.Intent;
 import android.os.Bundle;
 import com.example.estres2.Bluetooth.ConectarBluno;
+import com.example.estres2.ui.registros.ListaRegistroAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -101,7 +102,6 @@ public class MenuPrincipal extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Ocurrio un error al recuperar la boleta", Toast.LENGTH_SHORT).show();
 
         }
-
     }
 
     @Override
@@ -122,11 +122,6 @@ public class MenuPrincipal extends AppCompatActivity {
         Intent siguiente = new Intent(MenuPrincipal.this, InicioSesion.class);
         startActivity(siguiente);
         finish();
-    }
-
-    public void Eliminar_Registro(MenuItem item) {
-        Toast.makeText(this, item.getItemId(),Toast.LENGTH_LONG).show();
-
     }
 
     public Usuario MandarUsuario() {

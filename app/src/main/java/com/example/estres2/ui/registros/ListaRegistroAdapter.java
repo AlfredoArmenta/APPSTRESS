@@ -16,11 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.estres2.R;
 import java.util.ArrayList;
 
-public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdapter.ListaRegistroViewHolder> {
+public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdapter.ListaRegistroViewHolder>{
 
-    private int position;
-    private Context mContext;
-    private static ArrayList<ListaRegistro> mExampleList;
+    private FragmentRegistro fragmento = new FragmentRegistro();
+
+    public int position;
+    public Context mContext;
+    public static ArrayList<ListaRegistro> mExampleList;
 
     private static final String TAG = "MyViewHolder";
 
@@ -97,6 +99,7 @@ public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdap
         public void onClick(View v) {
             //println("OnClick: " + getAdapterPosition());
             Log.d(TAG, "onClick: " + getAdapterPosition());
+            Toast.makeText(mContext, fragmento.Dato, Toast.LENGTH_LONG).show();
             position = getAdapterPosition();
             showPopupMenu(v);
         }
@@ -114,25 +117,30 @@ public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdap
             Log.d(TAG, "Entro al onMenuItemClick");
             switch (item.getItemId()){
                 case R.id.action_graficar:
-                    Toast.makeText(mContext, "Estoy en Graficar",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(mContext, "Estoy en Graficar",Toast.LENGTH_LONG).show();
                     Log.d(TAG, "onMenuItemClick: action_graficar");
                     return true;
                 case R.id.action_analizar:
-                    Toast.makeText(mContext, "Estoy en Analizar",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(mContext, "Estoy en Analizar",Toast.LENGTH_LONG).show();
                     Log.d(TAG, "onMenuItemClick: action_analizar");
                     return true;
                 case R.id.action_ambas:
-                    Toast.makeText(mContext, "Estoy en Graficar y Analizar",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(mContext, "Estoy en Graficar y Analizar",Toast.LENGTH_LONG).show();
                     Log.d(TAG, "onMenuItemClick: action_graficar y analizar");
                     return true;
                 case R.id.action_eliminar:
-                    Toast.makeText(mContext, "Estoy en Eliminar",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(mContext, "Estoy en Eliminar",Toast.LENGTH_LONG).show();
                     Log.d(TAG, "onMenuItemClick: action_eliminar");
-                    Log.d(TAG, "onClick: " + position);
+                    removeAt(position);
                     return true;
                 default: Log.d(TAG, "Default");
                     return false;
             }
         }
+    }
+
+    public void removeAt(int position) {
+        mExampleList.remove(position);
+        notifyDataSetChanged();
     }
 }

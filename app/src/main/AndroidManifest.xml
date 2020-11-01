@@ -22,12 +22,13 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
 
         <activity android:name=".Mostrar" />
-        <activity android:name=".Bluetooth.ConectarBluno" android:screenOrientation="portrait"/>
+        <activity android:name=".Bluetooth.ConectarBluno" android:configChanges="screenSize|orientation"/>
 
         <activity
             android:name=".MenuPrincipal"
             android:label="@string/title_activity_menu_principal"
-            android:theme="@style/NoActionBar" />
+            android:theme="@style/NoActionBar"
+            android:configChanges="screenSize|orientation" />
 
         <activity android:name=".InicioSesion">
             <intent-filter>

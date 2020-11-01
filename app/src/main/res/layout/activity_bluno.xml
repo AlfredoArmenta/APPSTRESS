@@ -1,77 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
+    android:layout_width="match_parent"
+    android:scrollbars="vertical"
     tools:context=".Bluetooth.ConectarBluno">
 
-    <Button
-        android:id="@+id/buttonScan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Scan"
-        android:textSize="28dp"/>
-
-    <TextView
-        android:id="@+id/editText2"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:textAlignment="center"
-        android:ems="10"
-        android:text="Received Data:"
-        android:textSize="25sp" />
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="@dimen/margin"
-        android:layout_marginStart="@dimen/margin"
-        android:scrollbarThumbVertical="@drawable/scroll">
-
-        <TextView
-            android:id="@+id/serialReveicedText"
+        <Button
+            android:id="@+id/buttonScan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Scan"
+            android:textSize="28dp"/>
+
+        <TextView
+            android:id="@+id/editText2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:textAlignment="center"
             android:ems="10"
-            android:textSize="10sp" />
+            android:text="Received Data:"
+            android:textSize="25sp" />
 
-    </ScrollView>
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
+            android:scrollbarThumbVertical="@drawable/scroll">
 
-    <Button
-        android:id="@+id/buttonSerialSend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Send Data"
-        android:textSize="28dp"
-        android:layout_marginBottom="10dp"/>
+            <TextView
+                android:id="@+id/serialReveicedText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:textSize="10sp" />
 
-    <EditText
-        android:id="@+id/serialSendText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#555555"
-        android:bufferType="editable"
-        android:textAlignment="center"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Data sending Area"
-        android:textSize="20dp"
-        android:layout_marginBottom="@dimen/margin"
-        android:layout_marginEnd="@dimen/margin"
-        android:layout_marginStart="@dimen/margin" />
+        </ScrollView>
 
-    <Button
-        android:id="@+id/CSRegresar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Regresar"
-        android:textSize="28dp"
-        android:layout_marginBottom="10dp"/>
+        <Button
+            android:id="@+id/buttonSerialSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send Data"
+            android:textSize="28dp"
+            android:layout_marginBottom="10dp"/>
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/serialSendText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#555555"
+            android:bufferType="editable"
+            android:textAlignment="center"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Data sending Area"
+            android:textSize="20dp"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin" />
+
+        <Button
+            android:id="@+id/CSRegresar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Regresar"
+            android:textSize="28dp"
+            android:layout_marginBottom="10dp"/>
+
+    </LinearLayout>
+</ScrollView>
