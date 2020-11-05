@@ -1,49 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:scrollbars="vertical"
     tools:context=".Bluetooth.ConectarBluno">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/buttonScan"
+        <ImageButton
+            android:id="@+id/buttonScanBlunoConected"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Scan"
-            android:textSize="28dp"/>
+            android:text="@string/texto_bluno_conectar_scan"
+            android:textSize="@dimen/text_size_bluno_conectar"
+            android:src="@drawable/ic_estado_scan"
+            android:contentDescription="@string/estados_de_la_conexion_con_la_pulsera" />
 
         <TextView
             android:id="@+id/editText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:textAlignment="center"
             android:ems="10"
-            android:text="Received Data:"
+            android:text="@string/text_bluno_conectar_received_data"
+            android:textAlignment="center"
             android:textSize="25sp" />
 
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="@dimen/margin"
             android:layout_marginStart="@dimen/margin"
-            android:scrollbarThumbVertical="@drawable/scroll">
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginBottom="10dp"
+            android:scrollbarThumbVertical="@drawable/scroll"
+            tools:ignore="NestedScrolling">
 
             <TextView
                 android:id="@+id/serialReveicedText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:textSize="10sp" />
+                android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
 
         </ScrollView>
 
@@ -51,32 +54,34 @@
             android:id="@+id/buttonSerialSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Send Data"
-            android:textSize="28dp"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:text="@string/text_button_bluno_conectar_send_data"
+            android:textSize="@dimen/text_size_bluno_conectar" />
 
         <EditText
             android:id="@+id/serialSendText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
             android:background="#555555"
             android:bufferType="editable"
-            android:textAlignment="center"
             android:ems="10"
             android:inputType="text"
-            android:text="Data sending Area"
-            android:textSize="20dp"
-            android:layout_marginBottom="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
-            android:layout_marginStart="@dimen/margin" />
+            android:text="@string/ext_bluno_conectar_send_data"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_size_envio_datos_bluno_conectar"
+            android:importantForAutofill="no"
+            tools:ignore="LabelFor" />
 
         <Button
             android:id="@+id/CSRegresar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Regresar"
-            android:textSize="28dp"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:text="@string/regresar"
+            android:textSize="@dimen/text_size_bluno_conectar" />
 
     </LinearLayout>
 </ScrollView>

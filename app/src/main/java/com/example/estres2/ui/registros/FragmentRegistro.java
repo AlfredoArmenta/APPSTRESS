@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 public class FragmentRegistro extends Fragment {
 
-    View root;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayaoutManager;
@@ -43,17 +42,17 @@ public class FragmentRegistro extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        lRegistro.add(new ListaRegistro("Registro1", R.drawable.ic_sin_registro));
-        lRegistro.add(new ListaRegistro("Registro2", R.drawable.ic_sin_registro));
-        lRegistro.add(new ListaRegistro("Registro3", R.drawable.ic_sin_registro));
-        lRegistro.add(new ListaRegistro("Registro4", R.drawable.ic_sin_registro));
-        lRegistro.add(new ListaRegistro("Registro5", R.drawable.ic_sin_registro));
-        lRegistro.add(new ListaRegistro("Registro6", R.drawable.ic_sin_registro));
-        lRegistro.add(new ListaRegistro("Registro7", R.drawable.ic_sin_registro));
-        lRegistro.add(new ListaRegistro("Registro8", R.drawable.ic_sin_registro));
-        lRegistro.add(new ListaRegistro("Registro9", R.drawable.ic_sin_registro));
+        lRegistro.add(new ListaRegistro("Registro1", R.drawable.ic_registros_menu));
+        lRegistro.add(new ListaRegistro("Registro2", R.drawable.ic_registros_menu));
+        lRegistro.add(new ListaRegistro("Registro3", R.drawable.ic_registros_menu));
+        lRegistro.add(new ListaRegistro("Registro4", R.drawable.ic_registros_menu));
+        lRegistro.add(new ListaRegistro("Registro5", R.drawable.ic_registros_menu));
+        lRegistro.add(new ListaRegistro("Registro6", R.drawable.ic_registros_menu));
+        lRegistro.add(new ListaRegistro("Registro7", R.drawable.ic_registros_menu));
+        lRegistro.add(new ListaRegistro("Registro8", R.drawable.ic_registros_menu));
+        lRegistro.add(new ListaRegistro("Registro9", R.drawable.ic_registros_menu));
 
-        root = inflater.inflate(R.layout.fragment_registro, container, false);
+        View root = inflater.inflate(R.layout.fragment_registro, container, false);
         mRecyclerView = root.findViewById(R.id.Resgistros);
         mRecyclerView.setHasFixedSize(true);
         mLayaoutManager = new LinearLayoutManager(this.getContext());

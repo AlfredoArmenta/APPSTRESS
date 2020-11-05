@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:layout_marginEnd="@dimen/margin"
+    android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/margin"
     android:layout_marginTop="@dimen/margin"
-    android:layout_marginBottom="@dimen/margin">
+    android:layout_marginEnd="@dimen/margin"
+    android:layout_marginBottom="@dimen/margin"
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/RVText_View"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Name_Registro"
-        android:textSize="30dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:text="@string/name_registro"
+        android:textSize="@dimen/text_size_list_register" />
 
     <ImageView
         android:id="@+id/RVEliminar"
-        android:src="@drawable/ic_sin_registro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="5"/>
+        android:layout_weight="5"
+        android:src="@drawable/ic_sin_registro"
+        android:contentDescription="@string/imagen_registros" />
 
 </LinearLayout>

@@ -27,10 +27,15 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/presence_online" />
+        app:srcCompat="@drawable/ic_conectar_pulsera"
+        app:fabCustomSize="75dp"
+        app:fabSize="auto"
+        android:scaleType="fitCenter"
+        app:maxImageSize="50dp"
+        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

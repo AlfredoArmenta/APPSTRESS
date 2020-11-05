@@ -7,4 +7,11 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="margin">10dp</dimen>
 
+    <dimen name="text_size_list_register">30sp</dimen>
+
+    <!-- Dimensiones de la actividad ConectarBluno-->
+    <dimen name="text_size_bluno_conectar">28sp</dimen>
+    <dimen name="text_size_datos_recibidos_bluno_conectar">10sp</dimen>
+    <dimen name="text_size_envio_datos_bluno_conectar">20sp</dimen>
+
 </resources>

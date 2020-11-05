@@ -1,6 +1,9 @@
 package com.example.estres2;
 
 import android.content.Intent;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import com.example.estres2.Bluetooth.ConectarBluno;
 import com.example.estres2.ui.registros.ListaRegistroAdapter;
@@ -18,7 +21,10 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
+
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +44,7 @@ public class MenuPrincipal extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
+        //((Animatable) fab.getDrawable()).start();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,7 +95,7 @@ public class MenuPrincipal extends AppCompatActivity {
 
             // Se realiza la consulta y se guarda en un onjeto usuario
             DatosUsuario = Consultar.ObtenerDatos(BoletaRecibida);
-            if ( DatosUsuario.getBoleta() != "") {
+            if (!DatosUsuario.getBoleta().equals("")) {
                 Nombre = (TextView) Hview.findViewById(R.id.MenuNombre);
                 Nombre.setText(DatosUsuario.getNombre());
                 Boleta = (TextView) Hview.findViewById(R.id.MenuBoleta);
@@ -101,6 +108,18 @@ public class MenuPrincipal extends AppCompatActivity {
         }else {
             Toast.makeText(getApplicationContext(),"Ocurrio un error al recuperar la boleta", Toast.LENGTH_SHORT).show();
 
+        }
+    }
+
+    public void animate(View view) {
+        ImageView v = (ImageView) view;
+        Drawable d = v.getDrawable();
+        if (d instanceof AnimatedVectorDrawable) {
+            AnimatedVectorDrawable avd = (AnimatedVectorDrawable) d;
+            avd.start();
+        } else if (d instanceof AnimatedVectorDrawableCompat) {
+            AnimatedVectorDrawableCompat avd = (AnimatedVectorDrawableCompat) d;
+            avd.start();
         }
     }
 

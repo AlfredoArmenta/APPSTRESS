@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +18,7 @@ import com.example.estres2.MenuPrincipal;
 import com.example.estres2.R;
 
 public class ConectarBluno extends BlunoLibrary {
-    private Button buttonScan;
+    private ImageButton buttonScan;
     private EditText serialSendText;
     private TextView serialReceivedText;
 
@@ -82,7 +83,7 @@ public class ConectarBluno extends BlunoLibrary {
             }
         });
 
-        buttonScan = findViewById(R.id.buttonScan);					//initial the button for scanning the BLE device
+        buttonScan = findViewById(R.id.buttonScanBlunoConected);					//initial the button for scanning the BLE device
         buttonScan.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -100,8 +101,6 @@ public class ConectarBluno extends BlunoLibrary {
         System.out.println("BlUNOActivity onResume");
         onResumeProcess();														//onResume Process by BlunoLibrary
     }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -134,21 +133,21 @@ public class ConectarBluno extends BlunoLibrary {
     public void onConectionStateChange(connectionStateEnum theConnectionState) {//Once connection state changes, this function will be called
         switch (theConnectionState) {											//Four connection state
             case isConnected:
-                buttonScan.setText("Connected");
+                buttonScan.setImageDrawable(getResources().getDrawable(R.drawable.ic_estado_conectado));
                 break;
             case isConnecting:
-                buttonScan.setText("Connecting");
+                buttonScan.setImageDrawable(getResources().getDrawable(R.drawable.ic_estado_conectando));
                 break;
             case isToScan:
-                buttonScan.setText("Scan");
+                buttonScan.setImageDrawable(getResources().getDrawable(R.drawable.ic_estado_scan));
                 break;
             case isScanning:
-                buttonScan.setText("Scanning");
+                buttonScan.setImageDrawable(getResources().getDrawable(R.drawable.ic_estado_is_scanning));
                 break;
             case isDisconnecting:
-                buttonScan.setText("isDisconnecting");
+                buttonScan.setImageDrawable(getResources().getDrawable(R.drawable.ic_estado_desconectando));
                 break;
-            default:
+            default: buttonScan.setImageDrawable(getResources().getDrawable(R.drawable.ic_estado_no_conectado));
                 break;
         }
     }
