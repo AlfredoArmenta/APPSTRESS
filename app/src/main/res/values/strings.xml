@@ -152,5 +152,6 @@
     <string name="ext_bluno_conectar_send_data">Área de envio de datos</string>
     <string name="regresar">Regresar</string>
     <string name="estados_de_la_conexion_con_la_pulsera">Estados de la conexión con la pulsera</string>
+    <string name="comenzar_terminar_proceso_bluno">boton para iniciar y finalizar un monitoreo</string>
 
 </resources>

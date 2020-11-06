@@ -13,14 +13,33 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/buttonScanBlunoConected"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/texto_bluno_conectar_scan"
-            android:textSize="@dimen/text_size_bluno_conectar"
-            android:src="@drawable/ic_estado_scan"
-            android:contentDescription="@string/estados_de_la_conexion_con_la_pulsera" />
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/buttonScanBlunoConected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/texto_bluno_conectar_scan"
+                android:textSize="@dimen/text_size_bluno_conectar"
+                android:src="@drawable/ic_estado_scan"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/estados_de_la_conexion_con_la_pulsera"
+                android:layout_weight="1"/>
+
+            <ImageButton
+                android:id="@+id/control_bluno"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="animar"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/comenzar_terminar_proceso_bluno"
+                android:src="@drawable/ic_comienza_monitoreo" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/editText2"
@@ -83,6 +102,7 @@
             android:layout_marginBottom="10dp"
             android:text="@string/regresar"
             android:textSize="@dimen/text_size_bluno_conectar" />
+
 
     </LinearLayout>
 </ScrollView>

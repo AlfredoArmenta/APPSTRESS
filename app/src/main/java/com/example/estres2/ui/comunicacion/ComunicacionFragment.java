@@ -27,7 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ComunicacionFragment extends Fragment {
-
+/*
     public Usuario user;
 
     private Spinner UA;
@@ -104,4 +104,5 @@ public class ComunicacionFragment extends Fragment {
         }
 
     }
+ */
 }

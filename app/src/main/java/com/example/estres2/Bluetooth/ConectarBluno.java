@@ -2,6 +2,7 @@ package com.example.estres2.Bluetooth;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
@@ -18,17 +19,19 @@ import com.example.estres2.MenuPrincipal;
 import com.example.estres2.R;
 
 public class ConectarBluno extends BlunoLibrary {
+
     private ImageButton buttonScan;
     private EditText serialSendText;
     private TextView serialReceivedText;
-
-    /**************************/
-    public String BoletaRecibida;
+    private ImageButton estadoMonitoreo;
+    private String BoletaRecibida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluno);
+
+        estadoMonitoreo = findViewById(R.id.control_bluno);
 
         // Se inicializa BoletaRecibida
         BoletaRecibida = "";
@@ -95,6 +98,17 @@ public class ConectarBluno extends BlunoLibrary {
         });
     }
 
+    public void animar(View view){
+        estadoMonitoreo.setSelected(!estadoMonitoreo.isSelected());
+        if(!estadoMonitoreo.isSelected()){
+            estadoMonitoreo.setImageResource(R.drawable.ic_detener_monitoreo);
+            ((Animatable) estadoMonitoreo.getDrawable()).start();
+        }else{
+            estadoMonitoreo.setImageResource(R.drawable.ic_comienza_monitoreo);
+            ((Animatable) estadoMonitoreo.getDrawable()).start();
+        }
+    }
+
     protected void onResume(){
         super.onResume();
         Toast.makeText(this,"BlUNO Activity onResume",Toast.LENGTH_LONG).show();
@@ -133,21 +147,22 @@ public class ConectarBluno extends BlunoLibrary {
     public void onConectionStateChange(connectionStateEnum theConnectionState) {//Once connection state changes, this function will be called
         switch (theConnectionState) {											//Four connection state
             case isConnected:
-                buttonScan.setImageDrawable(getResources().getDrawable(R.drawable.ic_estado_conectado));
+                buttonScan.setImageResource(R.drawable.ic_estado_conectado);
                 break;
             case isConnecting:
-                buttonScan.setImageDrawable(getResources().getDrawable(R.drawable.ic_estado_conectando));
+                buttonScan.setImageResource(R.drawable.ic_estado_conectando);
                 break;
             case isToScan:
-                buttonScan.setImageDrawable(getResources().getDrawable(R.drawable.ic_estado_scan));
+                buttonScan.setImageResource(R.drawable.ic_estado_scan);
                 break;
             case isScanning:
-                buttonScan.setImageDrawable(getResources().getDrawable(R.drawable.ic_estado_is_scanning));
+                buttonScan.setImageResource(R.drawable.ic_estado_is_scanning);
                 break;
             case isDisconnecting:
-                buttonScan.setImageDrawable(getResources().getDrawable(R.drawable.ic_estado_desconectando));
+                buttonScan.setImageResource(R.drawable.ic_estado_desconectando);
                 break;
-            default: buttonScan.setImageDrawable(getResources().getDrawable(R.drawable.ic_estado_no_conectado));
+            default:
+                buttonScan.setImageResource(R.drawable.ic_estado_no_conectado);
                 break;
         }
     }
@@ -176,6 +191,4 @@ public class ConectarBluno extends BlunoLibrary {
 
     // Se anula el botón que nos regresa
     @Override public void onBackPressed() {}
-
 }
-
