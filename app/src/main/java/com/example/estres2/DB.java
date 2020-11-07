@@ -5,9 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
-import com.example.estres2.ui.cuenta.CuentaFragment;
 
 public class DB extends SQLiteOpenHelper {
     // Versión de la base de datos
@@ -40,7 +37,6 @@ public class DB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLA_USUARIOS);
-
     }
 
     // Función que se encarga de la actualización de la base de datos
@@ -48,7 +44,6 @@ public class DB extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS '" + TABLA_USUARIO + "'");
         onCreate(db);
-
     }
 
     // Función que nos permite insertar un nuevo usuario
@@ -72,18 +67,13 @@ public class DB extends SQLiteOpenHelper {
 
     // Función que confima la existencia de la boleta ingresada y regresa como parametro la contraseña asociada a la cuenta
     public String IniciarSesion(String Boleta) {
-
         SQLiteDatabase db = this.getReadableDatabase();
-
         String Contraseña = "";
-
         Cursor fila = db.rawQuery("select " + COLUMNA_USUARIO_CONTRASEÑA + " from " + TABLA_USUARIO + " where " + COLUMNA_USUARIO_BOLETA + " = " + Boleta, null);
 
         if (fila != null && fila.getCount() != 0) {
             fila.moveToFirst();
-
             Contraseña = fila.getString(0);
-
             db.close();
             return Contraseña;
         } else {
@@ -92,21 +82,17 @@ public class DB extends SQLiteOpenHelper {
     }
 
     // Función que realiza la consulta para la visualización de todos los Uusarios registrados regresa una ArrayList que contiene a todos los Usuarios
-    public Cursor Mostrar(){
+    public Cursor Mostrar() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor fila = db.rawQuery("select * from usuarios", null);
-        return fila;
+        return db.rawQuery("select * from usuarios", null);
     }
 
     public String RecuperarContraseña(String Boleta, String Contraseña) {
-
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-
         values.put(COLUMNA_USUARIO_CONTRASEÑA, Contraseña);
 
-        if( db.update(TABLA_USUARIO, values, COLUMNA_USUARIO_BOLETA + "=" + Boleta, null) > 0) {
-
+        if (db.update(TABLA_USUARIO, values, COLUMNA_USUARIO_BOLETA + "=" + Boleta, null) > 0) {
             db.close();
             return "Corregido";
         }
@@ -114,10 +100,8 @@ public class DB extends SQLiteOpenHelper {
     }
 
     public Usuario ObtenerDatos(String Boleta) {
-
         SQLiteDatabase db = this.getReadableDatabase();
-        Usuario AuxUsuario = new Usuario("","","","","","");
-
+        Usuario AuxUsuario = new Usuario("", "", "", "", "", "");
         Cursor fila = db.rawQuery("select *from " + TABLA_USUARIO + " where " + COLUMNA_USUARIO_BOLETA + " = " + Boleta, null);
 
         if (fila != null && fila.getCount() != 0) {
@@ -132,16 +116,13 @@ public class DB extends SQLiteOpenHelper {
             );
             db.close();
             return AuxUsuario;
-
         } else {
             return AuxUsuario;
-
         }
     }
 
     // Función que nos permite modificar un usuario
     public long ActualizarUsuario(Usuario user) {
-
         SQLiteDatabase db = this.getWritableDatabase();
 
         if (db != null) {
@@ -151,7 +132,6 @@ public class DB extends SQLiteOpenHelper {
             values.put(COLUMNA_USUARIO_GENERO, user.getGenero());
             values.put(COLUMNA_USUARIO_SEMESTRE, user.getSemestre());
             values.put(COLUMNA_USUARIO_CONTRASEÑA, user.getContraseña());
-
             long update = db.update(TABLA_USUARIO, values, COLUMNA_USUARIO_BOLETA + "=" + user.getBoleta(), null);
             db.close();
             return update;
@@ -160,13 +140,11 @@ public class DB extends SQLiteOpenHelper {
     }
 
     // Función que nos permite borrar un usurio
-
     public long BorrarUsuario(String Boleta) {
         SQLiteDatabase db = this.getWritableDatabase();
         long Borrar = db.delete(TABLA_USUARIO, COLUMNA_USUARIO_BOLETA + " = " + Boleta, null);
         db.close();
         return Borrar;
     }
-
     // ********************** Fin de la clase DB ************************ //
 }

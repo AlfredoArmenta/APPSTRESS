@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
+
         <item
             android:id="@+id/nav_inicio"
             android:icon="@drawable/ic_inicio"
             android:title="@string/menu_inicio" />
+
         <item
             android:id="@+id/nav_graficas"
             android:icon="@drawable/ic_menu_gallery"
@@ -20,12 +20,8 @@
             android:icon="@drawable/ic_menu_registros"
             android:title="@string/registros" />
 
-        <item
-            android:id="@+id/nav_comunicación"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_comunicación" />
-
         <item android:title="@string/herramientas">
+
             <menu>
 
                 <item
@@ -39,6 +35,7 @@
                     android:title="@string/menu_eliminar" />
 
             </menu>
+
         </item>
 
     </group>

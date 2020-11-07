@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbarThumbVertical="@drawable/scroll"
-        tools:context=".InicioSesion">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbarThumbVertical="@drawable/scroll"
+    tools:context=".InicioSesion">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/RText"
@@ -20,23 +19,24 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:text="@string/iniciar_sesion"
-            android:textSize="36sp"/>
+            android:textSize="36sp" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:src="@drawable/ic_inicio_sesion" />
+            android:src="@drawable/ic_inicio_sesion"
+            android:contentDescription="@string/icono_de_inicio" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:passwordToggleEnabled="true"
-            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="@dimen/margin"
-            android:layout_marginStart="@dimen/margin">
+            android:layout_marginBottom="@dimen/margin"
+            app:passwordToggleEnabled="true">
 
             <EditText
                 android:id="@+id/Usuario"
@@ -46,18 +46,19 @@
                 android:ems="10"
                 android:hint="@string/boleta"
                 android:inputType="number"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:autofillHints="" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:passwordToggleEnabled="true"
-            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="@dimen/margin"
-            android:layout_marginStart="@dimen/margin">
+            android:layout_marginBottom="@dimen/margin"
+            app:passwordToggleEnabled="true">
 
             <EditText
                 android:id="@+id/Password"
@@ -67,7 +68,8 @@
                 android:ems="10"
                 android:hint="@string/nueva_contrasena"
                 android:inputType="textPassword"
-                android:textSize="24sp"/>
+                android:textSize="24sp"
+                android:autofillHints="" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,7 +81,7 @@
             android:background="#00FFFFFF"
             android:onClick="RecuperarPass"
             android:text="@string/olvidaste_tu_contrasena"
-            android:textStyle="bold|italic"/>
+            android:textStyle="bold|italic" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -90,27 +92,27 @@
                 android:id="@+id/Loggin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginTop="@dimen/margin"
+                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginBottom="@dimen/margin"
                 android:background="#00B02727"
                 android:onClick="Ingresar"
                 android:text="@string/ingresar"
-                android:textSize="24sp"
-                android:layout_marginEnd="@dimen/margin"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginBottom="@dimen/margin"
-                android:layout_marginTop="@dimen/margin"/>
+                android:textSize="24sp" />
 
             <Button
                 android:id="@+id/Registro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginTop="@dimen/margin"
+                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginBottom="@dimen/margin"
                 android:background="#00FFFFFF"
                 android:onClick="Registrar"
                 android:text="@string/registrar"
-                android:textSize="24sp"
-                android:layout_marginEnd="@dimen/margin"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginBottom="@dimen/margin"
-                android:layout_marginTop="@dimen/margin"/>
+                android:textSize="24sp" />
 
         </LinearLayout>
 

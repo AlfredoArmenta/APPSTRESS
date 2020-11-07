@@ -1,41 +1,36 @@
 package com.example.estres2;
 
 import android.content.Intent;
-import android.graphics.drawable.Animatable;
-import android.graphics.drawable.AnimatedVectorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import com.example.estres2.Bluetooth.ConectarBluno;
-import com.example.estres2.ui.registros.ListaRegistroAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
-import android.util.Log;
+import com.example.estres2.Bluetooth.ConectarBluno;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import android.view.MenuItem;
 import android.view.View;
+
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
 import com.google.android.material.navigation.NavigationView;
+
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import android.view.Menu;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MenuPrincipal extends AppCompatActivity {
-
     private AppBarConfiguration mAppBarConfiguration;
     public TextView Nombre;
-    public TextView Boleta;
-    public String BoletaRecibida;
-    public Usuario DatosUsuario;
-    public DB Consultar;
+    protected TextView Boleta;
+    protected String BoletaRecibida;
+    protected Usuario DatosUsuario;
+    protected DB Consultar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,23 +39,10 @@ public class MenuPrincipal extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
-        //((Animatable) fab.getDrawable()).start();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Has presentado un episodio de estrés", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                // Se crea el objeto PasarUsuario que nos permite enviar objetos de un activity a otra
-                Bundle PasarBoleta = new Bundle();
-
-                Intent siguiente = new Intent(MenuPrincipal.this, ConectarBluno.class);
-                // Damos una clave = Boleta y el Objeto de tipo String = RContraseña
-                PasarBoleta.putString("Boleta",BoletaRecibida);
-
-                // Pasamos el objeto de tipo Bundle como parametro a la activity siguiente.
-                siguiente.putExtras(PasarBoleta);
-                startActivity(siguiente);
-                finish();
+                pasarBlunoConectar();
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -78,7 +60,24 @@ public class MenuPrincipal extends AppCompatActivity {
 
         // Se crea un componente View para poder mostrar el contenido
         View Hview = navigationView.getHeaderView(0);
+        pasarBoleta(Hview);
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
+    }
+
+    public void pasarBoleta(View view) {
         // Se inicializa BoletaRecibida
         BoletaRecibida = "";
 
@@ -96,45 +95,29 @@ public class MenuPrincipal extends AppCompatActivity {
             // Se realiza la consulta y se guarda en un onjeto usuario
             DatosUsuario = Consultar.ObtenerDatos(BoletaRecibida);
             if (!DatosUsuario.getBoleta().equals("")) {
-                Nombre = (TextView) Hview.findViewById(R.id.MenuNombre);
+                Nombre = (TextView) view.findViewById(R.id.MenuNombre);
                 Nombre.setText(DatosUsuario.getNombre());
-                Boleta = (TextView) Hview.findViewById(R.id.MenuBoleta);
+                Boleta = (TextView) view.findViewById(R.id.MenuBoleta);
                 Boleta.setText(BoletaRecibida);
-
-            }else {
-                Toast.makeText(getApplicationContext(),"No se pudo recuperar el usuario", Toast.LENGTH_SHORT).show();
-
+            } else {
+                Toast.makeText(getApplicationContext(), "No se pudo recuperar el usuario", Toast.LENGTH_SHORT).show();
             }
-        }else {
-            Toast.makeText(getApplicationContext(),"Ocurrio un error al recuperar la boleta", Toast.LENGTH_SHORT).show();
-
+        } else {
+            Toast.makeText(getApplicationContext(), "Ocurrio un error al recuperar la boleta", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void animate(View view) {
-        ImageView v = (ImageView) view;
-        Drawable d = v.getDrawable();
-        if (d instanceof AnimatedVectorDrawable) {
-            AnimatedVectorDrawable avd = (AnimatedVectorDrawable) d;
-            avd.start();
-        } else if (d instanceof AnimatedVectorDrawableCompat) {
-            AnimatedVectorDrawableCompat avd = (AnimatedVectorDrawableCompat) d;
-            avd.start();
-        }
-    }
+    public void pasarBlunoConectar() {
+        Bundle PasarBoleta = new Bundle();
+        Intent siguiente = new Intent(MenuPrincipal.this, ConectarBluno.class);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_principal, menu);
-        return true;
-    }
+        // Damos una clave = Boleta y el Objeto de tipo String = RContraseña
+        PasarBoleta.putString("Boleta", BoletaRecibida);
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+        // Pasamos el objeto de tipo Bundle como parametro a la activity siguiente.
+        siguiente.putExtras(PasarBoleta);
+        startActivity(siguiente);
+        finish();
     }
 
     public void Salir(MenuItem item) {

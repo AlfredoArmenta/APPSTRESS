@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbarThumbVertical="@drawable/scroll">
@@ -8,34 +7,34 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/txt_eliminar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Al eliminarse la cuenta no se podrán recuperar los datos."
-            android:textSize="36sp"
-            android:gravity="center"
-            android:layout_marginEnd="@dimen/margin"
             android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"/>
+            android:gravity="center"
+            android:text="@string/eliminarse_la_cuenta"
+            android:textSize="36sp" />
 
         <Button
             android:id="@+id/CEliminar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:text="@string/eliminar_cuenta"
-            android:background="#00FFFFFF"
-            android:textSize="20sp"
-            android:layout_marginEnd="@dimen/margin"
             android:layout_marginStart="@dimen/margin"
-            android:layout_marginBottom="@dimen/margin"
             android:layout_marginTop="@dimen/margin"
-            android:focusable="true" />
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:background="#00FFFFFF"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/eliminar_cuenta"
+            android:textSize="20sp" />
 
     </LinearLayout>
 

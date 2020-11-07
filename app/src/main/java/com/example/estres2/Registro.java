@@ -25,17 +25,12 @@ public class Registro extends AppCompatActivity {
     private RadioButton Femenino;
     private Spinner Semestre;
     private EditText Contraseña;
-
-    private TextView Requerimientos;
     private TextView Numero;
     private TextView CaracterEspecial;
     private TextView Mayuscula;
     private TextView Minuscula;
     private TextView Longitud;
-
-    // Variable del color verde
     private int ColorVerde;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +40,7 @@ public class Registro extends AppCompatActivity {
     }
 
     // Función con la cual inicializamos los objetos que se utilizarán los registros
-    private void IniciarObjetos(){
+    private void IniciarObjetos() {
 
         Boleta = (EditText) findViewById(R.id.RBoleta);
         Nombre = (EditText) findViewById(R.id.RNombre);
@@ -54,16 +49,14 @@ public class Registro extends AppCompatActivity {
         Femenino = (RadioButton) findViewById(R.id.RFemenino);
         Semestre = (Spinner) findViewById(R.id.RSemestre);
         Contraseña = (EditText) findViewById(R.id.RContraseña);
-
         Masculino.setChecked(true);
 
         // String que nos ayudan a llenar a los spinners que sirven para la selección del semestre y la materia
-        String [] semestre = {"Selecciona tu semestre actual", "1", "2", "3", "4", "5","6", "7", "8", "9", "10","11", "12", "13", "14", "15"};
+        String[] semestre = {"Selecciona tu semestre actual", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"};
         ArrayAdapter<String> AdapterSemestre = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, semestre);
         Semestre.setAdapter(AdapterSemestre);
 
         // Elementos de texto que nos proporcionan información sobre los parametros de la contraseña
-        Requerimientos = (TextView) findViewById(R.id.RRContraseña);
         Numero = (TextView) findViewById(R.id.RTNumero);
         CaracterEspecial = (TextView) findViewById(R.id.RTCaracterEspecial);
         Mayuscula = (TextView) findViewById(R.id.RTMayuscula);
@@ -71,13 +64,12 @@ public class Registro extends AppCompatActivity {
         Longitud = (TextView) findViewById(R.id.RTLongitud);
 
         // El valor númerico del color verde es = -16711936
-        ColorVerde = -16711936;
+        ColorVerde = Color.GREEN;
 
         // Esta función nos permite estar checacodo si se ha modificado el texto del EditText Contraseña
         Contraseña.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -87,11 +79,9 @@ public class Registro extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
     }
-
 
     /**
      * This method is to initialize objects to be used
@@ -102,29 +92,24 @@ public class Registro extends AppCompatActivity {
         Intent siguiente = new Intent(this, InicioSesion.class);
         startActivity(siguiente);
         finish();
-
     }
 
     // Registro que nos permite realizar el registro de un nuevo Usuario
     public void Registrar(View view) {
         RegistrarSQL();
-
     }
 
     // Función que nos permite visualizar a todos los usuarios registrados
-    public void Mostrar (View view) {
+    public void Mostrar(View view) {
         Intent siguiente = new Intent(this, Mostrar.class);
         startActivity(siguiente);
         finish();
     }
 
-
     //En está función se obtienen los valores de entrada, se validan y se registra al usuario
     private void RegistrarSQL() {
-
         DB bd = new DB(getApplicationContext());
         Usuario user = new Usuario();
-
         user.setBoleta(Boleta.getText().toString());
         user.setNombre(Nombre.getText().toString());
         user.setEdad(Edad.getText().toString());
@@ -134,61 +119,56 @@ public class Registro extends AppCompatActivity {
         } else {
             user.setGenero("Femenino");
         }
+
         user.setSemestre(Semestre.getSelectedItem().toString());
         user.setContraseña(Contraseña.getText().toString());
 
         if (VerifyCampos()) {
-
             if (bd.InsertarUsuario(user) > 0) {
                 Toast.makeText(getApplicationContext(),
                         getText(R.string.InicioCorrecto), Toast.LENGTH_SHORT).show();
                 Intent siguiente = new Intent(this, InicioSesion.class);
                 startActivity(siguiente);
                 finish();
-
             } else {
                 Toast.makeText(getApplicationContext(),
                         getText(R.string.BoletaRegistrada), Toast.LENGTH_SHORT).show();
-
             }
-
         }
-
     }
 
     // Función que nos proporciona si se esta cumpliendo con el llenado de los paramestros para el registro
-    private  boolean VerifyCampos() {
-
+    private boolean VerifyCampos() {
         // Preguntamos si esta vacio el campo de Boleta
-        if ( Boleta.getText().toString().isEmpty() ) {
+        if (Boleta.getText().toString().isEmpty()) {
             Boleta.setError(getString(R.string.SinBoleta), null);
             Toast.makeText(getApplicationContext(), getString(R.string.SinBoleta), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Preguntamos si la longitud es de 10
-        if ( Boleta.length() != 10 ){
+        if (Boleta.length() != 10) {
             Boleta.setError(getString(R.string.LongBoleta), null);
             Toast.makeText(getApplicationContext(), getString(R.string.LongBoleta), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Preguntamos si esta vacio el campo de nombre
-        if ( Nombre.getText().toString().isEmpty() ) {
+        if (Nombre.getText().toString().isEmpty()) {
             Nombre.setError(getString(R.string.SinNombre), null);
             Toast.makeText(getApplicationContext(), getString(R.string.SinNombre), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Preguntamos si esta vacio el campo de Edad
-        if ( Edad.getText().toString().isEmpty() ) {
+        if (Edad.getText().toString().isEmpty()) {
             Edad.setError(getString(R.string.SinEdad), null);
             Toast.makeText(getApplicationContext(), getString(R.string.SinEdad), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Resteingimos la Edad en un rango de 10 a 99 años
-        if ( Integer.parseInt(String.valueOf(Edad.getText())) < 20 || Integer.parseInt(String.valueOf(Edad.getText())) > 25){
+        if (Integer.parseInt(String.valueOf(Edad.getText())) < 20 || Integer.parseInt(String.valueOf(Edad.getText())) > 25) {
             Edad.setError(getString(R.string.RangoEdad), null);
             Toast.makeText(getApplicationContext(), getString(R.string.RangoEdad), Toast.LENGTH_SHORT).show();
             return false;
@@ -202,25 +182,20 @@ public class Registro extends AppCompatActivity {
         }
 
         // Preguntamos si esta vacio el campo de Contraseña esta vacio
-        if ( Contraseña.getText().toString().isEmpty() ) {
-            Contraseña.setError(getString(R.string.SinContraseña),null);
+        if (Contraseña.getText().toString().isEmpty()) {
+            Contraseña.setError(getString(R.string.SinContraseña), null);
             Toast.makeText(getApplicationContext(), getString(R.string.SinContraseña), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Preguntamos si todas las restricciones para la contraseña estan en verde si es así la contraseña es valida
-        if ( !(Longitud.getCurrentTextColor() == ColorVerde && CaracterEspecial.getCurrentTextColor() == ColorVerde &&
+        return Longitud.getCurrentTextColor() == ColorVerde && CaracterEspecial.getCurrentTextColor() == ColorVerde &&
                 Numero.getCurrentTextColor() == ColorVerde && Minuscula.getCurrentTextColor() == ColorVerde &&
-                Mayuscula.getCurrentTextColor() == ColorVerde) ) {
-            return false;
-        }
-
-        return true;
+                Mayuscula.getCurrentTextColor() == ColorVerde;
     }
 
     // Función que valida los parametros con las restrigcciones de la contraseña
     private void password() {
-
         String Password = Contraseña.getText().toString().trim();
 
         // Preguntamos si la longitud de la contraseña esta comprendida en un rango de 8 a 15 caracteres
@@ -234,7 +209,7 @@ public class Registro extends AppCompatActivity {
         // Preguntamos si se contiene algún caracter especial
         if (!Password.matches(".*[!@#$%^*+=¿?_-].*")) {
             CaracterEspecial.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_not_find_special_caracter),null);;
+            Contraseña.setError(getString(R.string.error_not_find_special_caracter), null);
         } else {
             CaracterEspecial.setTextColor(Color.GREEN);
         }
@@ -250,7 +225,7 @@ public class Registro extends AppCompatActivity {
         // Preguntamos si se contiene alguna minúscula
         if (!Password.matches(".*[a-z].*")) {
             Minuscula.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_not_find_lowercase_caracter),null);
+            Contraseña.setError(getString(R.string.error_not_find_lowercase_caracter), null);
         } else {
             Minuscula.setTextColor(Color.GREEN);
         }
@@ -258,12 +233,10 @@ public class Registro extends AppCompatActivity {
         // Preguntamos si se contiene alguna mayúscula
         if (!Password.matches(".*[A-Z].*")) {
             Mayuscula.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_not_find_uppercase_caracter),null);
+            Contraseña.setError(getString(R.string.error_not_find_uppercase_caracter), null);
         } else {
             Mayuscula.setTextColor(Color.GREEN);
         }
-
     }
-
     // ********************** Fin de la clase Registro ************************ //
 }

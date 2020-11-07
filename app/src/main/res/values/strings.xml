@@ -153,5 +153,8 @@
     <string name="regresar">Regresar</string>
     <string name="estados_de_la_conexion_con_la_pulsera">Estados de la conexión con la pulsera</string>
     <string name="comenzar_terminar_proceso_bluno">boton para iniciar y finalizar un monitoreo</string>
+    <string name="restablecer_contrasena">Para restablecer la contraseña se debe ingresar la boleta del usuario y la nueva contraseña</string>
+    <string name="eliminarse_la_cuenta">Al eliminarse la cuenta no se podrán recuperar los datos.</string>
+    <string name="icono_de_inicio">Icono de inicio</string>
 
 </resources>

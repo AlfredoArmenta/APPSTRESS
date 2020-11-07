@@ -1,5 +1,6 @@
 package com.example.estres2.ui.Graficas;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -8,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.estres2.R;
@@ -22,18 +22,14 @@ public class GraficasFragment extends Fragment {
     private LineGraphSeries<DataPoint> FC1, GSR1;
 
     public GraficasFragment() {
-        // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,12 +63,12 @@ public class GraficasFragment extends Fragment {
 
         int NumeroPuntos = 500;
 
-        for(int i = 0; i < NumeroPuntos; i++) {
+        for (int i = 0; i < NumeroPuntos; i++) {
             y = Math.sin(x);
-            y2 =  Math.cos(x);
+            y2 = Math.cos(x);
 
-            FC1.appendData(new DataPoint(x,y),true,250);
-            GSR1.appendData(new DataPoint(x,y2),true, 250);
+            FC1.appendData(new DataPoint(x, y), true, 250);
+            GSR1.appendData(new DataPoint(x, y2), true, 250);
 
             x = x + 0.1;
         }
@@ -86,10 +82,10 @@ public class GraficasFragment extends Fragment {
         grafica3.addSeries(GSR1);
         grafica3.setTitle("Frecuencia Cardiaca y Respuesta Galvánica de la Piel");
 
-        FC1.setColor(Color.rgb(226,91,34));
+        FC1.setColor(Color.rgb(226, 91, 34));
         FC1.setThickness(6);
         FC1.setDrawBackground(true);
-        FC1.setBackgroundColor(Color.argb(60,95,226, 156));
+        FC1.setBackgroundColor(Color.argb(60, 95, 226, 156));
 
         grafica.getViewport().setScalable(true);
         grafica.getViewport().setScrollable(true);

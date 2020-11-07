@@ -3,14 +3,13 @@ package com.example.estres2;
 import java.io.Serializable;
 
 public class Usuario implements Serializable {
-
     // Creamos las variables String que serán las encargadas de componer los parametros del objeto Usuario
     String Boleta, Nombre, Edad, Semestre, Genero, Contraseña;
 
     public Usuario() {
     }
 
-    public Usuario(String boleta, String nombre, String edad,String genero, String semestre, String contraseña) {
+    public Usuario(String boleta, String nombre, String edad, String genero, String semestre, String contraseña) {
         Boleta = boleta;
         Nombre = nombre;
         Edad = edad;

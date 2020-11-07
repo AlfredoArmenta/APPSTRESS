@@ -1,21 +1,16 @@
 package com.example.estres2;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
 // Actividad principal
 public class InicioSesion extends AppCompatActivity {
-
     private EditText Boleta;
     private EditText Contraseña;
 
@@ -34,59 +29,45 @@ public class InicioSesion extends AppCompatActivity {
     }
 
     // Función que nos permite pasar a la actividad de Registro
-    public void Registrar(View view){
-
+    public void Registrar(View view) {
         Intent siguiente = new Intent(this, Registro.class);
         startActivity(siguiente);
     }
 
     // Función que nos permite recuperar la contraseña
-    public void RecuperarPass(View view){
-
+    public void RecuperarPass(View view) {
         Intent siguiente = new Intent(this, RecuperarPassword.class);
         startActivity(siguiente);
     }
 
     // Función que nos permite pasar  la función MenuPrincipal
-    public void Ingresar(View view){
-
-        if ( VerifyCampos() ) {
-
+    public void Ingresar(View view) {
+        if (VerifyCampos()) {
             // Se crea el objeto bd para utilizar los metodos de la DB y se crea con uno nuevo
             DB bd = new DB(getApplicationContext());
-
             // Se crea el objeto AuxUsuario para obtener los parametros de los usuarios y enviarlos a la siguiente actividad
             String RContraeña;
-
             // Se crea el objeto PasarUsuario que nos permite enviar objetos de un activity a otra
             Bundle PasarBoleta = new Bundle();
-
             // Se crea el objeto siguiente para dar inicio a la activity MenuPrincipal
             Intent siguiente = new Intent(InicioSesion.this, MenuPrincipal.class);
-
             String IBoleta = Boleta.getText().toString();
             String IContraseña = Contraseña.getText().toString();
-
             RContraeña = bd.IniciarSesion(IBoleta);
 
-            if ( IContraseña.equals(RContraeña) ) {
+            if (IContraseña.equals(RContraeña)) {
                 Toast.makeText(getApplicationContext(),
                         getText(R.string.InicioSesion), Toast.LENGTH_SHORT).show();
-
                 // Damos una clave = Boleta y el Objeto de tipo String = RContraseña
-                PasarBoleta.putString("Boleta",IBoleta);
-
+                PasarBoleta.putString("Boleta", IBoleta);
                 // Pasamos el objeto de tipo Bundle como parametro a la activity siguiente.
                 siguiente.putExtras(PasarBoleta);
-
                 startActivity(siguiente);
                 finish();
-
-            } else if ( RContraeña.equals("") ) {
+            } else if (RContraeña.equals("")) {
                 Toast.makeText(getApplicationContext(),
                         getText(R.string.BoletaNoRegistrada), Toast.LENGTH_SHORT).show();
-
-            }else {
+            } else {
                 Toast.makeText(getApplicationContext(),
                         getText(R.string.ErrorContraseña), Toast.LENGTH_SHORT).show();
             }
@@ -94,31 +75,27 @@ public class InicioSesion extends AppCompatActivity {
     }
 
     // Función auxiliar que nos ayuda a visualizar los Usuarios registrados
-    public void Mostrar (View view) {
+    public void Mostrar(View view) {
         Intent siguiente = new Intent(this, Mostrar.class);
         startActivity(siguiente);
     }
 
-    private  boolean VerifyCampos() {
-
-        if ( Boleta.getText().toString().isEmpty() ) {
+    private boolean VerifyCampos() {
+        if (Boleta.getText().toString().isEmpty()) {
             Boleta.setError(getString(R.string.SinBoleta), null);
             return false;
         }
 
-        if ( Boleta.length() != 10 ){
+        if (Boleta.length() != 10) {
             Boleta.setError(getString(R.string.LongBoleta), null);
             return false;
         }
 
-        if ( Contraseña.getText().toString().isEmpty() ) {
+        if (Contraseña.getText().toString().isEmpty()) {
             Contraseña.setError(getString(R.string.SinContraseña), null);
             return false;
         }
-
         return true;
-
     }
-
     // ********************** Fin de la clase InicioSesión ************************ //
 }

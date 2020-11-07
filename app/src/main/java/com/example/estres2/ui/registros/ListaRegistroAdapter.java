@@ -13,22 +13,21 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.estres2.R;
+
 import java.util.ArrayList;
 
-public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdapter.ListaRegistroViewHolder>{
-
+public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdapter.ListaRegistroViewHolder> {
     private FragmentRegistro fragmento = new FragmentRegistro();
-
     public int position;
     public Context mContext;
     public static ArrayList<ListaRegistro> mExampleList;
-
     private static final String TAG = "MyViewHolder";
 
-    public ListaRegistroAdapter(ArrayList<ListaRegistro> exampleList, Context mContext){
-            mExampleList = exampleList;
-            this.mContext = mContext;
+    public ListaRegistroAdapter(ArrayList<ListaRegistro> exampleList, Context mContext) {
+        mExampleList = exampleList;
+        this.mContext = mContext;
     }
 
     @NonNull
@@ -84,11 +83,11 @@ public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdap
     }
 
     class ListaRegistroViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
-    //class ListaRegistroViewHolder extends RecyclerView.ViewHolder {
+        //class ListaRegistroViewHolder extends RecyclerView.ViewHolder {
         public TextView registroTexto;
         public ImageView registroImagen;
 
-        public ListaRegistroViewHolder(View itemView){
+        public ListaRegistroViewHolder(View itemView) {
             super(itemView);
             registroTexto = itemView.findViewById(R.id.RVText_View);
             registroImagen = itemView.findViewById(R.id.RVEliminar);
@@ -99,23 +98,21 @@ public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdap
         public void onClick(View v) {
             //println("OnClick: " + getAdapterPosition());
             Log.d(TAG, "onClick: " + getAdapterPosition());
-            Toast.makeText(mContext, fragmento.Dato, Toast.LENGTH_LONG).show();
             position = getAdapterPosition();
             showPopupMenu(v);
         }
 
-        private void showPopupMenu(View view){
+        private void showPopupMenu(View view) {
             PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
             popupMenu.inflate(R.menu.menu_registros);
             popupMenu.setOnMenuItemClickListener(this);
             popupMenu.show();
-
         }
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             Log.d(TAG, "Entro al onMenuItemClick");
-            switch (item.getItemId()){
+            switch (item.getItemId()) {
                 case R.id.action_graficar:
                     //Toast.makeText(mContext, "Estoy en Graficar",Toast.LENGTH_LONG).show();
                     Log.d(TAG, "onMenuItemClick: action_graficar");
@@ -133,7 +130,8 @@ public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdap
                     Log.d(TAG, "onMenuItemClick: action_eliminar");
                     removeAt(position);
                     return true;
-                default: Log.d(TAG, "Default");
+                default:
+                    Log.d(TAG, "Default");
                     return false;
             }
         }

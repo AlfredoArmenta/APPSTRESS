@@ -19,7 +19,6 @@ import android.util.Log;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-
 /**
  * Service for managing connection and data communication with a GATT server hosted on a
  * given Bluetooth LE device.
@@ -44,17 +43,19 @@ public class BluetoothLeService extends Service {
     //define the limited length of the characteristic.
     private static final int MAX_CHARACTERISTIC_LENGTH = 17;
     //Show that Characteristic is writing or not.
-    private boolean mIsWritingCharacteristic=false;
+    private boolean mIsWritingCharacteristic = false;
 
     //class to store the Characteristic and content string push into the ring buffer.
-    private static class BluetoothGattCharacteristicHelper{
+    private static class BluetoothGattCharacteristicHelper {
         BluetoothGattCharacteristic mCharacteristic;
         String mCharacteristicValue;
-        BluetoothGattCharacteristicHelper(BluetoothGattCharacteristic characteristic, String characteristicValue){
-            mCharacteristic=characteristic;
-            mCharacteristicValue=characteristicValue;
+
+        BluetoothGattCharacteristicHelper(BluetoothGattCharacteristic characteristic, String characteristicValue) {
+            mCharacteristic = characteristic;
+            mCharacteristicValue = characteristicValue;
         }
     }
+
     //ring buffer
     private RingBuffer<BluetoothGattCharacteristicHelper> mCharacteristicRingBuffer = new RingBuffer<BluetoothGattCharacteristicHelper>(8);
 
@@ -317,7 +318,7 @@ public class BluetoothLeService extends Service {
     public boolean initialize() {
         // For API level 18 and above, get a reference to BluetoothAdapter through
         // BluetoothManager.
-        System.out.println("BluetoothLeService initialize"+mBluetoothManager);
+        System.out.println("BluetoothLeService initialize" + mBluetoothManager);
         if (mBluetoothManager == null) {
             mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
             if (mBluetoothManager == null) {
@@ -339,14 +340,13 @@ public class BluetoothLeService extends Service {
      * Connects to the GATT server hosted on the Bluetooth LE device.
      *
      * @param address The device address of the destination device.
-     *
      * @return Return true if the connection is initiated successfully. The connection result
-     *         is reported asynchronously through the
-     *         {@code BluetoothGattCallback#onConnectionStateChange(android.bluetooth.BluetoothGatt, int, int)}
-     *         callback.
+     * is reported asynchronously through the
+     * {@code BluetoothGattCallback#onConnectionStateChange(android.bluetooth.BluetoothGatt, int, int)}
+     * callback.
      */
     public boolean connect(final String address) {
-        System.out.println("BluetoothLeService connect"+address+mBluetoothGatt);
+        System.out.println("BluetoothLeService connect" + address + mBluetoothGatt);
         if (mBluetoothAdapter == null || address == null) {
             Log.w(TAG, "BluetoothAdapter not initialized or unspecified address.");
             return false;
@@ -374,8 +374,7 @@ public class BluetoothLeService extends Service {
         // We want to directly connect to the device, so we are setting the autoConnect
         // parameter to false.
         System.out.println("device.connectGatt connect");
-        synchronized(this)
-        {
+        synchronized (this) {
             mBluetoothGatt = device.connectGatt(this, false, mGattCallback);
         }
         Log.d(TAG, "Trying to create a new connection.");
@@ -445,16 +444,16 @@ public class BluetoothLeService extends Service {
         //so String should be cut to comply this restriction. And something should be done here:
         String writeCharacteristicString;
         try {
-            writeCharacteristicString = new String(characteristic.getValue(),"ISO-8859-1");
+            writeCharacteristicString = new String(characteristic.getValue(), "ISO-8859-1");
         } catch (UnsupportedEncodingException e) {
             // this should never happen because "US-ASCII" is hard-coded.
             throw new IllegalStateException(e);
         }
-        System.out.println("allwriteCharacteristicString:"+writeCharacteristicString);
+        System.out.println("allwriteCharacteristicString:" + writeCharacteristicString);
 
         //As the communication is asynchronous content string and characteristic should be pushed into an ring buffer for further transmission
         mCharacteristicRingBuffer.push(new BluetoothGattCharacteristicHelper(characteristic, writeCharacteristicString));
-        System.out.println("mCharacteristicRingBufferlength:"+mCharacteristicRingBuffer.size());
+        System.out.println("mCharacteristicRingBufferlength:" + mCharacteristicRingBuffer.size());
 
 
         //The progress of onCharacteristicWrite and writeCharacteristic is almost the same. So callback function is called directly here
@@ -467,7 +466,7 @@ public class BluetoothLeService extends Service {
      * Enables or disables notification on a give characteristic.
      *
      * @param characteristic Characteristic to act on.
-     * @param enabled If true, enable notification.  False otherwise.
+     * @param enabled        If true, enable notification.  False otherwise.
      */
     public void setCharacteristicNotification(BluetoothGattCharacteristic characteristic,
                                               boolean enabled) {

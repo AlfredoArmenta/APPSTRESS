@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/action_Cerrar_Sesión"
+        android:onClick="Salir"
         android:orderInCategory="100"
         android:title="@string/cerrar_sesion"
-        android:onClick="Salir"
-        app:showAsAction="never"
-        />
+        app:showAsAction="never" />
 
 </menu>

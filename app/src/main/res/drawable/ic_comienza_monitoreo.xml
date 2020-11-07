@@ -1,7 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
     xmlns:tools="http://schemas.android.com/tools"
     tools:targetApi="lollipop">
+
     <aapt:attr name="android:drawable">
         <vector
             android:name="vector"
@@ -44,4 +46,5 @@
             </set>
         </aapt:attr>
     </target>
+
 </animated-vector>

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,28 +14,29 @@
             android:id="@+id/CFBoleta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/boleta"
-            android:textSize="32sp"
-            android:textAlignment="center"
-            android:gravity="center_horizontal"
-            android:layout_marginEnd="@dimen/margin"
             android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"/>
+            android:ems="10"
+            android:gravity="center_horizontal"
+            android:hint="@string/boleta"
+            android:textAlignment="center"
+            android:textSize="32sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
-            android:layout_marginStart="@dimen/margin">
+            android:layout_marginBottom="@dimen/margin">
 
             <EditText
                 android:id="@+id/CFNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints="yes"
                 android:drawableStart="?attr/actionModePasteDrawable"
                 android:ems="10"
                 android:hint="@string/nombre_completo"
@@ -49,20 +48,21 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
-            android:layout_marginStart="@dimen/margin">
+            android:layout_marginBottom="@dimen/margin">
 
             <EditText
                 android:id="@+id/CFEdad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints="yes"
+                android:drawableStart="@drawable/ic_edad"
                 android:ems="10"
                 android:hint="@string/edad"
                 android:inputType="number"
-                android:textSize="20sp"
-                android:drawableStart="@drawable/ic_edad" />
+                android:textSize="20sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,21 +70,21 @@
             android:id="@+id/CFTGenero"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/genero"
-            android:textSize="14sp"
-            android:layout_marginEnd="@dimen/margin"
             android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"/>
+            android:text="@string/genero"
+            android:textSize="14sp" />
 
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginEnd="@dimen/margin"
             android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="@dimen/margin"
-            android:layout_marginTop="@dimen/margin">
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/CFMasculino"
@@ -106,99 +106,99 @@
             android:id="@+id/CFTSemestre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/semestre"
-            android:textSize="14sp"
-            android:layout_marginEnd="@dimen/margin"
             android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="@dimen/margin"
-            android:layout_marginTop="@dimen/margin" />
+            android:text="@string/semestre"
+            android:textSize="14sp" />
 
         <Spinner
             android:id="@+id/CFSemestre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fadeScrollbars="false"
-            android:spinnerMode="dialog"
-            android:layout_marginEnd="@dimen/margin"
             android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"/>
+            android:fadeScrollbars="false"
+            android:spinnerMode="dialog" />
 
         <TextView
             android:id="@+id/CFTContraseña"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/la_contrasena_debe_contener"
-            android:textSize="14sp"
-            android:layout_marginEnd="@dimen/margin"
             android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"/>
+            android:text="@string/la_contrasena_debe_contener"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/CFNumero"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
             android:text="@string/Debe_Contener_1_Numero"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="14sp"
-            android:layout_marginStart="@dimen/margin" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/CFLongitud"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
             android:text="@string/Longitud_de_8_15_Caracteres"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="14sp"
-            android:layout_marginStart="@dimen/margin"  />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/CFMayuscula"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
             android:text="@string/mayuscula"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="14sp"
-            android:layout_marginStart="@dimen/margin"  />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/CFMinuscula"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
             android:text="@string/Minuscula"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="14sp"
-            android:layout_marginStart="@dimen/margin" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/CFCaracterEspecial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
             android:text="@string/Caracter_Especial"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="14sp"
-            android:layout_marginStart="@dimen/margin" />
+            android:textSize="14sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:passwordToggleEnabled="true"
-            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
-            android:layout_marginStart="@dimen/margin">
+            android:layout_marginBottom="@dimen/margin"
+            app:passwordToggleEnabled="true">
 
             <EditText
                 android:id="@+id/CFContraseña"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints="true"
                 android:drawableStart="@android:drawable/ic_lock_idle_lock"
                 android:ems="10"
                 android:hint="@string/contrasena"
                 android:inputType="textPassword"
-                android:textSize="20sp"
-                android:autofillHints="true" />
+                android:textSize="20sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -206,15 +206,15 @@
             android:id="@+id/CFAplicar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
             android:background="#00FFFFFF"
             android:clickable="true"
+            android:focusable="true"
             android:text="@string/aplicar"
-            android:textSize="20sp"
-            android:layout_marginEnd="@dimen/margin"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginBottom="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"
-            android:focusable="true" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 

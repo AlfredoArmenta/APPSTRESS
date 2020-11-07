@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -17,16 +21,14 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.estres2.DB;
 import com.example.estres2.MenuPrincipal;
 import com.example.estres2.R;
 import com.example.estres2.Usuario;
 
 public class CuentaFragment extends Fragment {
-
-    View root;
     private Usuario user;
-
     private TextView Boleta;
     private EditText Nombre;
     private EditText Edad;
@@ -34,46 +36,43 @@ public class CuentaFragment extends Fragment {
     private RadioButton Femenino;
     private Spinner Semestre;
     private EditText Contraseña;
-
-    private TextView Requerimientos;
     private TextView Numero;
     private TextView CaracterEspecial;
     private TextView Mayuscula;
     private TextView Minuscula;
     private TextView Longitud;
-
-    private Button Boton;
-
+    private Button Aplicar;
     private Context mContext;
 
-    // Variable del color verde
-    private int ColorVerde;
-
-    public CuentaFragment(){
-
-    };
+    public CuentaFragment() {
+    }
 
     @Override
-    public void onAttach(Activity activity) {
-        // TODO Auto-generated method stub
-        super.onAttach(activity);
-        mContext=activity;
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        root = inflater.inflate(R.layout.fragment_cuenta, container, false);
-        IniciarObjetos();
-        return root;
+        View view = inflater.inflate(R.layout.fragment_cuenta, container, false);
+        iniciarObjetos(view);
+        return view;
     }
 
-    public void IniciarObjetos() {
+    @Override
+    public void onAttach(@NonNull Activity activity) {
+        super.onAttach(activity);
+        mContext = activity;
+    }
 
-        // Obtenemos el usuario con todos sus parametros para llenar los campos
-        user = ((MenuPrincipal)getActivity()).MandarUsuario();
-
+    public void iniciarObjetos(View root) {
+        if ((getActivity() == null)) {
+            requireActivity().finish();
+        } else {
+            // Obtenemos el usuario con todos sus parametros para llenar los campos
+            user = ((MenuPrincipal) getActivity()).MandarUsuario();
+        }
         // Creamos el vinculo de la parte visual con la parte lógica
         Boleta = (TextView) root.findViewById(R.id.CFBoleta);
         Nombre = (EditText) root.findViewById(R.id.CFNombre);
@@ -84,20 +83,18 @@ public class CuentaFragment extends Fragment {
         Contraseña = (EditText) root.findViewById(R.id.CFContraseña);
 
         // String que nos ayudan a llenar a los spinners que sirven para la selección del semestre y la materia
-        String [] semestre = {"Selecciona tu semestre actual", "1", "2", "3", "4", "5","6", "7", "8", "9", "10","11", "12", "13", "14", "15"};
-        ArrayAdapter<String> AdapterSemestre = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, semestre);
+        String[] semestre = {"Selecciona tu semestre actual", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"};
+        ArrayAdapter<String> AdapterSemestre = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_dropdown_item, semestre);
         Semestre.setAdapter(AdapterSemestre);
 
         // Elementos de texto que nos proporcionan información sobre los parametros de la contraseña
-        Requerimientos = (TextView) root.findViewById(R.id.CFTContraseña);
         Numero = (TextView) root.findViewById(R.id.CFNumero);
         CaracterEspecial = (TextView) root.findViewById(R.id.CFCaracterEspecial);
         Mayuscula = (TextView) root.findViewById(R.id.CFMayuscula);
         Minuscula = (TextView) root.findViewById(R.id.CFMinuscula);
         Longitud = (TextView) root.findViewById(R.id.CFLongitud);
-        Boton = (Button) root.findViewById(R.id.CFAplicar);
-
-        Boton.setOnClickListener(new View.OnClickListener() {
+        Aplicar = (Button) root.findViewById(R.id.CFAplicar);
+        Aplicar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ActualizarDatos();
@@ -109,16 +106,14 @@ public class CuentaFragment extends Fragment {
         Nombre.setText(user.getNombre());
         Edad.setText(user.getEdad());
 
-        if ( user.getGenero().equals("Masculino") ) {
+        if (user.getGenero().equals("Masculino")) {
             Masculino.setChecked(true);
-        } else{
+        } else {
             Femenino.setChecked(true);
         }
+
         Semestre.setSelection(AdapterSemestre.getPosition(user.getSemestre()));
         Contraseña.setText(user.getContraseña());
-
-        // El valor númerico del color verde es = -16711936
-        ColorVerde = -16711936;
 
         // Se llama a esta función para validar la contraseña del usuario
         password();
@@ -127,7 +122,6 @@ public class CuentaFragment extends Fragment {
         Contraseña.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -137,13 +131,11 @@ public class CuentaFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
-
     }
 
-    public void ActualizarDatos (){
+    public void ActualizarDatos() {
         DB bd = new DB(getContext());
         user.setBoleta(Boleta.getText().toString());
         user.setNombre(Nombre.getText().toString());
@@ -158,37 +150,33 @@ public class CuentaFragment extends Fragment {
         user.setContraseña(Contraseña.getText().toString());
 
         if (VerifyCampos()) {
-
-            if (bd.ActualizarUsuario(user) > 0) {
+            if (bd.ActualizarUsuario(user) > 0 && !(getActivity() == null)) {
                 Toast.makeText(getContext(), "Se actualizo correctamente", Toast.LENGTH_SHORT).show();
-                ((MenuPrincipal)getActivity()).Nombre.setText(user.getNombre());
-
+                ((MenuPrincipal) getActivity()).Nombre.setText(user.getNombre());
             } else {
-                Toast.makeText( getContext(), "Ocurrio un error al actualizar", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(getContext(), "Ocurrio un error al actualizar", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
     // Función que nos proporciona si se esta cumpliendo con el llenado de los paramestros para el registro
-    private  boolean VerifyCampos() {
-
+    private boolean VerifyCampos() {
         // Preguntamos si esta vacio el campo de nombre
-        if ( Nombre.getText().toString().isEmpty() ) {
+        if (Nombre.getText().toString().isEmpty()) {
             Nombre.setError(getString(R.string.SinNombre), null);
             Toast.makeText(mContext, getString(R.string.SinNombre), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Preguntamos si esta vacio el campo de Edad
-        if ( Edad.getText().toString().isEmpty() ) {
+        if (Edad.getText().toString().isEmpty()) {
             Edad.setError(getString(R.string.SinEdad), null);
             Toast.makeText(mContext, getString(R.string.SinEdad), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Resteingimos la Edad en un rango de 10 a 99 años
-        if ( Integer.parseInt(String.valueOf(Edad.getText())) < 20 || Integer.parseInt(String.valueOf(Edad.getText())) > 25){
+        if (Integer.parseInt(String.valueOf(Edad.getText())) < 20 || Integer.parseInt(String.valueOf(Edad.getText())) > 25) {
             Edad.setError(getString(R.string.RangoEdad), null);
             Toast.makeText(mContext, getString(R.string.RangoEdad), Toast.LENGTH_SHORT).show();
             return false;
@@ -202,25 +190,22 @@ public class CuentaFragment extends Fragment {
         }
 
         // Preguntamos si esta vacio el campo de Contraseña esta vacio
-        if ( Contraseña.getText().toString().isEmpty() ) {
-            Contraseña.setError(getString(R.string.SinContraseña),null);
+        if (Contraseña.getText().toString().isEmpty()) {
+            Contraseña.setError(getString(R.string.SinContraseña), null);
             Toast.makeText(mContext, getString(R.string.SinContraseña), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         // Preguntamos si todas las restricciones para la contraseña estan en verde si es así la contraseña es valida
-        if ( !(Longitud.getCurrentTextColor() == ColorVerde && CaracterEspecial.getCurrentTextColor() == ColorVerde &&
-                Numero.getCurrentTextColor() == ColorVerde && Minuscula.getCurrentTextColor() == ColorVerde &&
-                Mayuscula.getCurrentTextColor() == ColorVerde) ) {
-            return false;
-        }
-
-        return true;
+        // Variable del color verde
+        int colorVerde = Color.GREEN;
+        return Longitud.getCurrentTextColor() == colorVerde && CaracterEspecial.getCurrentTextColor() == colorVerde &&
+                Numero.getCurrentTextColor() == colorVerde && Minuscula.getCurrentTextColor() == colorVerde &&
+                Mayuscula.getCurrentTextColor() == colorVerde;
     }
 
     // Función que valida los parametros con las restrigcciones de la contraseña
     private void password() {
-
         String Password = Contraseña.getText().toString().trim();
 
         // Preguntamos si la longitud de la contraseña esta comprendida en un rango de 8 a 15 caracteres
@@ -234,7 +219,7 @@ public class CuentaFragment extends Fragment {
         // Preguntamos si se contiene algún caracter especial
         if (!Password.matches(".*[!@#$%^*+=¿?_-].*")) {
             CaracterEspecial.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_not_find_special_caracter),null);;
+            Contraseña.setError(getString(R.string.error_not_find_special_caracter), null);
         } else {
             CaracterEspecial.setTextColor(Color.GREEN);
         }
@@ -250,7 +235,7 @@ public class CuentaFragment extends Fragment {
         // Preguntamos si se contiene alguna minúscula
         if (!Password.matches(".*[a-z].*")) {
             Minuscula.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_not_find_lowercase_caracter),null);
+            Contraseña.setError(getString(R.string.error_not_find_lowercase_caracter), null);
         } else {
             Minuscula.setTextColor(Color.GREEN);
         }
@@ -258,7 +243,7 @@ public class CuentaFragment extends Fragment {
         // Preguntamos si se contiene alguna mayúscula
         if (!Password.matches(".*[A-Z].*")) {
             Mayuscula.setTextColor(Color.RED);
-            Contraseña.setError(getString(R.string.error_not_find_uppercase_caracter),null);
+            Contraseña.setError(getString(R.string.error_not_find_uppercase_caracter), null);
         } else {
             Mayuscula.setTextColor(Color.GREEN);
         }
