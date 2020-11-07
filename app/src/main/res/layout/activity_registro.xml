@@ -30,7 +30,7 @@
                 android:ems="10"
                 android:hint="@string/boleta"
                 android:inputType="number"
-                android:textSize="24sp" />
+                android:textSize="@dimen/text_size_bluno_conectar" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -51,7 +51,7 @@
                 android:ems="10"
                 android:hint="@string/nombre_completo"
                 android:inputType="textPersonName"
-                android:textSize="20sp" />
+                android:textSize="@dimen/text_size_bluno_conectar" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,7 +73,7 @@
                 android:ems="10"
                 android:hint="@string/edad"
                 android:inputType="number"
-                android:textSize="20sp" />
+                android:textSize="@dimen/text_size_bluno_conectar" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,7 +86,7 @@
             android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="@dimen/margin"
             android:text="@string/genero"
-            android:textSize="14sp" />
+            android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
 
         <RadioGroup
             android:layout_width="wrap_content"
@@ -102,14 +102,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/masculino"
-                android:textSize="14sp" />
+                android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
 
             <RadioButton
                 android:id="@+id/RFemenino"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/femenino"
-                android:textSize="14sp" />
+                android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
 
         </RadioGroup>
 
@@ -122,7 +122,7 @@
             android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="@dimen/margin"
             android:text="@string/semestre"
-            android:textSize="14sp" />
+            android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
 
         <Spinner
             android:id="@+id/RSemestre"
@@ -144,7 +144,7 @@
             android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="@dimen/margin"
             android:text="@string/la_contrasena_debe_contener"
-            android:textSize="14sp" />
+            android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
 
         <TextView
             android:id="@+id/RTNumero"
@@ -153,7 +153,7 @@
             android:layout_marginStart="@dimen/margin"
             android:text="@string/Debe_Contener_1_Numero"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="14sp" />
+            android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
 
         <TextView
             android:id="@+id/RTLongitud"
@@ -162,7 +162,7 @@
             android:layout_marginStart="@dimen/margin"
             android:text="@string/Longitud_de_8_15_Caracteres"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="14sp" />
+            android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
 
         <TextView
             android:id="@+id/RTMayuscula"
@@ -171,7 +171,7 @@
             android:layout_marginStart="@dimen/margin"
             android:text="@string/mayuscula"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="14sp" />
+            android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
 
         <TextView
             android:id="@+id/RTMinuscula"
@@ -180,7 +180,7 @@
             android:layout_marginStart="@dimen/margin"
             android:text="@string/Minuscula"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="14sp" />
+            android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
 
         <TextView
             android:id="@+id/RTCaracterEspecial"
@@ -189,7 +189,7 @@
             android:layout_marginStart="@dimen/margin"
             android:text="@string/Caracter_Especial"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="14sp" />
+            android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -209,7 +209,7 @@
                 android:ems="10"
                 android:hint="@string/contrasena"
                 android:inputType="textPassword"
-                android:textSize="20sp" />
+                android:textSize="@dimen/text_size_bluno_conectar" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -217,34 +217,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
-            android:layout_marginBottom="@dimen/margin"
             android:gravity="center"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/RRegistrar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/button_size_width_normal"
+                android:layout_height="@dimen/button_size_height_text"
                 android:layout_marginStart="@dimen/margin"
-                android:layout_marginTop="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
-                android:layout_marginBottom="@dimen/margin"
+                android:background="@drawable/shadow"
                 android:onClick="Registrar"
                 android:text="@string/registrar"
-                android:textSize="20sp" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_size_bluno_conectar" />
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/button_size_width_normal"
+                android:layout_height="@dimen/button_size_height_text"
                 android:layout_marginStart="@dimen/margin"
-                android:layout_marginTop="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
-                android:layout_marginBottom="@dimen/margin"
+                android:background="@drawable/shadow"
                 android:onClick="Cancelar"
                 android:text="@string/cancelar"
-                android:textSize="20sp" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_size_bluno_conectar" />
 
         </LinearLayout>
 

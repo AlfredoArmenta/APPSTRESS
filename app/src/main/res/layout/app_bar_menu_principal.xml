@@ -26,14 +26,14 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="@dimen/button_size_width_floating"
+        android:layout_height="@dimen/button_size_height_floating"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:scaleType="fitCenter"
-        app:fabCustomSize="75dp"
+        app:fabCustomSize="@dimen/button_fab_custom_size_floating"
         app:fabSize="auto"
-        app:maxImageSize="50dp"
+        app:maxImageSize="@dimen/button_max_size_image_floating"
         app:srcCompat="@drawable/ic_conectar_pulsera" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

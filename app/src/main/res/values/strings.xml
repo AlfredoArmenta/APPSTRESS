@@ -156,5 +156,6 @@
     <string name="restablecer_contrasena">Para restablecer la contraseña se debe ingresar la boleta del usuario y la nueva contraseña</string>
     <string name="eliminarse_la_cuenta">Al eliminarse la cuenta no se podrán recuperar los datos.</string>
     <string name="icono_de_inicio">Icono de inicio</string>
+    <string name="imagen_user">Imagen user</string>
 
 </resources>

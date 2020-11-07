@@ -77,7 +77,7 @@
             android:id="@+id/ForgotPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             android:background="#00FFFFFF"
             android:onClick="RecuperarPass"
             android:text="@string/olvidaste_tu_contrasena"
@@ -86,33 +86,35 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp">
+            android:layout_marginTop="10dp">
 
             <Button
                 android:id="@+id/Loggin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/button_size_width_normal"
+                android:layout_height="@dimen/button_size_height_text"
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginTop="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin"
-                android:background="#00B02727"
-                android:onClick="Ingresar"
+                android:background="@drawable/shadow"
+                android:textColor="@color/colorPrimary"
                 android:text="@string/ingresar"
-                android:textSize="24sp" />
+                android:textSize="@dimen/text_size_bluno_conectar"
+                android:onClick="Ingresar" />
 
             <Button
                 android:id="@+id/Registro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/button_size_width_normal"
+                android:layout_height="@dimen/button_size_height_text"
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginTop="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin"
-                android:background="#00FFFFFF"
+                android:background="@drawable/shadow"
+                android:textColor="@color/colorPrimary"
                 android:onClick="Registrar"
                 android:text="@string/registrar"
-                android:textSize="24sp" />
+                android:textSize="@dimen/text_size_bluno_conectar" />
 
         </LinearLayout>
 

@@ -20,8 +20,9 @@
             app:srcCompat="@drawable/ic_porfile"
             android:layout_marginEnd="@dimen/margin"
             android:layout_marginStart="@dimen/margin"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="@dimen/margin"/>
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:contentDescription="@string/imagen_user" />
 
         <TextView
             android:id="@+id/MenuNombre"
@@ -29,8 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin"
             android:layout_marginStart="@dimen/margin"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"/>
 
         <TextView
             android:id="@+id/MenuBoleta"
@@ -38,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin"
             android:layout_marginStart="@dimen/margin"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"/>
 
 </LinearLayout>

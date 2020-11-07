@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_start_navigation"
+    app:startDestination="@+id/nav_inicio_sesion"
+    tools:ignore="UnusedNavigation">
+
+    <activity
+        android:id="@+id/nav_inicio_sesion"
+        android:name="com.example.estres2.InicioSesion"
+        android:label="@string/iniciar_sesion"
+        tools:layout="@layout/activity_inicio_sesion"/>
+
+    <activity
+        android:id="@+id/nav_registrar"
+        android:name="com.example.estres2.Registro"
+        android:label="@string/registrar"
+        tools:layout="@layout/activity_registro">
+        <action
+            android:id="@+id/action_nav_registro_to_nav_inicio_sesion"
+            app:destination="@id/nav_inicio_sesion" />
+    </activity>
+
+    <activity
+        android:id="@+id/nav_recuperar_contraseña"
+        android:name="com.example.estres2.RecuperarPassword"
+        android:label="@string/restablecer_contrasena"
+        tools:layout="@layout/activity_recuperar_password">
+        <action
+            android:id="@+id/action_nav_recuperar_contraseña_to_nav_inicio_sesion"
+            app:destination="@id/nav_inicio_sesion" />
+    </activity>
+
+</navigation>

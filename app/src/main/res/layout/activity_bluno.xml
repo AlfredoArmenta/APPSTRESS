@@ -21,23 +21,25 @@
             <ImageButton
                 android:id="@+id/buttonScanBlunoConected"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/button_size_height_icon"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
+                android:background="@drawable/shadow"
                 android:contentDescription="@string/estados_de_la_conexion_con_la_pulsera"
                 android:src="@drawable/ic_estado_scan"
                 android:text="@string/texto_bluno_conectar_scan"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_size_bluno_conectar" />
 
             <ImageButton
                 android:id="@+id/control_bluno"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/button_size_height_icon"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
+                android:background="@drawable/shadow"
                 android:contentDescription="@string/comenzar_terminar_proceso_bluno"
                 android:onClick="animar"
-                android:src="@drawable/ic_comienza_monitoreo" />
+                android:src="@drawable/ic_comienza_monitoreo"
+                android:textColor="@color/colorPrimary" />
 
         </LinearLayout>
 
@@ -54,7 +56,7 @@
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="375dp"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="10dp"
@@ -72,10 +74,12 @@
 
         <Button
             android:id="@+id/buttonSerialSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_width="@dimen/button_size_width_extended"
+            android:layout_height="@dimen/button_size_height_text"
+            android:layout_marginBottom="@dimen/margin"
+            android:background="@drawable/shadow"
             android:text="@string/text_button_bluno_conectar_send_data"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_size_bluno_conectar" />
 
         <EditText
@@ -97,10 +101,12 @@
 
         <Button
             android:id="@+id/CSRegresar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_width="@dimen/button_size_width_normal"
+            android:layout_height="@dimen/button_size_height_text"
+            android:layout_marginBottom="@dimen/margin"
+            android:background="@drawable/shadow"
             android:text="@string/regresar"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_size_bluno_conectar" />
 
     </LinearLayout>
