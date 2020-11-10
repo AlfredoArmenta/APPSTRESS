@@ -34,6 +34,7 @@ public class ConectarBluno extends BlunoLibrary {
         setContentView(R.layout.activity_bluno);
 
         estadoMonitoreo = findViewById(R.id.control_bluno);
+        estadoMonitoreo.setEnabled(false);
 
         // Se inicializa BoletaRecibida
         BoletaRecibida = "";
@@ -149,21 +150,27 @@ public class ConectarBluno extends BlunoLibrary {
         switch (theConnectionState) {                                            //Four connection state
             case isConnected:
                 buttonScan.setImageResource(R.drawable.ic_estado_conectado);
+                estadoMonitoreo.setEnabled(true);
                 break;
             case isConnecting:
                 buttonScan.setImageResource(R.drawable.ic_estado_conectando);
+                estadoMonitoreo.setEnabled(false);
                 break;
             case isToScan:
                 buttonScan.setImageResource(R.drawable.ic_estado_scan);
+                estadoMonitoreo.setEnabled(false);
                 break;
             case isScanning:
                 buttonScan.setImageResource(R.drawable.ic_estado_is_scanning);
+                estadoMonitoreo.setEnabled(false);
                 break;
             case isDisconnecting:
                 buttonScan.setImageResource(R.drawable.ic_estado_desconectando);
+                estadoMonitoreo.setEnabled(false);
                 break;
             default:
                 buttonScan.setImageResource(R.drawable.ic_estado_no_conectado);
+                estadoMonitoreo.setEnabled(false);
                 break;
         }
     }

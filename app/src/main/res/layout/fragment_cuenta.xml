@@ -206,7 +206,7 @@
             android:id="@+id/CFAplicar"
             android:layout_width="@dimen/button_size_width_normal"
             android:layout_height="@dimen/button_size_height_text"
-            android:background="@drawable/shadow"
+            android:background="@drawable/cambia_sombra"
             android:textColor="@color/colorPrimary"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/margin"
