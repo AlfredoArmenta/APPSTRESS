@@ -56,7 +56,7 @@
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="375dp"
+            android:layout_height="300dp"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="10dp"
@@ -71,6 +71,12 @@
                 android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
 
         </ScrollView>
+
+        <Spinner
+            android:id="@+id/CMMateria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dialog" />
 
         <Button
             android:id="@+id/buttonSerialSend"
@@ -106,6 +112,16 @@
             android:layout_marginBottom="@dimen/margin"
             android:background="@drawable/cambia_sombra"
             android:text="@string/regresar"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_bluno_conectar" />
+
+        <Button
+            android:id="@+id/CSRegistro"
+            android:layout_width="250dp"
+            android:layout_height="@dimen/button_size_height_text"
+            android:background="@drawable/cambia_sombra"
+            android:text="Registro Nuevo"
+            android:onClick="ExportarCSV"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_size_bluno_conectar" />
 

@@ -5,12 +5,16 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.content.Intent;
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +23,13 @@ import androidx.core.content.ContextCompat;
 
 import com.example.estres2.MenuPrincipal;
 import com.example.estres2.R;
+import com.example.estres2.Usuario;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ConectarBluno extends BlunoLibrary {
 
@@ -28,14 +39,21 @@ public class ConectarBluno extends BlunoLibrary {
     private ImageButton estadoMonitoreo;
     private String BoletaRecibida;
 
+    // Variables globales para la generación del archivo del registro
+    private Spinner UA;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluno);
 
-        estadoMonitoreo = findViewById(R.id.control_bluno);
-        estadoMonitoreo.setEnabled(false);
+        inicializarVariables();
+        recibirBoleta();
+        pedirPermisos();
+        onCreateProcess();                                                        //onCreate Process by BlunoLibrary
+    }
 
+    public void recibirBoleta() {
         // Se inicializa BoletaRecibida
         BoletaRecibida = "";
 
@@ -46,28 +64,28 @@ public class ConectarBluno extends BlunoLibrary {
         if (BoletaR != null) {
             // Se obtiene la boleta
             BoletaRecibida = BoletaR.getString("Boleta");
-            Toast.makeText(getApplicationContext(), "Boleta recibida" + BoletaRecibida, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Boleta recibida: " + BoletaRecibida, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getApplicationContext(), "No se pudo recuperar el usuario", Toast.LENGTH_SHORT).show();
+            finish();
         }
+    }
 
-        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                Toast.makeText(this, "The permission to get BLE location data is required", Toast.LENGTH_SHORT).show();
-            } else {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            }
-        } else {
-            Toast.makeText(this, "Location permissions already granted", Toast.LENGTH_SHORT).show();
-        }
-        onCreateProcess();                                                        //onCreate Process by BlunoLibrary
-
+    public void inicializarVariables() {
+        estadoMonitoreo = findViewById(R.id.control_bluno);
+        estadoMonitoreo.setEnabled(false);
 
         serialBegin(115200);                                                    //set the Uart Baudrate on BLE chip to 115200
 
         serialReceivedText = findViewById(R.id.serialReveicedText);    //initial the EditText of the received data
         serialSendText = findViewById(R.id.serialSendText);            //initial the EditText of the sending data
+
+        UA = (Spinner) findViewById(R.id.CMMateria);
+
+        String [] UnidadAprendizaje = {"Selecciona una materia", "Líneas de Transmisión y Antenas", "Teoria de la Informacion", "Teoria de las Comunicaciones", "Variable Compleja",
+                "Protocolos de Internet", "Comunicaciones Digitales", "Sistemas Distribuidos", "Metodologia", "Sistemas Celulares", "Multimedia","Señales y Sistemas", "Probabilidad",
+                "Programacion de Dispositivos Moviles", "PT1", "PT2"};
+        ArrayAdapter<String> AdapterUnidad = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, UnidadAprendizaje);
+        UA.setAdapter(AdapterUnidad);
 
         Button buttonSerialSend = findViewById(R.id.buttonSerialSend);        //initial the button for sending the data
         Button regresar = findViewById(R.id.CSRegresar);
@@ -84,7 +102,6 @@ public class ConectarBluno extends BlunoLibrary {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-
                 serialSend(serialSendText.getText().toString());                //send the data to the BLUNO
             }
         });
@@ -95,20 +112,77 @@ public class ConectarBluno extends BlunoLibrary {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-
                 buttonScanOnClickProcess();                                        //Alert Dialog for selecting the BLE device
             }
         });
     }
 
-    public void animar(View view) {
-        estadoMonitoreo.setSelected(!estadoMonitoreo.isSelected());
-        if (!estadoMonitoreo.isSelected()) {
-            estadoMonitoreo.setImageResource(R.drawable.ic_detener_monitoreo);
+    public void pedirPermisos() {
+        // Permisos para bluetooth
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                Toast.makeText(this, "Se requiere permiso para obtener datos de ubicación BLE", Toast.LENGTH_SHORT).show();
+            } else {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            }
         } else {
-            estadoMonitoreo.setImageResource(R.drawable.ic_comienza_monitoreo);
+            Toast.makeText(this, "\n" +
+                    "Permisos de ubicación ya otorgados", Toast.LENGTH_SHORT).show();
         }
-        ((Animatable) estadoMonitoreo.getDrawable()).start();
+
+        // Permisos para almacenamiento externo
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+        }
+    }
+
+    public void ExportarCSV(View view) {
+
+        DateFormat hourdateFormat = new SimpleDateFormat("HH_mm_ss_dd_MM_yyyy");
+        File Carpeta = new File(Environment.getExternalStorageDirectory() + "/Monitoreo" + BoletaRecibida);
+
+        boolean isCreate = false;
+
+        if (!Carpeta.exists()) {
+            isCreate = Carpeta.mkdir();
+        }
+
+        String[] arregloArchivos = Carpeta.list();
+        assert arregloArchivos != null;
+        int numArchivos = arregloArchivos.length; // NÚMERO DE ARCHIVOS EN LA CARPETA
+
+        Log.d("Hora",hourdateFormat.format(new Date()));
+
+        String Archivo = Carpeta.toString() + "/" + BoletaRecibida + "_" + hourdateFormat.format(new Date()).trim() + ".csv";
+
+        try {
+            FileWriter fileWriter = new FileWriter(Archivo);
+            fileWriter.append(BoletaRecibida).append("\n");
+            fileWriter.append(UA.getSelectedItem().toString()).append("\n");
+            fileWriter.append(hourdateFormat.format(new Date())).append("\n");
+            fileWriter.append("MuestraFC, TiempoFC, MuestraGSR, TiempoGSR");
+            fileWriter.close();
+            Toast.makeText(this, "Se creó correctmente el registro de las variables.", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Log.d("Exception_FillWriter", e.toString());
+        }
+    }
+
+    public void animar(View view) {
+        if(!UA.getSelectedItem().toString().equals("Selecciona una materia")) {
+            estadoMonitoreo.setSelected(!estadoMonitoreo.isSelected());
+            if (!estadoMonitoreo.isSelected()) {
+                estadoMonitoreo.setImageResource(R.drawable.ic_detener_monitoreo);
+                serialSend("Play");
+            } else {
+                estadoMonitoreo.setImageResource(R.drawable.ic_comienza_monitoreo);
+                serialSend("Stop");
+            }
+            ((Animatable) estadoMonitoreo.getDrawable()).start();
+        } else {
+            Toast.makeText(this, "No se ha seleccionado una materia", Toast.LENGTH_LONG).show();
+        }
     }
 
     protected void onResume() {
