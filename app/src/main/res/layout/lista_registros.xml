@@ -6,6 +6,7 @@
     android:layout_marginTop="@dimen/margin"
     android:layout_marginEnd="@dimen/margin"
     android:layout_marginBottom="@dimen/margin"
+    android:gravity="center"
     android:orientation="horizontal">
 
     <TextView

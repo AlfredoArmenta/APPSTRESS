@@ -1,6 +1,7 @@
 package com.example.estres2.ui.registros;
 
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -14,20 +15,24 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.estres2.MenuPrincipal;
 import com.example.estres2.R;
+import com.example.estres2.Usuario;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdapter.ListaRegistroViewHolder> {
-    private FragmentRegistro fragmento = new FragmentRegistro();
     public int position;
     public Context mContext;
+    public String Boleta;
     public static ArrayList<ListaRegistro> mExampleList;
     private static final String TAG = "MyViewHolder";
 
-    public ListaRegistroAdapter(ArrayList<ListaRegistro> exampleList, Context mContext) {
+    public ListaRegistroAdapter(ArrayList<ListaRegistro> exampleList, Context mContext, String boletaUsuario) {
         mExampleList = exampleList;
         this.mContext = mContext;
+        Boleta = boletaUsuario;
     }
 
     @NonNull
@@ -42,39 +47,6 @@ public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdap
         ListaRegistro currentRegistro = mExampleList.get(position);
         holder.registroImagen.setImageResource(currentRegistro.getImagenEliminar());
         holder.registroTexto.setText(currentRegistro.getNombreRegistro());
-        /*holder.registroImagen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //creating a popup menu
-                PopupMenu popup = new PopupMenu(mContext, holder.registroImagen);
-                //inflating menu from xml resource
-                popup.inflate(R.menu.menu_registros);
-                //adding click listener
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_graficar:
-                                //handle menu1 click
-                                Toast.makeText(mContext, "Estoy en graficar",Toast.LENGTH_LONG).show();
-                                break;
-                            case R.id.action_analizar:
-                                //handle menu2 click
-                                Toast.makeText(mContext, "Estoy en analizar",Toast.LENGTH_LONG).show();
-                                break;
-                            case R.id.action_ambas:
-                                //handle menu3 click
-                                Toast.makeText(mContext, "Estoy en ambas",Toast.LENGTH_LONG).show();
-                                break;
-                        }
-                        return false;
-                    }
-                });
-                //displaying the popup
-                popup.show();
-            }
-        });*/
     }
 
     @Override
@@ -83,7 +55,6 @@ public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdap
     }
 
     class ListaRegistroViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
-        //class ListaRegistroViewHolder extends RecyclerView.ViewHolder {
         public TextView registroTexto;
         public ImageView registroImagen;
 
@@ -91,7 +62,8 @@ public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdap
             super(itemView);
             registroTexto = itemView.findViewById(R.id.RVText_View);
             registroImagen = itemView.findViewById(R.id.RVEliminar);
-            registroImagen.setOnClickListener(this);
+            if (!mExampleList.get(0).getNombreRegistro().equals("Carpeta Vacia"))
+                    registroImagen.setOnClickListener(this);
         }
 
         @Override
@@ -129,11 +101,31 @@ public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdap
                     //Toast.makeText(mContext, "Estoy en Eliminar",Toast.LENGTH_LONG).show();
                     Log.d(TAG, "onMenuItemClick: action_eliminar");
                     removeAt(position);
+                    eliminarRegistro(position);
                     return true;
                 default:
                     Log.d(TAG, "Default");
                     return false;
             }
+        }
+    }
+
+    private void eliminarRegistro(int position) {
+        int conteo = 0;
+        File Carpeta = new File(Environment.getExternalStorageDirectory() + "/Monitoreo" + Boleta);
+        if (Carpeta.exists()) {
+            File[] files = Carpeta.listFiles();
+            assert files != null;
+                for(int i=0; i<files.length; i++) {
+                    if(files[i].getPath().endsWith(".csv")) {
+                        if (i == position + conteo)
+                            files[i].delete();
+                    } else {
+                        conteo++;
+                    }
+                }
+            } else {
+            Toast.makeText(mContext, "No existe la carpeta del usuario", Toast.LENGTH_LONG).show();
         }
     }
 

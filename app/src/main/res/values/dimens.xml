@@ -7,7 +7,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="margin">10dp</dimen>
 
-    <dimen name="text_size_list_register">30sp</dimen>
+    <dimen name="text_size_list_register">16sp</dimen>
 
     <!-- Dimensiones de la actividad ConectarBluno-->
     <dimen name="text_size_bluno_conectar">24sp</dimen>
@@ -27,6 +27,6 @@
     <dimen name="button_max_size_image_floating">50dp</dimen>
 
     <!-- Dimenciones del RecyclerVew -->
-    <dimen name="recyclerview_size_height">200dp</dimen>
+    <dimen name="recyclerview_size_height">205dp</dimen>
 
 </resources>
