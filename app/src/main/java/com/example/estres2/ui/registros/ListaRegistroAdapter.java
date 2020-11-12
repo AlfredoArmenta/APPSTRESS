@@ -100,8 +100,12 @@ public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdap
                 case R.id.action_eliminar:
                     //Toast.makeText(mContext, "Estoy en Eliminar",Toast.LENGTH_LONG).show();
                     Log.d(TAG, "onMenuItemClick: action_eliminar");
-                    removeAt(position);
-                    eliminarRegistro(position);
+                    int c =eliminarRegistro(position);
+
+                    if(c <= 1){
+                        registroImagen.setImageResource(R.drawable.ic_sin_registro);
+                        registroTexto.setText("Carpeta Vacia");
+                    }else{removeAt(position);}
                     return true;
                 default:
                     Log.d(TAG, "Default");
@@ -110,14 +114,17 @@ public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdap
         }
     }
 
-    private void eliminarRegistro(int position) {
+    private int eliminarRegistro(int position) {
         int conteo = 0;
+        int cuentacsv = 0;
+
         File Carpeta = new File(Environment.getExternalStorageDirectory() + "/Monitoreo" + Boleta);
         if (Carpeta.exists()) {
             File[] files = Carpeta.listFiles();
             assert files != null;
                 for(int i=0; i<files.length; i++) {
                     if(files[i].getPath().endsWith(".csv")) {
+                        cuentacsv++;
                         if (i == position + conteo)
                             files[i].delete();
                     } else {
@@ -127,6 +134,7 @@ public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdap
             } else {
             Toast.makeText(mContext, "No existe la carpeta del usuario", Toast.LENGTH_LONG).show();
         }
+        return cuentacsv;
     }
 
     public void removeAt(int position) {

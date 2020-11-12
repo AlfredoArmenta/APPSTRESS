@@ -1,6 +1,8 @@
 package com.example.estres2;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import com.example.estres2.Bluetooth.ConectarBluno;
@@ -9,6 +11,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -61,6 +65,10 @@ public class MenuPrincipal extends AppCompatActivity {
         // Se crea un componente View para poder mostrar el contenido
         View Hview = navigationView.getHeaderView(0);
         pasarBoleta(Hview);
+        // Permisos para almacenamiento externo
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+        }
     }
 
     @Override

@@ -130,11 +130,6 @@ public class ConectarBluno extends BlunoLibrary {
             Toast.makeText(this, "\n" +
                     "Permisos de ubicación ya otorgados", Toast.LENGTH_SHORT).show();
         }
-
-        // Permisos para almacenamiento externo
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-        }
     }
 
     public void ExportarCSV(View view) {
@@ -147,10 +142,6 @@ public class ConectarBluno extends BlunoLibrary {
         if (!Carpeta.exists()) {
             isCreate = Carpeta.mkdir();
         }
-
-        String[] arregloArchivos = Carpeta.list();
-        assert arregloArchivos != null;
-        int numArchivos = arregloArchivos.length; // NÚMERO DE ARCHIVOS EN LA CARPETA
 
         Log.d("Hora",hourdateFormat.format(new Date()));
 
