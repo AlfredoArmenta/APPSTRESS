@@ -104,6 +104,7 @@ public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdap
 
                     if(c <= 1){
                         registroImagen.setImageResource(R.drawable.ic_sin_registro);
+                        registroImagen.setOnClickListener(null);
                         registroTexto.setText("Carpeta Vacia");
                     }else{removeAt(position);}
                     return true;
