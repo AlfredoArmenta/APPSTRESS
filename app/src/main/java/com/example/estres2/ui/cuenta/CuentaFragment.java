@@ -22,10 +22,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.estres2.DB;
+import com.example.estres2.almacenamiento.database.DB;
 import com.example.estres2.MenuPrincipal;
 import com.example.estres2.R;
-import com.example.estres2.Usuario;
+import com.example.estres2.almacenamiento.entidades.usuario.Usuario;
 
 public class CuentaFragment extends Fragment {
     private Usuario user;

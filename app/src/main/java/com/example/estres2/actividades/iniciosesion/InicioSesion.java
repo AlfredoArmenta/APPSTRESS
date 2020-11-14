@@ -1,4 +1,4 @@
-package com.example.estres2;
+package com.example.estres2.actividades.iniciosesion;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.estres2.almacenamiento.database.DB;
+import com.example.estres2.MenuPrincipal;
+import com.example.estres2.Mostrar;
+import com.example.estres2.R;
+import com.example.estres2.actividades.recuperarpassword.RecuperarPassword;
+import com.example.estres2.actividades.registrar.Registro;
 
 // Actividad principal
 public class InicioSesion extends AppCompatActivity {

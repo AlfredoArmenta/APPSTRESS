@@ -15,9 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.estres2.MenuPrincipal;
 import com.example.estres2.R;
-import com.example.estres2.Usuario;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.example.estres2;
+package com.example.estres2.almacenamiento.entidades.usuario;
 
 import java.io.Serializable;
 

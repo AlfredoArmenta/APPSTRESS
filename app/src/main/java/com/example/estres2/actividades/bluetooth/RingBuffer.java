@@ -1,4 +1,4 @@
-package com.example.estres2.Bluetooth;
+package com.example.estres2.actividades.bluetooth;
 
 public class RingBuffer<T> {
 

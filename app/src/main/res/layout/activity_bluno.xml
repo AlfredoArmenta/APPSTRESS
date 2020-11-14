@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:scrollbarThumbVertical="@drawable/scroll"
     android:scrollbars="vertical"
-    tools:context=".Bluetooth.ConectarBluno">
+    tools:context=".actividades.bluetooth.ConectarBluno">
 
     <LinearLayout
         android:layout_width="match_parent"

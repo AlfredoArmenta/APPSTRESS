@@ -1,4 +1,4 @@
-package com.example.estres2;
+package com.example.estres2.actividades.recuperarpassword;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.estres2.almacenamiento.database.DB;
+import com.example.estres2.R;
+import com.example.estres2.actividades.iniciosesion.InicioSesion;
 
 public class RecuperarPassword extends AppCompatActivity {
 

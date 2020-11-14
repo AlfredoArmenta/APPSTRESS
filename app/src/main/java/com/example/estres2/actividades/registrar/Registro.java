@@ -1,4 +1,4 @@
-package com.example.estres2;
+package com.example.estres2.actividades.registrar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +14,12 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.estres2.almacenamiento.database.DB;
+import com.example.estres2.Mostrar;
+import com.example.estres2.R;
+import com.example.estres2.almacenamiento.entidades.usuario.Usuario;
+import com.example.estres2.actividades.iniciosesion.InicioSesion;
 
 public class Registro extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.estres2.Bluetooth;
+package com.example.estres2.actividades.bluetooth;
 
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;

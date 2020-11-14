@@ -8,6 +8,9 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.estres2.almacenamiento.database.DB;
+import com.example.estres2.almacenamiento.entidades.usuario.Usuario;
+
 import java.util.ArrayList;
 import java.util.List;
 

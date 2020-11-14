@@ -26,7 +26,7 @@
         android:requestLegacyExternalStorage="true">
 
         <activity android:name=".Mostrar" />
-        <activity android:name=".Bluetooth.ConectarBluno" android:configChanges="screenSize|orientation"/>
+        <activity android:name=".actividades.bluetooth.ConectarBluno" android:configChanges="screenSize|orientation"/>
 
         <activity
             android:name=".MenuPrincipal"
@@ -34,7 +34,7 @@
             android:theme="@style/NoActionBar"
             android:configChanges="screenSize|orientation" />
 
-        <activity android:name=".InicioSesion">
+        <activity android:name=".actividades.iniciosesion.InicioSesion">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,14 +43,14 @@
         </activity>
 
         <activity
-            android:name=".Registro"
+            android:name=".actividades.registrar.Registro"
             android:label="Registrar Usuario" />
 
         <activity
-            android:name=".RecuperarPassword"
+            android:name=".actividades.recuperarpassword.RecuperarPassword"
             android:label="Restablecer contraseña" />
 
-        <service android:name="com.example.estres2.Bluetooth.BluetoothLeService" android:enabled="true" />
+        <service android:name=".actividades.bluetooth.BluetoothLeService" android:enabled="true" />
 
     </application>
 

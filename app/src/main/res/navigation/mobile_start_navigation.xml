@@ -8,13 +8,13 @@
 
     <activity
         android:id="@+id/nav_inicio_sesion"
-        android:name="com.example.estres2.InicioSesion"
+        android:name="com.example.estres2.actividades.iniciosesion.InicioSesion"
         android:label="@string/iniciar_sesion"
         tools:layout="@layout/activity_inicio_sesion"/>
 
     <activity
         android:id="@+id/nav_registrar"
-        android:name="com.example.estres2.Registro"
+        android:name="com.example.estres2.actividades.registrar.Registro"
         android:label="@string/registrar"
         tools:layout="@layout/activity_registro">
         <action
@@ -24,7 +24,7 @@
 
     <activity
         android:id="@+id/nav_recuperar_contraseña"
-        android:name="com.example.estres2.RecuperarPassword"
+        android:name="com.example.estres2.actividades.recuperarpassword.RecuperarPassword"
         android:label="@string/restablecer_contrasena"
         tools:layout="@layout/activity_recuperar_password">
         <action

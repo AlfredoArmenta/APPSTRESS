@@ -1,4 +1,4 @@
-package com.example.estres2.Bluetooth;
+package com.example.estres2.actividades.bluetooth;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -23,7 +23,6 @@ import androidx.core.content.ContextCompat;
 
 import com.example.estres2.MenuPrincipal;
 import com.example.estres2.R;
-import com.example.estres2.Usuario;
 
 import java.io.File;
 import java.io.FileWriter;

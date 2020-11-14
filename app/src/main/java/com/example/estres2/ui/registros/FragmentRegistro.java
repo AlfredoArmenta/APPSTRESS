@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.example.estres2.MenuPrincipal;
 import com.example.estres2.R;
-import com.example.estres2.Usuario;
+import com.example.estres2.almacenamiento.entidades.usuario.Usuario;
 
 import java.io.File;
 import java.util.ArrayList;

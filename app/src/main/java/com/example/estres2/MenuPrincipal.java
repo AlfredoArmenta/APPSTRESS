@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
-import com.example.estres2.Bluetooth.ConectarBluno;
+import com.example.estres2.actividades.bluetooth.ConectarBluno;
+import com.example.estres2.actividades.iniciosesion.InicioSesion;
+import com.example.estres2.almacenamiento.database.DB;
+import com.example.estres2.almacenamiento.entidades.usuario.Usuario;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.view.MenuItem;

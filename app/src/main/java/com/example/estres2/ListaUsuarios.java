@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.estres2.almacenamiento.entidades.usuario.Usuario;
+
 import java.util.List;
 
 public class ListaUsuarios extends RecyclerView.Adapter<ListaUsuarios.UsuariosView> {

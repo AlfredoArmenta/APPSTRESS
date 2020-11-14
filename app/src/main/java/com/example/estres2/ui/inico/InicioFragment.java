@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.example.estres2.MenuPrincipal;
 import com.example.estres2.R;
-import com.example.estres2.Usuario;
+import com.example.estres2.almacenamiento.entidades.usuario.Usuario;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
