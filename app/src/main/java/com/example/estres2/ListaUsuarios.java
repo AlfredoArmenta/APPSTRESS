@@ -39,7 +39,7 @@ public class ListaUsuarios extends RecyclerView.Adapter<ListaUsuarios.UsuariosVi
         holder.MEdad.setText(String.format("Edad: %s", ListaUsuarios.get(position).getEdad()));
         holder.MGenero.setText(String.format("Genero: %s", ListaUsuarios.get(position).getGenero()));
         holder.MSemestre.setText(String.format("Semestre: %s", ListaUsuarios.get(position).getSemestre()));
-        holder.MContraseña.setText(String.format("Contraseña: %s", ListaUsuarios.get(position).getContraseña()));
+        holder.MContraseña.setText(String.format("Contraseña: %s", ListaUsuarios.get(position).getPassword()));
     }
 
     @Override

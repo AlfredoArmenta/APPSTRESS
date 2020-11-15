@@ -4,9 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.database.Cursor;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.example.estres2.almacenamiento.database.DB;
 import com.example.estres2.almacenamiento.entidades.usuario.Usuario;
@@ -14,7 +12,7 @@ import com.example.estres2.almacenamiento.entidades.usuario.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Mostrar extends AppCompatActivity {
+public class MostrarUsuarios extends AppCompatActivity {
     // Creamos los objetos
     RecyclerView rvUsuarios;
     ListaUsuarios Lista;
@@ -24,7 +22,7 @@ public class Mostrar extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Inicializamos los objetos
-        setContentView(R.layout.activity_mostrar);
+        setContentView(R.layout.activity_mostrarusuario);
         rvUsuarios = findViewById(R.id.rvUsuarios);
         rvUsuarios.setLayoutManager(new GridLayoutManager(this, 1));
         obtenerUsuarios();
@@ -34,26 +32,8 @@ public class Mostrar extends AppCompatActivity {
     public void obtenerUsuarios() {
         UsuariosLista.clear();
         DB db = new DB(getApplicationContext());
-        Cursor fila = db.Mostrar();
-
-        if (fila != null && fila.getCount() != 0) {
-            fila.moveToFirst();
-            do {
-                UsuariosLista.add(
-                        new Usuario(
-                                fila.getString(0),
-                                fila.getString(1),
-                                fila.getString(2),
-                                fila.getString(3),
-                                fila.getString(4),
-                                fila.getString(5)
-                        )
-                );
-            } while (fila.moveToNext());
-        } else {
-            Toast.makeText(Mostrar.this, "No hay registros.", Toast.LENGTH_LONG).show();
-        }
-        Lista = new ListaUsuarios(Mostrar.this, UsuariosLista);
+        UsuariosLista = db.MostrarUsuario();
+        Lista = new ListaUsuarios(MostrarUsuarios.this, UsuariosLista);
         rvUsuarios.setAdapter(Lista);
     }
     // ********************** Fin de la clase Mostrar ************************ //

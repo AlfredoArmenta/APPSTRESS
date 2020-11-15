@@ -6,29 +6,54 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.estres2.almacenamiento.entidades.archivo.Archivo;
 import com.example.estres2.almacenamiento.entidades.usuario.Usuario;
+import com.example.estres2.almacenamiento.entidades.wearable.Wearable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DB extends SQLiteOpenHelper {
     // Versión de la base de datos
     private static final int VERSION_BD = 1;
 
-    //Nombre de la base de datos
+    // Nombre de la base de datos
     private static final String NOMBRE_BD = "usermanager";
 
     // Nombre de la tabla Usuario
     private static final String TABLA_USUARIO = "usuarios";
 
-    // Columnas de la tabla
+    // Columnas de la tabla Usuario
     private static final String COLUMNA_USUARIO_BOLETA = "boleta";
     private static final String COLUMNA_USUARIO_NOMBRE = "nombre";
     private static final String COLUMNA_USUARIO_EDAD = "edad";
     private static final String COLUMNA_USUARIO_GENERO = "genero";
     private static final String COLUMNA_USUARIO_SEMESTRE = "semestre";
-    private static final String COLUMNA_USUARIO_CONTRASEÑA = "contraseña";
+    private static final String COLUMNA_USUARIO_PASSWORD = "contraseña";
 
-    // Sentencia SQL para la creación de una tabla
+    // Sentencia SQL para la creación de la tabla Usuario
     private static final String CREATE_TABLA_USUARIOS = "create table if not exists " + TABLA_USUARIO + "(" + COLUMNA_USUARIO_BOLETA + " text primary key, " + COLUMNA_USUARIO_NOMBRE + " text, "
-            + COLUMNA_USUARIO_EDAD + " text, " + COLUMNA_USUARIO_GENERO + " text, " + COLUMNA_USUARIO_SEMESTRE + " text, " + COLUMNA_USUARIO_CONTRASEÑA + " text" + ");";
+            + COLUMNA_USUARIO_EDAD + " text, " + COLUMNA_USUARIO_GENERO + " text, " + COLUMNA_USUARIO_SEMESTRE + " text, " + COLUMNA_USUARIO_PASSWORD + " text" + ");";
+
+    // Nombre de la tabla Wearable
+    private static final String TABLA_WEARABLE = "wearable";
+
+    // Columnas de la tabla  Wearable
+    private static final String COLUMNA_WEARABLE_ID = "id_wearable";
+    private static final String COLUMNA_WEARABLE_MAC = "mac";
+
+    // Sentencia SQL para la creación de la tabla Wearable
+    private static final String CREATE_TABLA_WEARABLE = "create table if not exists " + TABLA_WEARABLE + "(" + COLUMNA_WEARABLE_ID + " text primary key, " + COLUMNA_WEARABLE_MAC + " text" + ");";
+
+    // Nombre de la tabla Archivo
+    private static final String TABLA_ARCHIVO = "archivo";
+
+    // Columnas de la tabla  Archivo
+    private static final String COLUMNA_ARCHIVO_ID = "id_archivo";
+    private static final String COLUMNA_ARCHIVO_BOLETA_USUARIO = "boleta";
+
+    // Sentencia SQL para la creación de la tabla archivo
+    private static final String CREATE_TABLA_ARCHIVO = "create table if not exists " + TABLA_ARCHIVO + "(" + COLUMNA_ARCHIVO_ID + " text primary key, " + COLUMNA_ARCHIVO_BOLETA_USUARIO + " text" + ");";
+
 
     // Constructor de la clase en la que se encuentra la crear base de datos
     public DB(Context context) {
@@ -39,18 +64,21 @@ public class DB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLA_USUARIOS);
+        db.execSQL(CREATE_TABLA_WEARABLE);
+        db.execSQL(CREATE_TABLA_ARCHIVO);
     }
 
     // Función que se encarga de la actualización de la base de datos
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS '" + TABLA_USUARIO + "'");
+        db.execSQL("DROP TABLE IF EXISTS '" + TABLA_WEARABLE + "'");
+        db.execSQL("DROP TABLE IF EXISTS '" + TABLA_ARCHIVO + "'");
         onCreate(db);
     }
 
     // Función que nos permite insertar un nuevo usuario
     public long InsertarUsuario(Usuario user) {
-
         SQLiteDatabase db = this.getReadableDatabase();
         if (db != null) {
             ContentValues values = new ContentValues();
@@ -59,7 +87,7 @@ public class DB extends SQLiteOpenHelper {
             values.put(COLUMNA_USUARIO_EDAD, user.getEdad());
             values.put(COLUMNA_USUARIO_GENERO, user.getGenero());
             values.put(COLUMNA_USUARIO_SEMESTRE, user.getSemestre());
-            values.put(COLUMNA_USUARIO_CONTRASEÑA, user.getContraseña());
+            values.put(COLUMNA_USUARIO_PASSWORD, user.getPassword());
             long insert = db.insert(TABLA_USUARIO, null, values);
             db.close();
             return insert;
@@ -70,30 +98,48 @@ public class DB extends SQLiteOpenHelper {
     // Función que confima la existencia de la boleta ingresada y regresa como parametro la contraseña asociada a la cuenta
     public String IniciarSesion(String Boleta) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String Contraseña = "";
-        Cursor fila = db.rawQuery("select " + COLUMNA_USUARIO_CONTRASEÑA + " from " + TABLA_USUARIO + " where " + COLUMNA_USUARIO_BOLETA + " = " + Boleta, null);
-
+        String Password = "";
+        Cursor fila = db.rawQuery("select " + COLUMNA_USUARIO_PASSWORD + " from " + TABLA_USUARIO + " where " + COLUMNA_USUARIO_BOLETA + " = " + Boleta, null);
         if (fila != null && fila.getCount() != 0) {
             fila.moveToFirst();
-            Contraseña = fila.getString(0);
+            Password = fila.getString(0);
             db.close();
-            return Contraseña;
+            return Password;
         } else {
-            return Contraseña;
+            return Password;
         }
     }
 
     // Función que realiza la consulta para la visualización de todos los Uusarios registrados regresa una ArrayList que contiene a todos los Usuarios
-    public Cursor Mostrar() {
+    public List<Usuario> MostrarUsuario() {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("select * from usuarios", null);
+        List<Usuario> UsuariosLista = new ArrayList<>();
+        UsuariosLista.clear();
+        Cursor fila = db.rawQuery("select * from usuarios", null);
+        if (fila != null && fila.getCount() != 0) {
+            fila.moveToFirst();
+            do {
+                UsuariosLista.add(
+                        new Usuario(
+                                fila.getString(0),
+                                fila.getString(1),
+                                fila.getString(2),
+                                fila.getString(3),
+                                fila.getString(4),
+                                fila.getString(5)
+                        )
+                );
+            } while (fila.moveToNext());
+        } else {
+            return UsuariosLista;
+        }
+        return UsuariosLista;
     }
 
-    public String RecuperarContraseña(String Boleta, String Contraseña) {
+    public String RecuperarPassword(String Boleta, String Password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMNA_USUARIO_CONTRASEÑA, Contraseña);
-
+        values.put(COLUMNA_USUARIO_PASSWORD, Password);
         if (db.update(TABLA_USUARIO, values, COLUMNA_USUARIO_BOLETA + "=" + Boleta, null) > 0) {
             db.close();
             return "Corregido";
@@ -105,7 +151,6 @@ public class DB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Usuario AuxUsuario = new Usuario("", "", "", "", "", "");
         Cursor fila = db.rawQuery("select *from " + TABLA_USUARIO + " where " + COLUMNA_USUARIO_BOLETA + " = " + Boleta, null);
-
         if (fila != null && fila.getCount() != 0) {
             fila.moveToFirst();
             AuxUsuario = new Usuario(
@@ -117,23 +162,20 @@ public class DB extends SQLiteOpenHelper {
                     fila.getString(5)
             );
             db.close();
-            return AuxUsuario;
-        } else {
-            return AuxUsuario;
         }
+        return AuxUsuario;
     }
 
     // Función que nos permite modificar un usuario
     public long ActualizarUsuario(Usuario user) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         if (db != null) {
             ContentValues values = new ContentValues();
             values.put(COLUMNA_USUARIO_NOMBRE, user.getNombre());
             values.put(COLUMNA_USUARIO_EDAD, user.getEdad());
             values.put(COLUMNA_USUARIO_GENERO, user.getGenero());
             values.put(COLUMNA_USUARIO_SEMESTRE, user.getSemestre());
-            values.put(COLUMNA_USUARIO_CONTRASEÑA, user.getContraseña());
+            values.put(COLUMNA_USUARIO_PASSWORD, user.getPassword());
             long update = db.update(TABLA_USUARIO, values, COLUMNA_USUARIO_BOLETA + "=" + user.getBoleta(), null);
             db.close();
             return update;
@@ -148,5 +190,106 @@ public class DB extends SQLiteOpenHelper {
         db.close();
         return Borrar;
     }
+
+    // ********************** Funciones de Wearable *************************
+    // Función que nos permite insertar un nuevo wearable
+    public long InsertarWearable(Wearable wearable) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        if (db != null) {
+            ContentValues values = new ContentValues();
+            values.put(COLUMNA_WEARABLE_ID, wearable.getId());
+            values.put(COLUMNA_WEARABLE_MAC, wearable.getMac());
+            long insert = db.insert(TABLA_WEARABLE, null, values);
+            db.close();
+            return insert;
+        }
+        return 0;
+    }
+
+    public boolean ObtenerWearable(String Mac) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] campos = new String[] {COLUMNA_WEARABLE_ID, COLUMNA_WEARABLE_MAC};
+        Cursor fila = db.rawQuery("select *from " + TABLA_WEARABLE + " where " + COLUMNA_WEARABLE_MAC + " = '" + Mac + "' ", null);
+        if (fila != null && fila.getCount() != 0) {
+            fila.moveToFirst();
+            db.close();
+            return true;
+        }
+        return false;
+    }
+
+    public List<Wearable> MostrarWearable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        List<Wearable> WearableLista = new ArrayList<>();
+        WearableLista.clear();
+        Cursor fila = db.rawQuery("select * from wearable", null);
+        if (fila != null && fila.getCount() != 0) {
+            fila.moveToFirst();
+            do {
+                WearableLista.add(
+                        new Wearable(
+                                fila.getString(0),
+                                fila.getString(1)
+                        )
+                );
+            } while (fila.moveToNext());
+        } else {
+            return WearableLista;
+        }
+        return WearableLista;
+    }
+
+    public long BorrarWearable(Wearable wearable) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long Borrar = db.delete(TABLA_WEARABLE, COLUMNA_WEARABLE_MAC + " = '" + wearable.getMac() + "' ", null);
+        db.close();
+        return Borrar;
+    }
+
+    // ********************** Funciones de Archivo *************************
+    // Función que nos permite insertar un nuevo archivo
+    public long InsertarArchivo(Archivo archivo) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        if (db != null) {
+            ContentValues values = new ContentValues();
+            values.put(COLUMNA_ARCHIVO_ID,archivo.getId());
+            values.put(COLUMNA_ARCHIVO_BOLETA_USUARIO, archivo.getBoleta());
+            long insert = db.insert(TABLA_ARCHIVO
+                    , null, values);
+            db.close();
+            return insert;
+        }
+        return 0;
+    }
+
+    public List<Archivo> MostrarArchivo() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        List<Archivo> ArchivoLista = new ArrayList<>();
+        ArchivoLista.clear();
+        Cursor fila = db.rawQuery("select * from archivo", null);
+        if (fila != null && fila.getCount() != 0) {
+            fila.moveToFirst();
+            do {
+                ArchivoLista.add(
+                        new Archivo(
+                                fila.getString(0),
+                                fila.getString(1)
+                        )
+                );
+            } while (fila.moveToNext());
+        } else {
+            return ArchivoLista;
+        }
+        return ArchivoLista;
+    }
+
+    // Función que nos permite borrar un archivo
+    public long BorrarArchivo(Archivo archivo) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long Borrar = db.delete(TABLA_ARCHIVO, COLUMNA_ARCHIVO_ID + " = " + archivo.getId(), null);
+        db.close();
+        return Borrar;
+    }
+
     // ********************** Fin de la clase DB ************************ //
 }

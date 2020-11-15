@@ -113,7 +113,7 @@ public class CuentaFragment extends Fragment {
         }
 
         Semestre.setSelection(AdapterSemestre.getPosition(user.getSemestre()));
-        Contraseña.setText(user.getContraseña());
+        Contraseña.setText(user.getPassword());
 
         // Se llama a esta función para validar la contraseña del usuario
         password();
@@ -147,7 +147,7 @@ public class CuentaFragment extends Fragment {
             user.setGenero("Femenino");
         }
         user.setSemestre(Semestre.getSelectedItem().toString());
-        user.setContraseña(Contraseña.getText().toString());
+        user.setPassword(Contraseña.getText().toString());
 
         if (VerifyCampos()) {
             if (bd.ActualizarUsuario(user) > 0 && !(getActivity() == null)) {

@@ -26,8 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:src="@drawable/ic_inicio_sesion"
-            android:contentDescription="@string/icono_de_inicio" />
+            android:contentDescription="@string/icono_de_inicio"
+            android:src="@drawable/ic_inicio_sesion" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="wrap_content"
@@ -42,12 +42,12 @@
                 android:id="@+id/Usuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:drawableStart="@android:drawable/ic_menu_edit"
                 android:ems="10"
                 android:hint="@string/boleta"
                 android:inputType="number"
-                android:textSize="24sp"
-                android:autofillHints="" />
+                android:textSize="24sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,12 +64,12 @@
                 android:id="@+id/Password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:drawableStart="@android:drawable/ic_lock_idle_lock"
                 android:ems="10"
                 android:hint="@string/nueva_contrasena"
                 android:inputType="textPassword"
-                android:textSize="24sp"
-                android:autofillHints="" />
+                android:textSize="24sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -97,10 +97,10 @@
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin"
                 android:background="@drawable/cambia_sombra"
-                android:textColor="@color/colorPrimary"
+                android:onClick="Ingresar"
                 android:text="@string/ingresar"
-                android:textSize="@dimen/text_size_bluno_conectar"
-                android:onClick="Ingresar" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_size_bluno_conectar" />
 
             <Button
                 android:id="@+id/Registro"
@@ -111,20 +111,35 @@
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin"
                 android:background="@drawable/cambia_sombra"
-                android:textColor="@color/colorPrimary"
                 android:onClick="Registrar"
                 android:text="@string/registrar"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_size_bluno_conectar" />
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/Mostrar"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="Mostrar"
-            android:text="Mostrar"
-            android:visibility="visible" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/MostrarUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="MostrarUsuarios"
+                android:text="User"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/MostrarArchivo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="MostrarArchivo"
+                android:text="Archivo"
+                android:visibility="visible" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

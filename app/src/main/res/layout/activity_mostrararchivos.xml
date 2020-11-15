@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Mostrar">
+    tools:context=".MostrarArchivos">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvUsuarios"
+        android:id="@+id/rvArchivo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin"

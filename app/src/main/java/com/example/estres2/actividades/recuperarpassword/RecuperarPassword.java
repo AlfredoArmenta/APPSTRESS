@@ -73,7 +73,7 @@ public class RecuperarPassword extends AppCompatActivity {
 
         if (!Rboleta.equals("") && !Rcontraseña.equals("")) {
             if (VerifyCampos()) {
-                if (bd.RecuperarContraseña(Rboleta, Rcontraseña).equals("Corregido")) {
+                if (bd.RecuperarPassword(Rboleta, Rcontraseña).equals("Corregido")) {
                     Toast.makeText(getApplicationContext(),
                             getText(R.string.ActualizoCorrectamente), Toast.LENGTH_SHORT).show();
                     Intent siguiente = new Intent(this, InicioSesion.class);

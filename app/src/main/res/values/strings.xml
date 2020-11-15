@@ -157,5 +157,10 @@
     <string name="eliminarse_la_cuenta">Al eliminarse la cuenta no se podrán recuperar los datos.</string>
     <string name="icono_de_inicio">Icono de inicio</string>
     <string name="imagen_user">Imagen user</string>
+    <string name="id_wearable">id wearable</string>
+    <string name="mac_wearable">Mac wearable</string>
+    <string name="id_archvivo">Id Archvivo</string>
+    <string name="wearables_registrado">Wearables Registrado</string>
+    <string name="selecciona_un_dispositivo_para_agregar">Selecciona un dispositivo para agregar</string>
 
 </resources>

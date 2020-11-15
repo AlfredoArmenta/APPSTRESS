@@ -9,17 +9,20 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.estres2.MostrarArchivos;
+import com.example.estres2.AdministrarWearables;
 import com.example.estres2.almacenamiento.database.DB;
 import com.example.estres2.MenuPrincipal;
-import com.example.estres2.Mostrar;
+import com.example.estres2.MostrarUsuarios;
 import com.example.estres2.R;
 import com.example.estres2.actividades.recuperarpassword.RecuperarPassword;
 import com.example.estres2.actividades.registrar.Registro;
+import com.example.estres2.almacenamiento.entidades.wearable.Wearable;
 
 // Actividad principal
 public class InicioSesion extends AppCompatActivity {
     private EditText Boleta;
-    private EditText Contraseña;
+    private EditText Password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +30,12 @@ public class InicioSesion extends AppCompatActivity {
         setContentView(R.layout.activity_inicio_sesion);
         InicializarObjetos();
         Boleta.setText("2015640408");
-        Contraseña.setText("Tru$tn01");
+        Password.setText("Tru$tn01");
     }
 
     private void InicializarObjetos() {
         Boleta = (EditText) findViewById(R.id.Usuario);
-        Contraseña = (EditText) findViewById(R.id.Password);
+        Password = (EditText) findViewById(R.id.Password);
     }
 
     // Función que nos permite pasar a la actividad de Registro
@@ -53,16 +56,16 @@ public class InicioSesion extends AppCompatActivity {
             // Se crea el objeto bd para utilizar los metodos de la DB y se crea con uno nuevo
             DB bd = new DB(getApplicationContext());
             // Se crea el objeto AuxUsuario para obtener los parametros de los usuarios y enviarlos a la siguiente actividad
-            String RContraeña;
+            String RPassword;
             // Se crea el objeto PasarUsuario que nos permite enviar objetos de un activity a otra
             Bundle PasarBoleta = new Bundle();
             // Se crea el objeto siguiente para dar inicio a la activity MenuPrincipal
             Intent siguiente = new Intent(InicioSesion.this, MenuPrincipal.class);
             String IBoleta = Boleta.getText().toString();
-            String IContraseña = Contraseña.getText().toString();
-            RContraeña = bd.IniciarSesion(IBoleta);
+            String IPassword = Password.getText().toString();
+            RPassword = bd.IniciarSesion(IBoleta);
 
-            if (IContraseña.equals(RContraeña)) {
+            if (IPassword.equals(RPassword)) {
                 Toast.makeText(getApplicationContext(),
                         getText(R.string.InicioSesion), Toast.LENGTH_SHORT).show();
                 // Damos una clave = Boleta y el Objeto de tipo String = RContraseña
@@ -71,7 +74,7 @@ public class InicioSesion extends AppCompatActivity {
                 siguiente.putExtras(PasarBoleta);
                 startActivity(siguiente);
                 finish();
-            } else if (RContraeña.equals("")) {
+            } else if (RPassword.equals("")) {
                 Toast.makeText(getApplicationContext(),
                         getText(R.string.BoletaNoRegistrada), Toast.LENGTH_SHORT).show();
             } else {
@@ -82,8 +85,14 @@ public class InicioSesion extends AppCompatActivity {
     }
 
     // Función auxiliar que nos ayuda a visualizar los Usuarios registrados
-    public void Mostrar(View view) {
-        Intent siguiente = new Intent(this, Mostrar.class);
+    public void MostrarUsuarios(View view) {
+        Intent siguiente = new Intent(this, MostrarUsuarios.class);
+        startActivity(siguiente);
+    }
+
+    // Función auxiliar que nos ayuda a visualizar los Usuarios registrados
+    public void MostrarArchivo(View view) {
+        Intent siguiente = new Intent(this, MostrarArchivos.class);
         startActivity(siguiente);
     }
 
@@ -98,8 +107,8 @@ public class InicioSesion extends AppCompatActivity {
             return false;
         }
 
-        if (Contraseña.getText().toString().isEmpty()) {
-            Contraseña.setError(getString(R.string.SinContraseña), null);
+        if (Password.getText().toString().isEmpty()) {
+            Password.setError(getString(R.string.SinContraseña), null);
             return false;
         }
         return true;

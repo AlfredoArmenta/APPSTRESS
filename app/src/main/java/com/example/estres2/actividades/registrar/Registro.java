@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.estres2.almacenamiento.database.DB;
-import com.example.estres2.Mostrar;
+import com.example.estres2.MostrarUsuarios;
 import com.example.estres2.R;
 import com.example.estres2.almacenamiento.entidades.usuario.Usuario;
 import com.example.estres2.actividades.iniciosesion.InicioSesion;
@@ -107,7 +107,7 @@ public class Registro extends AppCompatActivity {
 
     // Función que nos permite visualizar a todos los usuarios registrados
     public void Mostrar(View view) {
-        Intent siguiente = new Intent(this, Mostrar.class);
+        Intent siguiente = new Intent(this, MostrarUsuarios.class);
         startActivity(siguiente);
         finish();
     }
@@ -127,7 +127,7 @@ public class Registro extends AppCompatActivity {
         }
 
         user.setSemestre(Semestre.getSelectedItem().toString());
-        user.setContraseña(Contraseña.getText().toString());
+        user.setPassword(Contraseña.getText().toString());
 
         if (VerifyCampos()) {
             if (bd.InsertarUsuario(user) > 0) {

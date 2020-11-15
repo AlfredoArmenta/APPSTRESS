@@ -28,7 +28,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.estres2.AdministrarWearables;
 import com.example.estres2.R;
+import com.example.estres2.almacenamiento.database.DB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +77,7 @@ public abstract class BlunoLibrary extends AppCompatActivity {
     private BluetoothAdapter mBluetoothAdapter;
     private boolean mScanning = false;
     AlertDialog mScanDeviceDialog;
+    AlertDialog mRegisterDevice;
     private String mDeviceName;
     private String mDeviceAddress;
 
@@ -89,6 +92,8 @@ public abstract class BlunoLibrary extends AppCompatActivity {
     public boolean mConnected = false;
 
     private final static String TAG = BlunoLibrary.class.getSimpleName();
+
+    public DB db = new DB(this);
 
     private Runnable mConnectingOverTimeRunnable = new Runnable() {
 
@@ -152,15 +157,36 @@ public abstract class BlunoLibrary extends AppCompatActivity {
                             mDeviceName = device.getName().toString();
                             mDeviceAddress = device.getAddress().toString();
 
-                            if (mBluetoothLeService.connect(mDeviceAddress)) {
-                                Log.d(TAG, "Connect request success");
-                                mConnectionState = connectionStateEnum.isConnecting;
-                                onConectionStateChange(mConnectionState);
-                                mHandler.postDelayed(mConnectingOverTimeRunnable, 10000);
-                            } else {
-                                Log.d(TAG, "Connect request fail");
+                            if (db.ObtenerWearable(mDeviceAddress)) {
+                                if (mBluetoothLeService.connect(mDeviceAddress)) {
+                                    Log.d(TAG, "Connect request success");
+                                    mConnectionState = connectionStateEnum.isConnecting;
+                                    onConectionStateChange(mConnectionState);
+                                    mHandler.postDelayed(mConnectingOverTimeRunnable, 10000);
+                                } else {
+                                    Log.d(TAG, "Connect request fail");
+                                    mConnectionState = connectionStateEnum.isToScan;
+                                    onConectionStateChange(mConnectionState);
+                                }
+                            }else{
+                                Log.d(TAG, "El dispositivo no esta registrado");
                                 mConnectionState = connectionStateEnum.isToScan;
                                 onConectionStateChange(mConnectionState);
+                                mRegisterDevice = new AlertDialog.Builder(mainContext)
+                                        .setTitle("Registrar Dispositivo").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                Log.d(TAG, "Aceptar el registro");
+                                                    Intent siguiente = new Intent(mainContext, AdministrarWearables.class);
+                                                    startActivity(siguiente);
+                                                    //finish();
+                                            }
+                                        }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                Log.d(TAG, "Cancelar el registro");
+                                            }
+                                        }).show();
                             }
                         }
                     }
@@ -178,7 +204,6 @@ public abstract class BlunoLibrary extends AppCompatActivity {
                         scanLeDevice(false);
                     }
                 }).create();
-
     }
 
 
