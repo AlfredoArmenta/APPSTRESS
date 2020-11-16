@@ -28,9 +28,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.estres2.AdministrarWearables;
 import com.example.estres2.R;
 import com.example.estres2.almacenamiento.database.DB;
+import com.example.estres2.almacenamiento.entidades.wearable.Wearable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -168,7 +168,7 @@ public abstract class BlunoLibrary extends AppCompatActivity {
                                     mConnectionState = connectionStateEnum.isToScan;
                                     onConectionStateChange(mConnectionState);
                                 }
-                            }else{
+                            } else {
                                 Log.d(TAG, "El dispositivo no esta registrado");
                                 mConnectionState = connectionStateEnum.isToScan;
                                 onConectionStateChange(mConnectionState);
@@ -177,9 +177,8 @@ public abstract class BlunoLibrary extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 Log.d(TAG, "Aceptar el registro");
-                                                    Intent siguiente = new Intent(mainContext, AdministrarWearables.class);
-                                                    startActivity(siguiente);
-                                                    //finish();
+                                                Wearable wearable = new Wearable(mDeviceName, mDeviceAddress);
+                                                registrarWearable(wearable);
                                             }
                                         }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                                             @Override
@@ -196,14 +195,21 @@ public abstract class BlunoLibrary extends AppCompatActivity {
                     @Override
                     public void onCancel(DialogInterface arg0) {
                         System.out.println("mBluetoothAdapter.stopLeScan");
-
                         mConnectionState = connectionStateEnum.isToScan;
                         onConectionStateChange(mConnectionState);
                         mScanDeviceDialog.dismiss();
-
                         scanLeDevice(false);
                     }
                 }).create();
+    }
+
+    public void registrarWearable(Wearable wearable) {
+        DB bd = new DB(getApplicationContext());
+        if (bd.InsertarWearable(wearable) > 0) {
+            Toast.makeText(this, "Se inserto correctamente el Wearable", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "No se inserto ni madres", Toast.LENGTH_LONG).show();
+        }
     }
 
 

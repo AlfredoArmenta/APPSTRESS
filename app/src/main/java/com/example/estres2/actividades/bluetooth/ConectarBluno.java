@@ -1,6 +1,7 @@
 package com.example.estres2.actividades.bluetooth;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Animatable;
 import android.os.Bundle;
@@ -20,15 +21,22 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.estres2.ListaWearable;
 import com.example.estres2.MenuPrincipal;
 import com.example.estres2.R;
+import com.example.estres2.almacenamiento.database.DB;
+import com.example.estres2.almacenamiento.entidades.wearable.Wearable;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ConectarBluno extends BlunoLibrary {
 
@@ -37,6 +45,10 @@ public class ConectarBluno extends BlunoLibrary {
     private TextView serialReceivedText;
     private ImageButton estadoMonitoreo;
     private String BoletaRecibida;
+    private RecyclerView rvWearable;
+    private List<Wearable> wearablesLista = new ArrayList<>();
+    public EditText eliminarWearable;
+    public Button btn_eliminar;
 
     // Variables globales para la generación del archivo del registro
     private Spinner UA;
@@ -72,7 +84,6 @@ public class ConectarBluno extends BlunoLibrary {
     public void inicializarVariables() {
         estadoMonitoreo = findViewById(R.id.control_bluno);
         estadoMonitoreo.setEnabled(false);
-
         serialBegin(115200);                                                    //set the Uart Baudrate on BLE chip to 115200
 
         serialReceivedText = findViewById(R.id.serialReveicedText);    //initial the EditText of the received data
@@ -80,11 +91,17 @@ public class ConectarBluno extends BlunoLibrary {
 
         UA = (Spinner) findViewById(R.id.CMMateria);
 
-        String [] UnidadAprendizaje = {"Selecciona una materia", "Líneas de Transmisión y Antenas", "Teoria de la Informacion", "Teoria de las Comunicaciones", "Variable Compleja",
-                "Protocolos de Internet", "Comunicaciones Digitales", "Sistemas Distribuidos", "Metodologia", "Sistemas Celulares", "Multimedia","Señales y Sistemas", "Probabilidad",
+        String[] UnidadAprendizaje = {"Selecciona una materia", "Líneas de Transmisión y Antenas", "Teoria de la Informacion", "Teoria de las Comunicaciones", "Variable Compleja",
+                "Protocolos de Internet", "Comunicaciones Digitales", "Sistemas Distribuidos", "Metodologia", "Sistemas Celulares", "Multimedia", "Señales y Sistemas", "Probabilidad",
                 "Programacion de Dispositivos Moviles", "PT1", "PT2"};
         ArrayAdapter<String> AdapterUnidad = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, UnidadAprendizaje);
         UA.setAdapter(AdapterUnidad);
+
+        eliminarWearable = findViewById(R.id.Eliminar_Wearable);
+        btn_eliminar = findViewById(R.id.boton_eliminar);
+        rvWearable = findViewById(R.id.rvBluno_Mostrar_Wearables);
+        rvWearable.setLayoutManager(new GridLayoutManager(this, 1));
+        obtenerWearables(this);
 
         Button buttonSerialSend = findViewById(R.id.buttonSerialSend);        //initial the button for sending the data
         Button regresar = findViewById(R.id.CSRegresar);
@@ -142,7 +159,7 @@ public class ConectarBluno extends BlunoLibrary {
             isCreate = Carpeta.mkdir();
         }
 
-        Log.d("Hora",hourdateFormat.format(new Date()));
+        Log.d("Hora", hourdateFormat.format(new Date()));
 
         String Archivo = Carpeta.toString() + "/" + BoletaRecibida + "_" + hourdateFormat.format(new Date()).trim() + ".csv";
 
@@ -160,7 +177,7 @@ public class ConectarBluno extends BlunoLibrary {
     }
 
     public void animar(View view) {
-        if(!UA.getSelectedItem().toString().equals("Selecciona una materia")) {
+        if (!UA.getSelectedItem().toString().equals("Selecciona una materia")) {
             estadoMonitoreo.setSelected(!estadoMonitoreo.isSelected());
             if (!estadoMonitoreo.isSelected()) {
                 estadoMonitoreo.setImageResource(R.drawable.ic_detener_monitoreo);
@@ -172,6 +189,27 @@ public class ConectarBluno extends BlunoLibrary {
             ((Animatable) estadoMonitoreo.getDrawable()).start();
         } else {
             Toast.makeText(this, "No se ha seleccionado una materia", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    // Función en la que obtenemos los parametros2
+    public void obtenerWearables(Context context) {
+        DB bd = new DB(context);
+        wearablesLista.clear();
+        wearablesLista = bd.MostrarWearable();
+        ListaWearable lista = new ListaWearable(context, wearablesLista);
+        rvWearable = findViewById(R.id.rvBluno_Mostrar_Wearables);
+        rvWearable.setLayoutManager(new GridLayoutManager(context, 1));
+        rvWearable.setAdapter(lista);
+    }
+
+    public void eliminarWearable(View view) {
+        DB bd = new DB(getApplicationContext());
+        if (bd.BorrarWearable(eliminarWearable.getText().toString()) > 0) {
+            Toast.makeText(this, "Se Elimino correctamente el Wearable", Toast.LENGTH_LONG).show();
+            obtenerWearables(this);
+        } else {
+            Toast.makeText(this, "No se Borro ni madres", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -217,10 +255,13 @@ public class ConectarBluno extends BlunoLibrary {
                 estadoMonitoreo.setEnabled(true);
                 break;
             case isConnecting:
+                btn_eliminar.setEnabled(false);
+                obtenerWearables(this);
                 buttonScan.setImageResource(R.drawable.ic_estado_conectando);
                 estadoMonitoreo.setEnabled(false);
                 break;
             case isToScan:
+                btn_eliminar.setEnabled(true);
                 buttonScan.setImageResource(R.drawable.ic_estado_scan);
                 estadoMonitoreo.setEnabled(false);
                 break;

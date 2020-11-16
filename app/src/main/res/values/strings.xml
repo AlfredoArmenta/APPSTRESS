@@ -160,7 +160,7 @@
     <string name="id_wearable">id wearable</string>
     <string name="mac_wearable">Mac wearable</string>
     <string name="id_archvivo">Id Archvivo</string>
-    <string name="wearables_registrado">Wearables Registrado</string>
-    <string name="selecciona_un_dispositivo_para_agregar">Selecciona un dispositivo para agregar</string>
-
+    <string name="wearables_registrados">Wearables Registrados</string>
+    <string name="selecciona_un_wearable_para_eliminar">Selecciona un Wearable para eliminar</string>
+    <string name="wearable_eliminar">ID Wearable</string>
 </resources>

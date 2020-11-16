@@ -208,7 +208,6 @@ public class DB extends SQLiteOpenHelper {
 
     public boolean ObtenerWearable(String Mac) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] campos = new String[] {COLUMNA_WEARABLE_ID, COLUMNA_WEARABLE_MAC};
         Cursor fila = db.rawQuery("select *from " + TABLA_WEARABLE + " where " + COLUMNA_WEARABLE_MAC + " = '" + Mac + "' ", null);
         if (fila != null && fila.getCount() != 0) {
             fila.moveToFirst();
@@ -239,9 +238,9 @@ public class DB extends SQLiteOpenHelper {
         return WearableLista;
     }
 
-    public long BorrarWearable(Wearable wearable) {
+    public long BorrarWearable(String wearable) {
         SQLiteDatabase db = this.getWritableDatabase();
-        long Borrar = db.delete(TABLA_WEARABLE, COLUMNA_WEARABLE_MAC + " = '" + wearable.getMac() + "' ", null);
+        long Borrar = db.delete(TABLA_WEARABLE, COLUMNA_WEARABLE_ID + " = '" + wearable + "' ", null);
         db.close();
         return Borrar;
     }

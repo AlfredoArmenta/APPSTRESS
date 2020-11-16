@@ -10,14 +10,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.estres2.MostrarArchivos;
-import com.example.estres2.AdministrarWearables;
 import com.example.estres2.almacenamiento.database.DB;
 import com.example.estres2.MenuPrincipal;
 import com.example.estres2.MostrarUsuarios;
 import com.example.estres2.R;
 import com.example.estres2.actividades.recuperarpassword.RecuperarPassword;
 import com.example.estres2.actividades.registrar.Registro;
-import com.example.estres2.almacenamiento.entidades.wearable.Wearable;
 
 // Actividad principal
 public class InicioSesion extends AppCompatActivity {

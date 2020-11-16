@@ -44,6 +44,73 @@
         </LinearLayout>
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:text="@string/wearables_registrados"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_size_bluno_conectar" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvBluno_Mostrar_Wearables"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/recyclerview_size_height"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:scrollbarAlwaysDrawHorizontalTrack="true"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbarThumbVertical="@drawable/scroll"
+            android:scrollbars="vertical">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:text="@string/selecciona_un_wearable_para_eliminar"
+            android:textSize="@dimen/text_size_envio_datos_bluno_conectar"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/Eliminar_Wearable"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/wearable_eliminar"
+                android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/boton_eliminar"
+                android:layout_width="@dimen/button_size_width_normal"
+                android:layout_height="@dimen/button_size_height_text"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginEnd="@dimen/margin"
+                android:background="@drawable/cambia_sombra"
+                android:onClick="eliminarWearable"
+                android:text="@string/eliminar"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_size_bluno_conectar" />
+
+        </LinearLayout>
+
+        <TextView
             android:id="@+id/editText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

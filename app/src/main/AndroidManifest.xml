@@ -38,7 +38,6 @@
         <activity android:name=".actividades.recuperarpassword.RecuperarPassword" android:label="Restablecer contraseña" />
         <activity android:name=".actividades.bluetooth.ConectarBluno" android:configChanges="screenSize|orientation"/>
         <activity android:name=".MostrarUsuarios" />
-        <activity android:name=".AdministrarWearables"/>
         <activity android:name=".MostrarArchivos"/>
         <service android:name=".actividades.bluetooth.BluetoothLeService" android:enabled="true" />
 
