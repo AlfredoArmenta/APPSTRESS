@@ -26,10 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentRegistro extends Fragment {
-    private ArrayList<ListaRegistro> lRegistro = new ArrayList<>();
+    private final ArrayList<ListaRegistro> lRegistro = new ArrayList<>();
     public Context mContext;
     public Usuario user;
-    public List<String> item = new ArrayList<>();
 
     public FragmentRegistro() {
         // Required empty public constructor
@@ -75,6 +74,7 @@ public class FragmentRegistro extends Fragment {
     }
 
     public List<String> obtenerRegistros() {
+        List<String> item = new ArrayList<>();
         if (!(getActivity() == null)) {
             user = ((MenuPrincipal)getActivity()).MandarUsuario();
             File Carpeta = new File(Environment.getExternalStorageDirectory() + "/Monitoreo" + user.getBoleta());

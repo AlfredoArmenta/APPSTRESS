@@ -24,7 +24,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.estres2.ListaWearable;
+import com.example.estres2.AdapterWearable;
 import com.example.estres2.MenuPrincipal;
 import com.example.estres2.R;
 import com.example.estres2.almacenamiento.database.DB;
@@ -197,10 +197,11 @@ public class ConectarBluno extends BlunoLibrary {
         DB bd = new DB(context);
         wearablesLista.clear();
         wearablesLista = bd.MostrarWearable();
-        ListaWearable lista = new ListaWearable(context, wearablesLista);
-        rvWearable = findViewById(R.id.rvBluno_Mostrar_Wearables);
+        if (wearablesLista.isEmpty())
+            wearablesLista.add(new Wearable("Wearable no registrado","sin mac"));
+        AdapterWearable adapter = new AdapterWearable(context, wearablesLista);
         rvWearable.setLayoutManager(new GridLayoutManager(context, 1));
-        rvWearable.setAdapter(lista);
+        rvWearable.setAdapter(adapter);
     }
 
     public void eliminarWearable(View view) {

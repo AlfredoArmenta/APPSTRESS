@@ -14,7 +14,7 @@ import java.util.List;
 public class MostrarArchivos extends AppCompatActivity {
     // Creamos los objetos
     RecyclerView rvArchivo;
-    ListaArchivos Lista;
+    AdapterArchivos Lista;
     List<Archivo> ArchivoLista = new ArrayList<>();
 
     @Override
@@ -32,7 +32,7 @@ public class MostrarArchivos extends AppCompatActivity {
         ArchivoLista.clear();
         DB db = new DB(getApplicationContext());
         ArchivoLista = db.MostrarArchivo();
-        Lista = new ListaArchivos(MostrarArchivos.this, ArchivoLista);
+        Lista = new AdapterArchivos(MostrarArchivos.this, ArchivoLista);
         rvArchivo.setAdapter(Lista);
     }
     // ********************** Fin de la clase Mostrar ************************ //

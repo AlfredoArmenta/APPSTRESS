@@ -15,7 +15,7 @@ import java.util.List;
 public class MostrarUsuarios extends AppCompatActivity {
     // Creamos los objetos
     RecyclerView rvUsuarios;
-    ListaUsuarios Lista;
+    AdapterUsuarios Lista;
     List<Usuario> UsuariosLista = new ArrayList<>();
 
     @Override
@@ -33,7 +33,7 @@ public class MostrarUsuarios extends AppCompatActivity {
         UsuariosLista.clear();
         DB db = new DB(getApplicationContext());
         UsuariosLista = db.MostrarUsuario();
-        Lista = new ListaUsuarios(MostrarUsuarios.this, UsuariosLista);
+        Lista = new AdapterUsuarios(MostrarUsuarios.this, UsuariosLista);
         rvUsuarios.setAdapter(Lista);
     }
     // ********************** Fin de la clase Mostrar ************************ //

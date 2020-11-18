@@ -13,13 +13,13 @@ import com.example.estres2.almacenamiento.entidades.wearable.Wearable;
 
 import java.util.List;
 
-public class ListaWearable extends RecyclerView.Adapter<ListaWearable.WearableView> {
+public class AdapterWearable extends RecyclerView.Adapter<AdapterWearable.WearableView> {
     // Creanos un objecto context y un objeto List
     Context context;
     List<Wearable> ListaWearable;
 
     // Aquí inicializamos el constructor
-    public ListaWearable(Context context, List<Wearable> ListaWearable) {
+    public AdapterWearable(Context context, List<Wearable> ListaWearable) {
         this.context = context;
         this.ListaWearable = ListaWearable;
     }

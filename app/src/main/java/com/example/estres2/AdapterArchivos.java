@@ -13,13 +13,13 @@ import com.example.estres2.almacenamiento.entidades.archivo.Archivo;
 
 import java.util.List;
 
-public class ListaArchivos extends RecyclerView.Adapter<ListaArchivos.ArchivoView> {
+public class AdapterArchivos extends RecyclerView.Adapter<AdapterArchivos.ArchivoView> {
     // Creanos un objecto context y un objeto List
     Context context;
     List<Archivo> ListaArchivos;
 
     // Aquí inicializamos el constructor
-    public ListaArchivos(Context context, List<Archivo> ListaArchivo) {
+    public AdapterArchivos(Context context, List<Archivo> ListaArchivo) {
         this.context = context;
         this.ListaArchivos = ListaArchivo;
     }

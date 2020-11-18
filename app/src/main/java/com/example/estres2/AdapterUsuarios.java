@@ -13,13 +13,13 @@ import com.example.estres2.almacenamiento.entidades.usuario.Usuario;
 
 import java.util.List;
 
-public class ListaUsuarios extends RecyclerView.Adapter<ListaUsuarios.UsuariosView> {
+public class AdapterUsuarios extends RecyclerView.Adapter<AdapterUsuarios.UsuariosView> {
     // Creanos un objecto context y un objeto List
     Context context;
     List<Usuario> ListaUsuarios;
 
     // Aquí inicializamos el constructor
-    public ListaUsuarios(Context context, List<Usuario> ListaUsuarios) {
+    public AdapterUsuarios(Context context, List<Usuario> ListaUsuarios) {
         this.context = context;
         this.ListaUsuarios = ListaUsuarios;
     }
