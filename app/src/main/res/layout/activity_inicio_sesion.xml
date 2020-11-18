@@ -67,7 +67,7 @@
                 android:autofillHints=""
                 android:drawableStart="@android:drawable/ic_lock_idle_lock"
                 android:ems="10"
-                android:hint="@string/nueva_contrasena"
+                android:hint="@string/contrasena"
                 android:inputType="textPassword"
                 android:textSize="24sp" />
 

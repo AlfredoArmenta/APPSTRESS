@@ -223,7 +223,7 @@ public class ConectarBluno extends BlunoLibrary {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        onActivityResultProcess(requestCode, resultCode, data);                    //onActivityResult Process by BlunoLibrary
+        onActivityResultProcess(requestCode, resultCode);                    //onActivityResult Process by BlunoLibrary
         super.onActivityResult(requestCode, resultCode, data);
     }
 
