@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.estres2.R;
+import com.example.estres2.almacenamiento.database.DB;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -98,7 +99,7 @@ public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdap
                 case R.id.action_eliminar:
                     //Toast.makeText(mContext, "Estoy en Eliminar",Toast.LENGTH_LONG).show();
                     Log.d(TAG, "onMenuItemClick: action_eliminar");
-                    int c =eliminarRegistro(position);
+                    int c = eliminarRegistro(position);
 
                     if(c <= 1){
                         registroImagen.setImageResource(R.drawable.ic_sin_registro);
@@ -116,6 +117,7 @@ public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdap
     private int eliminarRegistro(int position) {
         int conteo = 0;
         int cuentacsv = 0;
+        DB db = new DB(mContext);
 
         File Carpeta = new File(Environment.getExternalStorageDirectory() + "/Monitoreo" + Boleta);
         if (Carpeta.exists()) {
@@ -124,8 +126,12 @@ public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdap
                 for(int i=0; i<files.length; i++) {
                     if(files[i].getPath().endsWith(".csv")) {
                         cuentacsv++;
-                        if (i == position + conteo)
-                            files[i].delete();
+                        if (i == position + conteo){
+                            if(db.BorrarArchivo(files[i].getName()) > 0){
+                                Toast.makeText(mContext, "Se elimino registro correctamente", Toast.LENGTH_LONG).show();
+                                files[i].delete();
+                            }
+                        }
                     } else {
                         conteo++;
                     }

@@ -276,16 +276,31 @@ public class DB extends SQLiteOpenHelper {
                         )
                 );
             } while (fila.moveToNext());
+            fila.close();
         } else {
             return ArchivoLista;
         }
         return ArchivoLista;
     }
 
-    // Función que nos permite borrar un archivo
-    public long BorrarArchivo(Archivo archivo) {
+    // Función para consultar un Archivo
+
+    public boolean ConsultarArchivo(Archivo archivo){
         SQLiteDatabase db = this.getWritableDatabase();
-        long Borrar = db.delete(TABLA_ARCHIVO, COLUMNA_ARCHIVO_ID + " = " + archivo.getId(), null);
+        Cursor fila = db.rawQuery("select " + COLUMNA_ARCHIVO_ID + " from " + TABLA_ARCHIVO + " where " + COLUMNA_ARCHIVO_ID + " = '" + archivo.getId() + "' ", null);
+        if (fila != null && fila.getCount() != 0) {
+            fila.moveToFirst();
+            db.close();
+            return true;
+        }
+        db.close();
+        return false;
+    }
+
+    // Función que nos permite borrar un archivo
+    public long BorrarArchivo(String archivo) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long Borrar = db.delete(TABLA_ARCHIVO, COLUMNA_ARCHIVO_ID + " = '" + archivo + "' ", null);
         db.close();
         return Borrar;
     }

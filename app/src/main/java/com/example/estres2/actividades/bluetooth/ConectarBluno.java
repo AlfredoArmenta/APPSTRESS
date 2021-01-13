@@ -28,6 +28,7 @@ import com.example.estres2.AdapterWearable;
 import com.example.estres2.MenuPrincipal;
 import com.example.estres2.R;
 import com.example.estres2.almacenamiento.database.DB;
+import com.example.estres2.almacenamiento.entidades.archivo.Archivo;
 import com.example.estres2.almacenamiento.entidades.wearable.Wearable;
 
 import java.io.File;
@@ -49,6 +50,7 @@ public class ConectarBluno extends BlunoLibrary {
     private List<Wearable> wearablesLista = new ArrayList<>();
     public EditText eliminarWearable;
     public Button btn_eliminar;
+    private FileWriter fileWriter;
 
     // Variables globales para la generación del archivo del registro
     private Spinner UA;
@@ -84,6 +86,7 @@ public class ConectarBluno extends BlunoLibrary {
     public void inicializarVariables() {
         estadoMonitoreo = findViewById(R.id.control_bluno);
         estadoMonitoreo.setEnabled(false);
+        estadoMonitoreo.setSelected(true);
         serialBegin(115200);                                                    //set the Uart Baudrate on BLE chip to 115200
 
         serialReceivedText = findViewById(R.id.serialReveicedText);    //initial the EditText of the received data
@@ -162,14 +165,15 @@ public class ConectarBluno extends BlunoLibrary {
         Log.d("Hora", hourdateFormat.format(new Date()));
 
         String Archivo = Carpeta.toString() + "/" + BoletaRecibida + "_" + hourdateFormat.format(new Date()).trim() + ".csv";
+        DB db = new DB(getApplicationContext());
 
+        db.InsertarArchivo(new Archivo(BoletaRecibida + "_" + hourdateFormat.format(new Date()).trim() + ".csv", BoletaRecibida));
         try {
-            FileWriter fileWriter = new FileWriter(Archivo);
+            fileWriter = new FileWriter(Archivo);
             fileWriter.append(BoletaRecibida).append("\n");
             fileWriter.append(UA.getSelectedItem().toString()).append("\n");
             fileWriter.append(hourdateFormat.format(new Date())).append("\n");
-            fileWriter.append("MuestraFC, TiempoFC, MuestraGSR, TiempoGSR");
-            fileWriter.close();
+            fileWriter.append("MuestraFC, TiempoFC, MuestraGSR, TiempoGSR").append("\n");
             Toast.makeText(this, "Se creó correctmente el registro de las variables.", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Log.d("Exception_FillWriter", e.toString());
@@ -182,9 +186,17 @@ public class ConectarBluno extends BlunoLibrary {
             if (!estadoMonitoreo.isSelected()) {
                 estadoMonitoreo.setImageResource(R.drawable.ic_detener_monitoreo);
                 serialSend("Play");
+                ExportarCSV(view);
             } else {
                 estadoMonitoreo.setImageResource(R.drawable.ic_comienza_monitoreo);
                 serialSend("Stop");
+                try {
+                    fileWriter.append("Fin del registro");
+                    fileWriter.close();
+                    Toast.makeText(this, "Se cerró correctmente el registro de las variables.", Toast.LENGTH_SHORT).show();
+                } catch (Exception e){
+                    Toast.makeText(this, "Hubo un problema al cerrar el registro de las variables.", Toast.LENGTH_SHORT).show();
+                }
             }
             ((Animatable) estadoMonitoreo.getDrawable()).start();
         } else {
@@ -242,7 +254,6 @@ public class ConectarBluno extends BlunoLibrary {
 
     @Override
     protected void onDestroy() {
-        //serialSend("F"); //Finish Terminar la comunicación
         super.onDestroy();
         Toast.makeText(this, "BlUNO Activity onDestroy", Toast.LENGTH_LONG).show();
         onDestroyProcess();                                                        //onDestroy Process by BlunoLibrary
@@ -285,6 +296,12 @@ public class ConectarBluno extends BlunoLibrary {
     public void onSerialReceived(String theString) {                            //Once connection data received, this function will be called
         // TODO Auto-generated method stub
         serialReceivedText.setText(String.format("%s%s", serialReceivedText.getText(), theString));    //append the text into the EditText
+        try {
+            fileWriter.write(theString);
+            Log.d("Escritura", "Se escribió correctamente");
+        }catch (Exception e) {
+            Log.d("Escritura", "Ocurrio un error al ecribir");
+        }
         //The Serial data from the BLUNO may be sub-packaged, so using a buffer to hold the String is a good choice.
         ((ScrollView) serialReceivedText.getParent()).fullScroll(View.FOCUS_DOWN);
     }
@@ -292,6 +309,12 @@ public class ConectarBluno extends BlunoLibrary {
     public void Salir() {
         Bundle PasarBoleta = new Bundle();
         Intent siguiente = new Intent(ConectarBluno.this, MenuPrincipal.class);
+        try {
+            fileWriter.close();
+        }catch (Exception e){
+            Log.d("Cierre de archivo", e.toString());
+        }
+
 
         // Damos una clave = Boleta y el Objeto de tipo String = RContraseña
         PasarBoleta.putString("Boleta", BoletaRecibida);

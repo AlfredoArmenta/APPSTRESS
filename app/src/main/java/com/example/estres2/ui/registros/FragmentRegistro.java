@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,11 +20,14 @@ import android.widget.Toast;
 
 import com.example.estres2.MenuPrincipal;
 import com.example.estres2.R;
+import com.example.estres2.almacenamiento.database.DB;
+import com.example.estres2.almacenamiento.entidades.archivo.Archivo;
 import com.example.estres2.almacenamiento.entidades.usuario.Usuario;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class FragmentRegistro extends Fragment {
     private final ArrayList<ListaRegistro> lRegistro = new ArrayList<>();
@@ -68,13 +72,14 @@ public class FragmentRegistro extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         DividerItemDecoration itemDecoration = new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL);
-        itemDecoration.setDrawable(getResources().getDrawable(R.drawable.divider));
+        itemDecoration.setDrawable(Objects.requireNonNull(ResourcesCompat.getDrawable(getResources(), R.drawable.divider, null)));
         mRecyclerView.addItemDecoration(itemDecoration);
         return root;
     }
 
     public List<String> obtenerRegistros() {
         List<String> item = new ArrayList<>();
+        DB db = new DB(getContext());
         if (!(getActivity() == null)) {
             user = ((MenuPrincipal)getActivity()).MandarUsuario();
             File Carpeta = new File(Environment.getExternalStorageDirectory() + "/Monitoreo" + user.getBoleta());
@@ -83,7 +88,7 @@ public class FragmentRegistro extends Fragment {
                 assert files != null;
                 for (File file : files) {
                     //Sacamos del array files un fichero
-                    if(file.getPath().endsWith(".csv"))
+                    if(file.getPath().endsWith(".csv") && db.ConsultarArchivo(new Archivo(file.getName(), user.getBoleta())))
                         item.add(file.getName());
                 }
                 return item;
