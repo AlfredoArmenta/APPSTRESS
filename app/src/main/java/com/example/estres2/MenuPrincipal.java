@@ -1,8 +1,14 @@
 package com.example.estres2;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.estres2.actividades.bluetooth.ConectarBluno;
@@ -11,6 +17,8 @@ import com.example.estres2.almacenamiento.database.DB;
 import com.example.estres2.almacenamiento.entidades.usuario.Usuario;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -28,8 +36,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MenuPrincipal extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
@@ -38,6 +52,7 @@ public class MenuPrincipal extends AppCompatActivity {
     protected String BoletaRecibida;
     protected Usuario DatosUsuario;
     protected DB Consultar;
+    private ImageView foto_gallery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +82,7 @@ public class MenuPrincipal extends AppCompatActivity {
 
         // Se crea un componente View para poder mostrar el contenido
         View Hview = navigationView.getHeaderView(0);
+        foto_gallery = Hview.findViewById(R.id.MenuImagen);
         pasarBoleta(Hview);
         // Permisos para almacenamiento externo
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -110,6 +126,8 @@ public class MenuPrincipal extends AppCompatActivity {
                 Nombre.setText(DatosUsuario.getNombre());
                 Boleta = (TextView) view.findViewById(R.id.MenuBoleta);
                 Boleta.setText(BoletaRecibida);
+                if (!DatosUsuario.getImagen().equals(""))
+                    foto_gallery.setImageBitmap(reduceBitmap(getApplicationContext(), DatosUsuario.getImagen(), 1024, 1024));
             } else {
                 Toast.makeText(getApplicationContext(), "No se pudo recuperar el usuario", Toast.LENGTH_SHORT).show();
             }
@@ -129,6 +147,49 @@ public class MenuPrincipal extends AppCompatActivity {
         siguiente.putExtras(PasarBoleta);
         startActivity(siguiente);
         finish();
+    }
+
+    @SuppressLint("IntentReset")
+    public void openGallery(View view){
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/");
+        startActivityForResult(Intent.createChooser(intent,"Seleccione la aplicación"),10);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        DB db = new DB(getApplicationContext());
+        if (resultCode == RESULT_OK){
+            DatosUsuario.setImagen(data.getDataString());
+            if(db.ActualizarImagen(DatosUsuario) > 0){
+                Toast.makeText(getApplicationContext(), "Se guardo correctamente la URL de la imagen", Toast.LENGTH_LONG).show();
+                foto_gallery.setImageBitmap(reduceBitmap(getApplicationContext(), data.getDataString(), 512, 512));
+            }else {
+                Toast.makeText(getApplicationContext(), "Ocurrio un error al guardar la URL de la imagen", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    public static Bitmap reduceBitmap(Context contexto, String uri,
+                                      float maxAncho, float maxAlto) {
+        try {
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(contexto.getContentResolver()
+                    .openInputStream(Uri.parse(uri)), null, options);
+            options.inSampleSize = (int) Math.max(
+                    Math.ceil(options.outWidth / maxAncho),
+                    Math.ceil(options.outHeight / maxAlto));
+            options.inJustDecodeBounds = false;
+            return BitmapFactory.decodeStream(contexto.getContentResolver()
+                    .openInputStream(Uri.parse(uri)), null, options);
+        } catch (FileNotFoundException e) {
+            Toast.makeText(contexto, "Fichero/recurso no encontrado",
+                    Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void Salir(MenuItem item) {

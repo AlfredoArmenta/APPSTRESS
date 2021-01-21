@@ -148,7 +148,7 @@ public class CuentaFragment extends Fragment {
         }
         user.setSemestre(Semestre.getSelectedItem().toString());
         user.setPassword(Contraseña.getText().toString());
-
+        user.setImagen(user.getImagen());
         if (VerifyCampos()) {
             if (bd.ActualizarUsuario(user) > 0 && !(getActivity() == null)) {
                 Toast.makeText(getContext(), "Se actualizo correctamente", Toast.LENGTH_SHORT).show();

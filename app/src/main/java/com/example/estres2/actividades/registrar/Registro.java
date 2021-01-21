@@ -128,6 +128,7 @@ public class Registro extends AppCompatActivity {
 
         user.setSemestre(Semestre.getSelectedItem().toString());
         user.setPassword(Contraseña.getText().toString());
+        user.setImagen("");
 
         if (VerifyCampos()) {
             if (bd.InsertarUsuario(user) > 0) {

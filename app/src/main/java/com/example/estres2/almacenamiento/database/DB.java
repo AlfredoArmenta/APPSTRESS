@@ -29,10 +29,11 @@ public class DB extends SQLiteOpenHelper {
     private static final String COLUMNA_USUARIO_GENERO = "genero";
     private static final String COLUMNA_USUARIO_SEMESTRE = "semestre";
     private static final String COLUMNA_USUARIO_PASSWORD = "contraseña";
+    private static final String COLUMNA_USUARIO_IMAGEN = "imagen";
 
     // Sentencia SQL para la creación de la tabla Usuario
     private static final String CREATE_TABLA_USUARIOS = "create table if not exists " + TABLA_USUARIO + "(" + COLUMNA_USUARIO_BOLETA + " text primary key, " + COLUMNA_USUARIO_NOMBRE + " text, "
-            + COLUMNA_USUARIO_EDAD + " text, " + COLUMNA_USUARIO_GENERO + " text, " + COLUMNA_USUARIO_SEMESTRE + " text, " + COLUMNA_USUARIO_PASSWORD + " text" + ");";
+            + COLUMNA_USUARIO_EDAD + " text, " + COLUMNA_USUARIO_GENERO + " text, " + COLUMNA_USUARIO_SEMESTRE + " text, " + COLUMNA_USUARIO_PASSWORD + " text, " + COLUMNA_USUARIO_IMAGEN + " text" + ");";
 
     // Nombre de la tabla Wearable
     private static final String TABLA_WEARABLE = "wearable";
@@ -88,6 +89,7 @@ public class DB extends SQLiteOpenHelper {
             values.put(COLUMNA_USUARIO_GENERO, user.getGenero());
             values.put(COLUMNA_USUARIO_SEMESTRE, user.getSemestre());
             values.put(COLUMNA_USUARIO_PASSWORD, user.getPassword());
+            values.put(COLUMNA_USUARIO_IMAGEN,user.getImagen());
             long insert = db.insert(TABLA_USUARIO, null, values);
             db.close();
             return insert;
@@ -126,7 +128,8 @@ public class DB extends SQLiteOpenHelper {
                                 fila.getString(2),
                                 fila.getString(3),
                                 fila.getString(4),
-                                fila.getString(5)
+                                fila.getString(5),
+                                fila.getString(6)
                         )
                 );
             } while (fila.moveToNext());
@@ -149,7 +152,7 @@ public class DB extends SQLiteOpenHelper {
 
     public Usuario ObtenerDatos(String Boleta) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Usuario AuxUsuario = new Usuario("", "", "", "", "", "");
+        Usuario AuxUsuario = new Usuario("", "", "", "", "", "", "");
         Cursor fila = db.rawQuery("select *from " + TABLA_USUARIO + " where " + COLUMNA_USUARIO_BOLETA + " = " + Boleta, null);
         if (fila != null && fila.getCount() != 0) {
             fila.moveToFirst();
@@ -159,7 +162,8 @@ public class DB extends SQLiteOpenHelper {
                     fila.getString(2),
                     fila.getString(3),
                     fila.getString(4),
-                    fila.getString(5)
+                    fila.getString(5),
+                    fila.getString(6)
             );
             db.close();
         }
@@ -176,6 +180,18 @@ public class DB extends SQLiteOpenHelper {
             values.put(COLUMNA_USUARIO_GENERO, user.getGenero());
             values.put(COLUMNA_USUARIO_SEMESTRE, user.getSemestre());
             values.put(COLUMNA_USUARIO_PASSWORD, user.getPassword());
+            long update = db.update(TABLA_USUARIO, values, COLUMNA_USUARIO_BOLETA + "=" + user.getBoleta(), null);
+            db.close();
+            return update;
+        }
+        return 0;
+    }
+
+    public long ActualizarImagen(Usuario user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        if (db != null) {
+            ContentValues values = new ContentValues();
+            values.put(COLUMNA_USUARIO_IMAGEN, user.getImagen());
             long update = db.update(TABLA_USUARIO, values, COLUMNA_USUARIO_BOLETA + "=" + user.getBoleta(), null);
             db.close();
             return update;

@@ -4,18 +4,19 @@ import java.io.Serializable;
 
 public class Usuario implements Serializable {
     // Creamos las variables String que serán las encargadas de componer los parametros del objeto Usuario
-    String Boleta, Nombre, Edad, Semestre, Genero, Password;
+    String Boleta, Nombre, Edad, Semestre, Genero, Password, Imagen;
 
     public Usuario() {
     }
 
-    public Usuario(String boleta, String nombre, String edad, String genero, String semestre, String password) {
+    public Usuario(String boleta, String nombre, String edad, String genero, String semestre, String password, String imagen) {
         Boleta = boleta;
         Nombre = nombre;
         Edad = edad;
         Semestre = semestre;
         Genero = genero;
         Password = password;
+        Imagen = imagen;
     }
 
     public String getBoleta() {
@@ -42,6 +43,8 @@ public class Usuario implements Serializable {
         return Password;
     }
 
+    public String getImagen() {return Imagen;}
+
     public void setBoleta(String boleta) {
         Boleta = boleta;
     }
@@ -65,5 +68,7 @@ public class Usuario implements Serializable {
     public void setPassword(String password) {
         Password = password;
     }
+
+    public void setImagen(String imagen) {Imagen = imagen;}
     // ********************** Fin de la clase InicioSesión ************************ //
 }
