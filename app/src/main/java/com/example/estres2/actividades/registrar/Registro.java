@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.estres2.almacenamiento.database.DB;
-import com.example.estres2.MostrarUsuarios;
 import com.example.estres2.R;
 import com.example.estres2.almacenamiento.entidades.usuario.Usuario;
 import com.example.estres2.actividades.iniciosesion.InicioSesion;
@@ -48,13 +47,13 @@ public class Registro extends AppCompatActivity {
     // Función con la cual inicializamos los objetos que se utilizarán los registros
     private void IniciarObjetos() {
 
-        Boleta = (EditText) findViewById(R.id.RBoleta);
-        Nombre = (EditText) findViewById(R.id.RNombre);
-        Edad = (EditText) findViewById(R.id.REdad);
-        Masculino = (RadioButton) findViewById(R.id.RMasculino);
-        Femenino = (RadioButton) findViewById(R.id.RFemenino);
-        Semestre = (Spinner) findViewById(R.id.RSemestre);
-        Contraseña = (EditText) findViewById(R.id.RContraseña);
+        Boleta = findViewById(R.id.RBoleta);
+        Nombre = findViewById(R.id.RNombre);
+        Edad = findViewById(R.id.REdad);
+        Masculino = findViewById(R.id.RMasculino);
+        Femenino = findViewById(R.id.RFemenino);
+        Semestre = findViewById(R.id.RSemestre);
+        Contraseña = findViewById(R.id.RContraseña);
         Masculino.setChecked(true);
 
         // String que nos ayudan a llenar a los spinners que sirven para la selección del semestre y la materia
@@ -63,11 +62,11 @@ public class Registro extends AppCompatActivity {
         Semestre.setAdapter(AdapterSemestre);
 
         // Elementos de texto que nos proporcionan información sobre los parametros de la contraseña
-        Numero = (TextView) findViewById(R.id.RTNumero);
-        CaracterEspecial = (TextView) findViewById(R.id.RTCaracterEspecial);
-        Mayuscula = (TextView) findViewById(R.id.RTMayuscula);
-        Minuscula = (TextView) findViewById(R.id.RTMinuscula);
-        Longitud = (TextView) findViewById(R.id.RTLongitud);
+        Numero = findViewById(R.id.RTNumero);
+        CaracterEspecial = findViewById(R.id.RTCaracterEspecial);
+        Mayuscula = findViewById(R.id.RTMayuscula);
+        Minuscula = findViewById(R.id.RTMinuscula);
+        Longitud = findViewById(R.id.RTLongitud);
 
         // El valor númerico del color verde es = -16711936
         ColorVerde = Color.GREEN;
@@ -103,13 +102,6 @@ public class Registro extends AppCompatActivity {
     // Registro que nos permite realizar el registro de un nuevo Usuario
     public void Registrar(View view) {
         RegistrarSQL();
-    }
-
-    // Función que nos permite visualizar a todos los usuarios registrados
-    public void Mostrar(View view) {
-        Intent siguiente = new Intent(this, MostrarUsuarios.class);
-        startActivity(siguiente);
-        finish();
     }
 
     //En está función se obtienen los valores de entrada, se validan y se registra al usuario

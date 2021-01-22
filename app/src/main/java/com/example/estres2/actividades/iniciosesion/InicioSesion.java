@@ -10,30 +10,64 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.estres2.MostrarArchivos;
+import com.example.estres2.UsuarioBoleta;
 import com.example.estres2.almacenamiento.database.DB;
 import com.example.estres2.MenuPrincipal;
 import com.example.estres2.MostrarUsuarios;
 import com.example.estres2.R;
 import com.example.estres2.actividades.recuperarpassword.RecuperarPassword;
 import com.example.estres2.actividades.registrar.Registro;
+import com.example.estres2.almacenamiento.entidades.usuario.Usuario;
 
 // Actividad principal
 public class InicioSesion extends AppCompatActivity {
     private EditText Boleta;
     private EditText Password;
+    // Crear usuarios para no tener que registrarlos
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio_sesion);
         InicializarObjetos();
+        UsuariosFake();
         Boleta.setText("2015640408");
         Password.setText("Tru$tn01");
     }
 
+    private void UsuariosFake() {
+        Usuario user = new Usuario("", "", "", "", "", "", "");
+        DB bd = new DB(getApplicationContext());
+        user.setBoleta("2015640017");
+        user.setNombre("Alfredo Armenta Espinosa");
+        user.setEdad("24");
+        user.setGenero("Masculino");
+        user.setSemestre("12");
+        user.setPassword("Politecnico12@");
+        user.setImagen("");
+        bd.InsertarUsuario(user);
+
+        user.setBoleta("2015640408");
+        user.setNombre("Efraín Villegas Sánchez");
+        user.setEdad("24");
+        user.setGenero("Masculino");
+        user.setSemestre("12");
+        user.setPassword("Tru$tn01");
+        user.setImagen("");
+        bd.InsertarUsuario(user);
+
+        user.setBoleta("2015640000");
+        user.setNombre("Fulanito Fulano");
+        user.setEdad("24");
+        user.setGenero("Masculino");
+        user.setSemestre("12");
+        user.setPassword("Politecnico12@");
+        user.setImagen("");
+        bd.InsertarUsuario(user);
+    }
     private void InicializarObjetos() {
-        Boleta = (EditText) findViewById(R.id.Usuario);
-        Password = (EditText) findViewById(R.id.Password);
+        Boleta = findViewById(R.id.Usuario);
+        Password = findViewById(R.id.Password);
     }
 
     // Función que nos permite pasar a la actividad de Registro
@@ -53,31 +87,18 @@ public class InicioSesion extends AppCompatActivity {
         if (VerifyCampos()) {
             // Se crea el objeto bd para utilizar los metodos de la DB y se crea con uno nuevo
             DB bd = new DB(getApplicationContext());
-            // Se crea el objeto AuxUsuario para obtener los parametros de los usuarios y enviarlos a la siguiente actividad
-            String RPassword;
-            // Se crea el objeto PasarUsuario que nos permite enviar objetos de un activity a otra
-            Bundle PasarBoleta = new Bundle();
             // Se crea el objeto siguiente para dar inicio a la activity MenuPrincipal
             Intent siguiente = new Intent(InicioSesion.this, MenuPrincipal.class);
-            String IBoleta = Boleta.getText().toString();
-            String IPassword = Password.getText().toString();
-            RPassword = bd.IniciarSesion(IBoleta);
+            UsuarioBoleta.INSTANCE.setObjectBoleta(bd.ObtenerDatos(Boleta.getText().toString()));
 
-            if (IPassword.equals(RPassword)) {
-                Toast.makeText(getApplicationContext(),
-                        getText(R.string.InicioSesion), Toast.LENGTH_SHORT).show();
-                // Damos una clave = Boleta y el Objeto de tipo String = RContraseña
-                PasarBoleta.putString("Boleta", IBoleta);
-                // Pasamos el objeto de tipo Bundle como parametro a la activity siguiente.
-                siguiente.putExtras(PasarBoleta);
+            if (Password.getText().toString().equals(UsuarioBoleta.INSTANCE.getObjectBoleta().getPassword())) {
+                Toast.makeText(getApplicationContext(), getText(R.string.InicioSesion), Toast.LENGTH_SHORT).show();
                 startActivity(siguiente);
                 finish();
-            } else if (RPassword.equals("")) {
-                Toast.makeText(getApplicationContext(),
-                        getText(R.string.BoletaNoRegistrada), Toast.LENGTH_SHORT).show();
+            } else if (Password.getText().toString().equals("")) {
+                Toast.makeText(getApplicationContext(), getText(R.string.BoletaNoRegistrada), Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(getApplicationContext(),
-                        getText(R.string.ErrorContraseña), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getText(R.string.ErrorContraseña), Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -1,12 +1,15 @@
 package com.example.estres2.actividades.bluetooth;
 
 import android.Manifest;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.content.Intent;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,8 +30,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.estres2.AdapterWearable;
 import com.example.estres2.MenuPrincipal;
 import com.example.estres2.R;
+import com.example.estres2.UsuarioBoleta;
 import com.example.estres2.almacenamiento.database.DB;
 import com.example.estres2.almacenamiento.entidades.archivo.Archivo;
+import com.example.estres2.almacenamiento.entidades.usuario.Usuario;
 import com.example.estres2.almacenamiento.entidades.wearable.Wearable;
 
 import java.io.File;
@@ -45,45 +50,27 @@ public class ConectarBluno extends BlunoLibrary {
     private EditText serialSendText;
     private TextView serialReceivedText;
     private ImageButton estadoMonitoreo;
-    private String BoletaRecibida;
+    private Usuario ObjetoUsuario;
     private RecyclerView rvWearable;
     private List<Wearable> wearablesLista = new ArrayList<>();
     public EditText eliminarWearable;
     public Button btn_eliminar;
     private FileWriter fileWriter;
-
-    // Variables globales para la generación del archivo del registro
     private Spinner UA;
+    private BluetoothAdapter blue;
+    private BluetoothManager mBluetoothManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluno);
-
         inicializarVariables();
-        recibirBoleta();
         pedirPermisos();
         onCreateProcess();                                                        //onCreate Process by BlunoLibrary
     }
 
-    public void recibirBoleta() {
-        // Se inicializa BoletaRecibida
-        BoletaRecibida = "";
-
-        // Se genera un objeto Bundle para poder recibir los parametros entre actividades
-        Bundle BoletaR = getIntent().getExtras();
-
-        //  Se pregunta si BoletaR es distinta de null lo que quiere decir que se recibio sin ningún problema
-        if (BoletaR != null) {
-            // Se obtiene la boleta
-            BoletaRecibida = BoletaR.getString("Boleta");
-            Toast.makeText(getApplicationContext(), "Boleta recibida: " + BoletaRecibida, Toast.LENGTH_SHORT).show();
-        } else {
-            finish();
-        }
-    }
-
     public void inicializarVariables() {
+        ObjetoUsuario = UsuarioBoleta.INSTANCE.getObjectBoleta();
         estadoMonitoreo = findViewById(R.id.control_bluno);
         estadoMonitoreo.setEnabled(false);
         estadoMonitoreo.setSelected(true);
@@ -92,7 +79,7 @@ public class ConectarBluno extends BlunoLibrary {
         serialReceivedText = findViewById(R.id.serialReveicedText);    //initial the EditText of the received data
         serialSendText = findViewById(R.id.serialSendText);            //initial the EditText of the sending data
 
-        UA = (Spinner) findViewById(R.id.CMMateria);
+        UA = findViewById(R.id.CMMateria);
 
         String[] UnidadAprendizaje = {"Selecciona una materia", "Líneas de Transmisión y Antenas", "Teoria de la Informacion", "Teoria de las Comunicaciones", "Variable Compleja",
                 "Protocolos de Internet", "Comunicaciones Digitales", "Sistemas Distribuidos", "Metodologia", "Sistemas Celulares", "Multimedia", "Señales y Sistemas", "Probabilidad",
@@ -104,6 +91,7 @@ public class ConectarBluno extends BlunoLibrary {
         btn_eliminar = findViewById(R.id.boton_eliminar);
         rvWearable = findViewById(R.id.rvBluno_Mostrar_Wearables);
         rvWearable.setLayoutManager(new GridLayoutManager(this, 1));
+        blue = BluetoothAdapter.getDefaultAdapter();
         obtenerWearables(this);
 
         Button buttonSerialSend = findViewById(R.id.buttonSerialSend);        //initial the button for sending the data
@@ -117,7 +105,6 @@ public class ConectarBluno extends BlunoLibrary {
         });
 
         buttonSerialSend.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
@@ -127,11 +114,15 @@ public class ConectarBluno extends BlunoLibrary {
 
         buttonScan = findViewById(R.id.buttonScanBlunoConected);                    //initial the button for scanning the BLE device
         buttonScan.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                buttonScanOnClickProcess();                                        //Alert Dialog for selecting the BLE device
+                //Alert Dialog for selecting the BLE device
+                if (!blue.isEnabled()) {
+                    blue.enable();
+                    SystemClock.sleep(350);
+                }
+                buttonScanOnClickProcess(); //Alert Dialog for selecting the BLE device
             }
         });
     }
@@ -154,7 +145,7 @@ public class ConectarBluno extends BlunoLibrary {
     public void ExportarCSV(View view) {
 
         DateFormat hourdateFormat = new SimpleDateFormat("HH_mm_ss_dd_MM_yyyy");
-        File Carpeta = new File(Environment.getExternalStorageDirectory() + "/Monitoreo" + BoletaRecibida);
+        File Carpeta = new File(Environment.getExternalStorageDirectory() + "/Monitoreo" + ObjetoUsuario.getBoleta());
 
         boolean isCreate = false;
 
@@ -164,44 +155,47 @@ public class ConectarBluno extends BlunoLibrary {
 
         Log.d("Hora", hourdateFormat.format(new Date()));
 
-        String Archivo = Carpeta.toString() + "/" + BoletaRecibida + "_" + hourdateFormat.format(new Date()).trim() + ".csv";
+        String Archivo = Carpeta.toString() + "/" + ObjetoUsuario.getBoleta() + "_" + hourdateFormat.format(new Date()).trim() + ".csv";
         DB db = new DB(getApplicationContext());
 
-        db.InsertarArchivo(new Archivo(BoletaRecibida + "_" + hourdateFormat.format(new Date()).trim() + ".csv", BoletaRecibida));
-        try {
-            fileWriter = new FileWriter(Archivo);
-            fileWriter.append(BoletaRecibida).append("\n");
-            fileWriter.append(UA.getSelectedItem().toString()).append("\n");
-            fileWriter.append(hourdateFormat.format(new Date())).append("\n");
-            fileWriter.append("MuestraFC, TiempoFC, MuestraGSR, TiempoGSR").append("\n");
-            Toast.makeText(this, "Se creó correctmente el registro de las variables.", Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Log.d("Exception_FillWriter", e.toString());
+        if (db.InsertarArchivo(new Archivo(ObjetoUsuario.getBoleta() + "_" + hourdateFormat.format(new Date()).trim() + ".csv", ObjetoUsuario.getBoleta())) > 0) {
+            try {
+                fileWriter = new FileWriter(Archivo);
+                fileWriter.append(ObjetoUsuario.getBoleta()).append("\n");
+                fileWriter.append(UA.getSelectedItem().toString()).append("\n");
+                fileWriter.append(hourdateFormat.format(new Date())).append("\n");
+                fileWriter.append("MuestraFC, TiempoFC, MuestraGSR, TiempoGSR").append("\n");
+                Toast.makeText(this, "Se creó correctmente el registro de las variables.", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Log.d("Exception_FillWriter", e.toString());
+            }
+        } else {
+            Toast.makeText(this, "Se inserto correctamente el registro a la base de datos", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void animar(View view) {
-        if (!UA.getSelectedItem().toString().equals("Selecciona una materia")) {
-            estadoMonitoreo.setSelected(!estadoMonitoreo.isSelected());
-            if (!estadoMonitoreo.isSelected()) {
-                estadoMonitoreo.setImageResource(R.drawable.ic_detener_monitoreo);
-                serialSend("Play");
-                ExportarCSV(view);
-            } else {
-                estadoMonitoreo.setImageResource(R.drawable.ic_comienza_monitoreo);
-                serialSend("Stop");
-                try {
-                    fileWriter.append("Fin del registro");
-                    fileWriter.close();
-                    Toast.makeText(this, "Se cerró correctmente el registro de las variables.", Toast.LENGTH_SHORT).show();
-                } catch (Exception e){
-                    Toast.makeText(this, "Hubo un problema al cerrar el registro de las variables.", Toast.LENGTH_SHORT).show();
+            if (!UA.getSelectedItem().toString().equals("Selecciona una materia")) {
+                estadoMonitoreo.setSelected(!estadoMonitoreo.isSelected());
+                if (!estadoMonitoreo.isSelected()) {
+                    estadoMonitoreo.setImageResource(R.drawable.ic_detener_monitoreo);
+                    serialSend("Play");
+                    ExportarCSV(view);
+                } else {
+                    estadoMonitoreo.setImageResource(R.drawable.ic_comienza_monitoreo);
+                    serialSend("Stop");
+                    try {
+                        fileWriter.append("Fin del registro");
+                        fileWriter.close();
+                        Toast.makeText(this, "Se cerró correctmente el registro de las variables.", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(this, "Hubo un problema al cerrar el registro de las variables.", Toast.LENGTH_SHORT).show();
+                    }
                 }
+                ((Animatable) estadoMonitoreo.getDrawable()).start();
+            } else {
+                Toast.makeText(this, "No se ha seleccionado una materia", Toast.LENGTH_LONG).show();
             }
-            ((Animatable) estadoMonitoreo.getDrawable()).start();
-        } else {
-            Toast.makeText(this, "No se ha seleccionado una materia", Toast.LENGTH_LONG).show();
-        }
     }
 
     // Función en la que obtenemos los parametros2
@@ -210,7 +204,7 @@ public class ConectarBluno extends BlunoLibrary {
         wearablesLista.clear();
         wearablesLista = bd.MostrarWearable();
         if (wearablesLista.isEmpty())
-            wearablesLista.add(new Wearable("Wearable no registrado","sin mac"));
+            wearablesLista.add(new Wearable("Wearable no registrado", "sin mac"));
         AdapterWearable adapter = new AdapterWearable(context, wearablesLista);
         rvWearable.setLayoutManager(new GridLayoutManager(context, 1));
         rvWearable.setAdapter(adapter);
@@ -299,7 +293,7 @@ public class ConectarBluno extends BlunoLibrary {
         try {
             fileWriter.write(theString);
             Log.d("Escritura", "Se escribió correctamente");
-        }catch (Exception e) {
+        } catch (Exception e) {
             Log.d("Escritura", "Ocurrio un error al ecribir");
         }
         //The Serial data from the BLUNO may be sub-packaged, so using a buffer to hold the String is a good choice.
@@ -307,20 +301,12 @@ public class ConectarBluno extends BlunoLibrary {
     }
 
     public void Salir() {
-        Bundle PasarBoleta = new Bundle();
-        Intent siguiente = new Intent(ConectarBluno.this, MenuPrincipal.class);
         try {
             fileWriter.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.d("Cierre de archivo", e.toString());
         }
-
-
-        // Damos una clave = Boleta y el Objeto de tipo String = RContraseña
-        PasarBoleta.putString("Boleta", BoletaRecibida);
-
-        // Pasamos el objeto de tipo Bundle como parametro a la activity siguiente.
-        siguiente.putExtras(PasarBoleta);
+        Intent siguiente = new Intent(ConectarBluno.this, MenuPrincipal.class);
         startActivity(siguiente);
         finish();
     }

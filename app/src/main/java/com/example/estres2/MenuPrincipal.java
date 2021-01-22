@@ -2,7 +2,6 @@ package com.example.estres2;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,7 +17,6 @@ import com.example.estres2.almacenamiento.entidades.usuario.Usuario;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -36,23 +34,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class MenuPrincipal extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     public TextView Nombre;
     protected TextView Boleta;
-    protected String BoletaRecibida;
     protected Usuario DatosUsuario;
-    protected DB Consultar;
-    private ImageView foto_gallery;
+    private ImageView FotoUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +75,7 @@ public class MenuPrincipal extends AppCompatActivity {
 
         // Se crea un componente View para poder mostrar el contenido
         View Hview = navigationView.getHeaderView(0);
-        foto_gallery = Hview.findViewById(R.id.MenuImagen);
+        FotoUsuario = Hview.findViewById(R.id.MenuImagen);
         pasarBoleta(Hview);
         // Permisos para almacenamiento externo
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -105,67 +98,45 @@ public class MenuPrincipal extends AppCompatActivity {
     }
 
     public void pasarBoleta(View view) {
-        // Se inicializa BoletaRecibida
-        BoletaRecibida = "";
-
-        // Se genera un objeto Bundle para poder recibir los parametros entre actividades
-        Bundle BoletaR = getIntent().getExtras();
-
-        //  Se pregunta si BoletaR es distinta de null lo que quiere decir que se recibio sin ningún problema
-        if (BoletaR != null) {
-            // Se obtiene la boleta
-            BoletaRecibida = BoletaR.getString("Boleta");
-
-            // Se crea un objeto DB para poder consultas todos los demás paramétros del usuario
-            Consultar = new DB(getApplicationContext());
-
-            // Se realiza la consulta y se guarda en un onjeto usuario
-            DatosUsuario = Consultar.ObtenerDatos(BoletaRecibida);
-            if (!DatosUsuario.getBoleta().equals("")) {
-                Nombre = (TextView) view.findViewById(R.id.MenuNombre);
-                Nombre.setText(DatosUsuario.getNombre());
-                Boleta = (TextView) view.findViewById(R.id.MenuBoleta);
-                Boleta.setText(BoletaRecibida);
-                if (!DatosUsuario.getImagen().equals(""))
-                    foto_gallery.setImageBitmap(reduceBitmap(getApplicationContext(), DatosUsuario.getImagen(), 1024, 1024));
-            } else {
-                Toast.makeText(getApplicationContext(), "No se pudo recuperar el usuario", Toast.LENGTH_SHORT).show();
-            }
+        // Se realiza la consulta y se guarda en un onjeto usuario
+        DatosUsuario = UsuarioBoleta.INSTANCE.getObjectBoleta();
+        Nombre = view.findViewById(R.id.MenuNombre);
+        Nombre.setText(DatosUsuario.getNombre());
+        Boleta = view.findViewById(R.id.MenuBoleta);
+        Boleta.setText(DatosUsuario.getBoleta());
+        if (DatosUsuario.getImagen().equals("")) {
+            Toast.makeText(getApplicationContext(), "No sea seleccionado una imagen", Toast.LENGTH_LONG).show();
+        } else if ((reduceBitmap(getApplicationContext(), DatosUsuario.getImagen(), 512, 512) != null)) {
+            Toast.makeText(getApplicationContext(), "Se cargo la imagen correctamente", Toast.LENGTH_LONG).show();
+            FotoUsuario.setImageBitmap(reduceBitmap(getApplicationContext(), DatosUsuario.getImagen(), 512, 512));
         } else {
-            Toast.makeText(getApplicationContext(), "Ocurrio un error al recuperar la boleta", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "La imagen no se encuentra", Toast.LENGTH_LONG).show();
         }
     }
 
     public void pasarBlunoConectar() {
-        Bundle PasarBoleta = new Bundle();
         Intent siguiente = new Intent(MenuPrincipal.this, ConectarBluno.class);
-
-        // Damos una clave = Boleta y el Objeto de tipo String = RContraseña
-        PasarBoleta.putString("Boleta", BoletaRecibida);
-
-        // Pasamos el objeto de tipo Bundle como parametro a la activity siguiente.
-        siguiente.putExtras(PasarBoleta);
         startActivity(siguiente);
         finish();
     }
 
     @SuppressLint("IntentReset")
-    public void openGallery(View view){
+    public void openGallery(View view) {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/");
-        startActivityForResult(Intent.createChooser(intent,"Seleccione la aplicación"),10);
+        startActivityForResult(Intent.createChooser(intent, "Seleccione la aplicación"), 10);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         DB db = new DB(getApplicationContext());
-        if (resultCode == RESULT_OK){
+        if (resultCode == RESULT_OK) {
             DatosUsuario.setImagen(data.getDataString());
-            if(db.ActualizarImagen(DatosUsuario) > 0){
+            if (db.ActualizarImagen(DatosUsuario) > 0) {
                 Toast.makeText(getApplicationContext(), "Se guardo correctamente la URL de la imagen", Toast.LENGTH_LONG).show();
-                foto_gallery.setImageBitmap(reduceBitmap(getApplicationContext(), data.getDataString(), 512, 512));
-            }else {
+                FotoUsuario.setImageBitmap(reduceBitmap(getApplicationContext(), data.getDataString(), 512, 512));
+            } else {
                 Toast.makeText(getApplicationContext(), "Ocurrio un error al guardar la URL de la imagen", Toast.LENGTH_LONG).show();
             }
         }
@@ -196,9 +167,5 @@ public class MenuPrincipal extends AppCompatActivity {
         Intent siguiente = new Intent(MenuPrincipal.this, InicioSesion.class);
         startActivity(siguiente);
         finish();
-    }
-
-    public Usuario MandarUsuario() {
-        return this.DatosUsuario;
     }
 }

@@ -22,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.estres2.UsuarioBoleta;
 import com.example.estres2.almacenamiento.database.DB;
 import com.example.estres2.MenuPrincipal;
 import com.example.estres2.R;
@@ -67,20 +68,17 @@ public class CuentaFragment extends Fragment {
     }
 
     public void iniciarObjetos(View root) {
-        if ((getActivity() == null)) {
-            requireActivity().finish();
-        } else {
-            // Obtenemos el usuario con todos sus parametros para llenar los campos
-            user = ((MenuPrincipal) getActivity()).MandarUsuario();
-        }
+
+        // Obtenemos el usuario con todos sus parametros para llenar los campos
+        user = UsuarioBoleta.INSTANCE.getObjectBoleta();
         // Creamos el vinculo de la parte visual con la parte lógica
-        Boleta = (TextView) root.findViewById(R.id.CFBoleta);
-        Nombre = (EditText) root.findViewById(R.id.CFNombre);
-        Edad = (EditText) root.findViewById(R.id.CFEdad);
-        Masculino = (RadioButton) root.findViewById(R.id.CFMasculino);
-        Femenino = (RadioButton) root.findViewById(R.id.CFFemenino);
-        Semestre = (Spinner) root.findViewById(R.id.CFSemestre);
-        Contraseña = (EditText) root.findViewById(R.id.CFContraseña);
+        Boleta = root.findViewById(R.id.CFBoleta);
+        Nombre = root.findViewById(R.id.CFNombre);
+        Edad = root.findViewById(R.id.CFEdad);
+        Masculino = root.findViewById(R.id.CFMasculino);
+        Femenino = root.findViewById(R.id.CFFemenino);
+        Semestre = root.findViewById(R.id.CFSemestre);
+        Contraseña = root.findViewById(R.id.CFContraseña);
 
         // String que nos ayudan a llenar a los spinners que sirven para la selección del semestre y la materia
         String[] semestre = {"Selecciona tu semestre actual", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"};
@@ -88,12 +86,12 @@ public class CuentaFragment extends Fragment {
         Semestre.setAdapter(AdapterSemestre);
 
         // Elementos de texto que nos proporcionan información sobre los parametros de la contraseña
-        Numero = (TextView) root.findViewById(R.id.CFNumero);
-        CaracterEspecial = (TextView) root.findViewById(R.id.CFCaracterEspecial);
-        Mayuscula = (TextView) root.findViewById(R.id.CFMayuscula);
-        Minuscula = (TextView) root.findViewById(R.id.CFMinuscula);
-        Longitud = (TextView) root.findViewById(R.id.CFLongitud);
-        Aplicar = (Button) root.findViewById(R.id.CFAplicar);
+        Numero = root.findViewById(R.id.CFNumero);
+        CaracterEspecial = root.findViewById(R.id.CFCaracterEspecial);
+        Mayuscula = root.findViewById(R.id.CFMayuscula);
+        Minuscula = root.findViewById(R.id.CFMinuscula);
+        Longitud = root.findViewById(R.id.CFLongitud);
+        Aplicar = root.findViewById(R.id.CFAplicar);
         Aplicar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

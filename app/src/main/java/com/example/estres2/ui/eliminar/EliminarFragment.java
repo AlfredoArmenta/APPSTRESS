@@ -5,23 +5,26 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.estres2.UsuarioBoleta;
 import com.example.estres2.almacenamiento.database.DB;
 import com.example.estres2.actividades.iniciosesion.InicioSesion;
-import com.example.estres2.MenuPrincipal;
 import com.example.estres2.R;
 import com.example.estres2.almacenamiento.entidades.usuario.Usuario;
+
+import java.io.File;
 
 public class EliminarFragment extends Fragment {
     private TextView txtEliminar;
     private Button Eliminar;
+    private Usuario user;
+    private DB bd;
 
     public EliminarFragment() {
     }
@@ -34,34 +37,62 @@ public class EliminarFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_eliminar, container, false);
-        txtEliminar = (TextView) root.findViewById(R.id.txt_eliminar);
-        Eliminar = (Button) root.findViewById(R.id.CEliminar);
+        View view = inflater.inflate(R.layout.fragment_eliminar, container, false);
+        txtEliminar = view.findViewById(R.id.txt_eliminar);
+        Eliminar = view.findViewById(R.id.CEliminar);
         Eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EliminarUsuario();
             }
         });
-        return root;
+        user = UsuarioBoleta.INSTANCE.getObjectBoleta();
+        bd = new DB(getContext());
+        return view;
     }
 
-    public void EliminarUsuario() {
-        if (!(getActivity() == null)) {
-            Usuario user = ((MenuPrincipal) getActivity()).MandarUsuario();
-            DB bd = new DB(getContext());
-            if (bd.BorrarUsuario(user.getBoleta()) > 0) {
-                Toast.makeText(getContext(), "Se elimino el usuario con boleta: " + user.getBoleta()
-                        + " y con nombre: " + user.getNombre(), Toast.LENGTH_SHORT).show();
-                Intent siguiente = new Intent(getContext(), InicioSesion.class);
-                startActivity(siguiente);
-                (getActivity()).finish();
+    private void EliminarUsuario() {
+        File Carpeta = new File(Environment.getExternalStorageDirectory() + "/Monitoreo" + user.getBoleta());
+        if (Carpeta.exists()) {
+            deleteRecursive(Carpeta);
+            if (!Carpeta.exists()) {
+                System.out.println("Carpeta borrada correctamente");
+                if (bd.EliminarArchivos(user.getBoleta()) > 0) {
+                    System.out.println("Archivos borrados de la base de datos correctamente");
+                    BorrarUsuario();
+                    Regresar();
+                } else {
+                    System.out.println("Los archivos no fueron borrados de la base de datos correctamente");
+                }
             } else {
-                Toast.makeText(getContext(), "No se pudo eliminar el usuario con boleta: " +
-                        user.getBoleta() + " y con nombre: " + user.getNombre(), Toast.LENGTH_SHORT).show();
+                System.out.println("La carpeta no fue borrada correctamente");
             }
         } else {
-            Log.d("Eliminar", "El getActivity() de EliminarUsuario esta vacio");
+            System.out.println("La carpeta no existe");
+            BorrarUsuario();
+            Regresar();
         }
+    }
+
+    private void BorrarUsuario() {
+        if (bd.BorrarUsuario(user.getBoleta()) > 0) {
+            System.out.println("Se elimino el usuario con boleta: " + user.getBoleta() + " y con nombre: " + user.getNombre());
+        } else {
+            System.out.println("No se pudo eliminar el usuario con boleta: " +
+                    user.getBoleta() + " y con nombre: " + user.getNombre());
+        }
+    }
+
+    private void deleteRecursive(File fileOrDirectory) {
+        if (fileOrDirectory.isDirectory())
+            for (File child : fileOrDirectory.listFiles())
+                deleteRecursive(child);
+        fileOrDirectory.delete();
+    }
+
+    private void Regresar() {
+        Intent siguiente = new Intent(getContext(), InicioSesion.class);
+        startActivity(siguiente);
+        getActivity().finish();
     }
 }

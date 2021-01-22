@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.estres2.MenuPrincipal;
 import com.example.estres2.R;
+import com.example.estres2.UsuarioBoleta;
 import com.example.estres2.almacenamiento.entidades.usuario.Usuario;
 
 import java.text.DateFormat;
@@ -37,24 +38,20 @@ public class InicioFragment extends Fragment {
     }
 
     public void Saludos(View view) {
-        if (!(getActivity() == null)) {
-            Usuario user = ((MenuPrincipal) getActivity()).MandarUsuario();
-            @SuppressLint("SimpleDateFormat") DateFormat hourFormat = new SimpleDateFormat("HH");
-            TextView inicio = (TextView) view.findViewById(R.id.txt_inicio);
-            String Hora = hourFormat.format(new Date());
-            int EstadoDia = Integer.parseInt(Hora);
+        Usuario user = UsuarioBoleta.INSTANCE.getObjectBoleta();
+        @SuppressLint("SimpleDateFormat") DateFormat hourFormat = new SimpleDateFormat("HH");
+        TextView inicio = (TextView) view.findViewById(R.id.txt_inicio);
+        String Hora = hourFormat.format(new Date());
+        int EstadoDia = Integer.parseInt(Hora);
 
-            if (EstadoDia >= 6 && EstadoDia < 12) {
-                inicio.setText(String.format("Hola %s Buenos dias", user.getNombre()));
-            } else if (EstadoDia >= 12 && EstadoDia < 18) {
-                inicio.setText(String.format("Hola %s Buenas tardes", user.getNombre()));
-            } else if (EstadoDia >= 18 && EstadoDia <= 23) {
-                inicio.setText(String.format("Hola %s Buenas noches", user.getNombre()));
-            } else {
-                inicio.setText(String.format("Hola %s ¡Ya es tarde deberías dormir, para comenzar un buen día!", user.getNombre()));
-            }
+        if (EstadoDia >= 6 && EstadoDia < 12) {
+            inicio.setText(String.format("Hola %s Buenos dias", user.getNombre()));
+        } else if (EstadoDia >= 12 && EstadoDia < 18) {
+            inicio.setText(String.format("Hola %s Buenas tardes", user.getNombre()));
+        } else if (EstadoDia >= 18 && EstadoDia <= 23) {
+            inicio.setText(String.format("Hola %s Buenas noches", user.getNombre()));
         } else {
-            Log.d("getActivity", "La actividad es nulla");
+            inicio.setText(String.format("Hola %s ¡Ya es tarde deberías dormir, para comenzar un buen día!", user.getNombre()));
         }
     }
 }

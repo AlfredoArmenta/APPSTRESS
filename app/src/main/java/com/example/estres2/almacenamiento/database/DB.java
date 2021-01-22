@@ -97,21 +97,6 @@ public class DB extends SQLiteOpenHelper {
         return 0;
     }
 
-    // Función que confima la existencia de la boleta ingresada y regresa como parametro la contraseña asociada a la cuenta
-    public String IniciarSesion(String Boleta) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String Password = "";
-        Cursor fila = db.rawQuery("select " + COLUMNA_USUARIO_PASSWORD + " from " + TABLA_USUARIO + " where " + COLUMNA_USUARIO_BOLETA + " = " + Boleta, null);
-        if (fila != null && fila.getCount() != 0) {
-            fila.moveToFirst();
-            Password = fila.getString(0);
-            db.close();
-            return Password;
-        } else {
-            return Password;
-        }
-    }
-
     // Función que realiza la consulta para la visualización de todos los Uusarios registrados regresa una ArrayList que contiene a todos los Usuarios
     public List<Usuario> MostrarUsuario() {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -321,5 +306,11 @@ public class DB extends SQLiteOpenHelper {
         return Borrar;
     }
 
+    public long EliminarArchivos(String boleta) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long Borrar = db.delete(TABLA_ARCHIVO, COLUMNA_ARCHIVO_BOLETA_USUARIO + " = " + boleta, null);
+        db.close();
+        return Borrar;
+    }
     // ********************** Fin de la clase DB ************************ //
 }
