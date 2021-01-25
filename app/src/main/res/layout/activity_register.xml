@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbarThumbVertical="@drawable/scroll"
-    tools:context=".actividades.registrar.Registro">
+    tools:context=".actividades.registrar.Register">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,6 +13,7 @@
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/containerBoleta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin"
@@ -201,7 +202,7 @@
             app:passwordToggleEnabled="true">
 
             <EditText
-                android:id="@+id/RContraseña"
+                android:id="@+id/RPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="true"
@@ -228,18 +229,17 @@
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
                 android:background="@drawable/cambia_sombra"
-                android:onClick="Registrar"
                 android:text="@string/registrar"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_size_bluno_conectar" />
 
             <Button
+                android:id="@+id/RCancel"
                 android:layout_width="@dimen/button_size_width_normal"
                 android:layout_height="@dimen/button_size_height_text"
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
                 android:background="@drawable/cambia_sombra"
-                android:onClick="Cancelar"
                 android:text="@string/cancelar"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_size_bluno_conectar" />

@@ -34,8 +34,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".actividades.registrar.Registro" android:label="Registrar Usuario" />
-        <activity android:name=".actividades.recuperarpassword.RecuperarPassword" android:label="Restablecer contraseña" />
+        <activity android:name=".actividades.registrar.Register" android:label="Registrar Usuario" />
+        <activity android:name=".actividades.recuperarpassword.RecoverPassword" android:label="Restablecer contraseña" />
         <activity android:name=".actividades.bluetooth.ConectarBluno" android:configChanges="screenSize|orientation"/>
         <activity android:name=".MostrarUsuarios" />
         <activity android:name=".MostrarArchivos"/>

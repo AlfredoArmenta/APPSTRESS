@@ -57,7 +57,7 @@ public class EliminarFragment extends Fragment {
             deleteRecursive(Carpeta);
             if (!Carpeta.exists()) {
                 System.out.println("Carpeta borrada correctamente");
-                if (bd.EliminarArchivos(user.getBoleta()) > 0) {
+                if (bd.deletedRecord(user.getBoleta())) {
                     System.out.println("Archivos borrados de la base de datos correctamente");
                     BorrarUsuario();
                     Regresar();
@@ -75,7 +75,7 @@ public class EliminarFragment extends Fragment {
     }
 
     private void BorrarUsuario() {
-        if (bd.BorrarUsuario(user.getBoleta()) > 0) {
+        if (bd.deleteUser(user.getBoleta())) {
             System.out.println("Se elimino el usuario con boleta: " + user.getBoleta() + " y con nombre: " + user.getNombre());
         } else {
             System.out.println("No se pudo eliminar el usuario con boleta: " +

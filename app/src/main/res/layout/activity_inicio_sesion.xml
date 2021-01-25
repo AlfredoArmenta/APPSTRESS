@@ -39,7 +39,7 @@
             app:passwordToggleEnabled="true">
 
             <EditText
-                android:id="@+id/Usuario"
+                android:id="@+id/User"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
@@ -79,7 +79,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="#00FFFFFF"
-            android:onClick="RecuperarPass"
             android:text="@string/olvidaste_tu_contrasena"
             android:textStyle="bold|italic" />
 
@@ -97,13 +96,12 @@
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin"
                 android:background="@drawable/cambia_sombra"
-                android:onClick="Ingresar"
                 android:text="@string/ingresar"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_size_bluno_conectar" />
 
             <Button
-                android:id="@+id/Registro"
+                android:id="@+id/button_register_inicio_sesion"
                 android:layout_width="@dimen/button_size_width_normal"
                 android:layout_height="@dimen/button_size_height_text"
                 android:layout_marginStart="@dimen/margin"
@@ -111,7 +109,6 @@
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin"
                 android:background="@drawable/cambia_sombra"
-                android:onClick="Registrar"
                 android:text="@string/registrar"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_size_bluno_conectar" />
@@ -127,7 +124,6 @@
                 android:id="@+id/MostrarUsuario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="MostrarUsuarios"
                 android:text="User"
                 android:visibility="visible" />
 
@@ -135,7 +131,6 @@
                 android:id="@+id/MostrarArchivo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="MostrarArchivo"
                 android:text="Archivo"
                 android:visibility="visible" />
 

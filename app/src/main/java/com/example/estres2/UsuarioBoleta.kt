@@ -10,4 +10,8 @@ object UsuarioBoleta {
     }
 
     fun getObjectBoleta(): Usuario = objetoUsuario
+
+    fun isInitialized(): Boolean {
+        return ::objetoUsuario.isInitialized
+    }
 }

@@ -141,7 +141,7 @@ public abstract class BlunoLibrary extends AppCompatActivity {
                             mDeviceName = device.getName();
                             mDeviceAddress = device.getAddress();
 
-                            if (db.ObtenerWearable(mDeviceAddress)) {
+                            if (db.getWearable(mDeviceAddress)) {
                                 if (mBluetoothLeService.connect(mDeviceAddress)) {
                                     Log.d(TAG, "Connect request success");
                                     mConnectionState = connectionStateEnum.isConnecting;
@@ -199,7 +199,7 @@ public abstract class BlunoLibrary extends AppCompatActivity {
 
     public void registrarWearable(Wearable wearable) {
         DB bd = new DB(getApplicationContext());
-        if (bd.InsertarWearable(wearable) > 0) {
+        if (bd.insertWearable(wearable)) {
             Toast.makeText(this, "Se inserto correctamente el Wearable", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, "No se inserto el wearable", Toast.LENGTH_LONG).show();

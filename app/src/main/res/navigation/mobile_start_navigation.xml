@@ -14,9 +14,9 @@
 
     <activity
         android:id="@+id/nav_registrar"
-        android:name="com.example.estres2.actividades.registrar.Registro"
+        android:name="com.example.estres2.actividades.registrar.Register"
         android:label="@string/registrar"
-        tools:layout="@layout/activity_registro">
+        tools:layout="@layout/activity_register">
         <action
             android:id="@+id/action_nav_registro_to_nav_inicio_sesion"
             app:destination="@id/nav_inicio_sesion" />
@@ -24,9 +24,9 @@
 
     <activity
         android:id="@+id/nav_recuperar_contraseña"
-        android:name="com.example.estres2.actividades.recuperarpassword.RecuperarPassword"
+        android:name="com.example.estres2.actividades.recuperarpassword.RecoverPassword"
         android:label="@string/restablecer_contrasena"
-        tools:layout="@layout/activity_recuperar_password">
+        tools:layout="@layout/activity_recover_password">
         <action
             android:id="@+id/action_nav_recuperar_contraseña_to_nav_inicio_sesion"
             app:destination="@id/nav_inicio_sesion" />

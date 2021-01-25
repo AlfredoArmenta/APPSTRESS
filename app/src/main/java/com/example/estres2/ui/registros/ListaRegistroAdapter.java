@@ -127,7 +127,7 @@ public class ListaRegistroAdapter extends RecyclerView.Adapter<ListaRegistroAdap
                     if(files[i].getPath().endsWith(".csv")) {
                         cuentacsv++;
                         if (i == position + conteo){
-                            if(db.BorrarArchivo(files[i].getName()) > 0){
+                            if(db.deletedRecord(files[i].getName())){
                                 Toast.makeText(mContext, "Se elimino registro correctamente", Toast.LENGTH_LONG).show();
                                 files[i].delete();
                             }
