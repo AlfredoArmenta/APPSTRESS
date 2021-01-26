@@ -5,4 +5,7 @@
     <color name="colorAccent">#D81B60</color>
     <color name="blanco">#FFFFFF</color>
 
+    <color name="error_red">#FF0000</color>
+    <color name="correct_green">#76FF36</color>
+
 </resources>

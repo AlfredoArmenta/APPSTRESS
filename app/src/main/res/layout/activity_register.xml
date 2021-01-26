@@ -13,9 +13,10 @@
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/containerBoleta"
+            android:id="@+id/RBoleta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableStart="@android:drawable/ic_menu_edit"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
@@ -23,11 +24,9 @@
             app:passwordToggleEnabled="true">
 
             <EditText
-                android:id="@+id/RBoleta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
-                android:drawableStart="@android:drawable/ic_menu_edit"
                 android:ems="10"
                 android:hint="@string/boleta"
                 android:inputType="number"
@@ -36,6 +35,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/RNombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin"
@@ -44,11 +44,9 @@
             android:layout_marginBottom="@dimen/margin">
 
             <EditText
-                android:id="@+id/RNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
-                android:drawableStart="?attr/actionModePasteDrawable"
                 android:ems="10"
                 android:hint="@string/nombre_completo"
                 android:inputType="textPersonName"
@@ -58,6 +56,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/REdad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin"
@@ -66,11 +65,9 @@
             android:layout_marginBottom="@dimen/margin">
 
             <EditText
-                android:id="@+id/REdad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
-                android:drawableStart="@drawable/ic_edad"
                 android:ems="10"
                 android:hint="@string/edad"
                 android:inputType="number"
@@ -133,7 +130,7 @@
             android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="@dimen/margin"
-            android:fadeScrollbars="false"
+            android:fadeScrollbars="true"
             android:spinnerMode="dialog" />
 
         <TextView
@@ -193,6 +190,7 @@
             android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/RPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin"
@@ -202,11 +200,9 @@
             app:passwordToggleEnabled="true">
 
             <EditText
-                android:id="@+id/RPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="true"
-                android:drawableStart="@android:drawable/ic_lock_idle_lock"
                 android:ems="10"
                 android:hint="@string/contrasena"
                 android:inputType="textPassword"

@@ -5,12 +5,14 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.widget.Toast
 import com.example.estres2.almacenamiento.entidades.archivo.Archivo
 import com.example.estres2.almacenamiento.entidades.usuario.Usuario
 import com.example.estres2.almacenamiento.entidades.wearable.Wearable
+import kotlinx.coroutines.withContext
 import java.util.ArrayList
 
-class DB(context: Context): SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_BD) {
+class DB(private var context: Context): SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_BD) {
     private lateinit var row: Cursor
     private var auxUser: Usuario? = null
     private var userList: MutableList<Usuario> = ArrayList()
@@ -50,10 +52,7 @@ class DB(context: Context): SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_B
         values.put(COLUMNA_USUARIO_IMAGEN, user.imagen)
         insert = this.writableDatabase.insert(TABLA_USUARIO, null, values).toInt()
         this.writableDatabase.close()
-        return when (insert) {
-            1 -> true
-            else -> false
-        }
+        return insert!! >= 0
     }
 
     fun showUser(): List<Usuario> {
@@ -119,6 +118,19 @@ class DB(context: Context): SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_B
         return auxUser
     }
 
+    fun checkUser(Boleta: String): Boolean{
+        row = this.writableDatabase.rawQuery("select *from $TABLA_USUARIO where $COLUMNA_USUARIO_BOLETA = $Boleta", null)
+        return when {
+            row.count != 0 -> {
+                this.readableDatabase.close()
+                true
+            } else -> {
+                this.readableDatabase.close()
+                false
+            }
+        }
+    }
+
     fun updateUser(user: Usuario): Boolean {
         val values = ContentValues()
         values.put(COLUMNA_USUARIO_NOMBRE, user.nombre)
@@ -128,19 +140,13 @@ class DB(context: Context): SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_B
         values.put(COLUMNA_USUARIO_PASSWORD, user.password)
         update = this.writableDatabase.update(TABLA_USUARIO, values, COLUMNA_USUARIO_BOLETA + "=" + user.boleta, null)
         this.writableDatabase.close()
-        return when (update) {
-            1 -> true
-            else -> false
-        }
+        return update!! >= 0
     }
 
     fun deleteUser(Boleta: String): Boolean {
         erase = this.writableDatabase.delete(TABLA_USUARIO, "$COLUMNA_USUARIO_BOLETA = $Boleta", null)
         this.writableDatabase.close()
-        return when (erase) {
-            1 -> true
-            else -> false
-        }
+        return erase!! >= 0
     }
 
     // ********************** Funciones de Imagen *************************
@@ -150,10 +156,7 @@ class DB(context: Context): SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_B
         values.put(COLUMNA_USUARIO_IMAGEN, user.imagen)
         update = this.writableDatabase.update(TABLA_USUARIO, values, """$COLUMNA_USUARIO_BOLETA=${user.boleta}""", null)
         this.writableDatabase.close()
-        return when (update) {
-            1 -> true
-            else -> false
-        }
+        return update!! >= 0
     }
 
     // ********************** Funciones de Wearable *************************
@@ -164,10 +167,7 @@ class DB(context: Context): SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_B
         values.put(COLUMNA_WEARABLE_MAC, wearable.mac)
         insert = this.writableDatabase.insert(TABLA_WEARABLE, null, values).toInt()
         this.writableDatabase.close()
-        return when (insert) {
-            1 -> true
-            else -> false
-        }
+        return insert!! >= 0
     }
 
     fun getWearable(Mac: String): Boolean {
@@ -207,10 +207,7 @@ class DB(context: Context): SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_B
     fun deleteWearable(wearable: String): Boolean {
         erase = this.writableDatabase.delete(TABLA_WEARABLE, "$COLUMNA_WEARABLE_ID = '$wearable' ", null)
         this.writableDatabase.close()
-        return when (erase) {
-            1 -> true
-            else -> false
-        }
+        return erase!! >= 0
     }
 
     // ********************** Funciones de Archivo *************************
@@ -221,10 +218,7 @@ class DB(context: Context): SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_B
         values.put(COLUMNA_ARCHIVO_BOLETA_USUARIO, Record.boleta)
         insert = this.writableDatabase.insert(TABLA_ARCHIVO, null, values).toInt()
         this.writableDatabase.close()
-        return when (insert) {
-            1 -> true
-            else -> false
-        }
+        return insert!! >= 0
     }
 
     fun showRecord(): List<Archivo> {
@@ -264,19 +258,13 @@ class DB(context: Context): SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_B
     fun deletedRecord(Record: String): Boolean {
         erase = this.writableDatabase.delete(TABLA_ARCHIVO, "$COLUMNA_ARCHIVO_ID = '$Record' ", null)
         this.writableDatabase.close()
-        return when (erase) {
-            1 -> true
-            else -> false
-        }
+        return erase!! >= 0
     }
 
     fun deletedRecordsAndDirectory(Boleta: String): Boolean {
         erase = this.writableDatabase.delete(TABLA_ARCHIVO, "$COLUMNA_ARCHIVO_BOLETA_USUARIO = $Boleta", null)
         this.writableDatabase.close()
-        return when (erase) {
-            1 -> true
-            else -> false
-        }
+        return erase!! >= 0
     } // ********************** Fin de la clase DB ************************ //
 
     companion object {

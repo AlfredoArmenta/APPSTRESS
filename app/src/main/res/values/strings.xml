@@ -163,4 +163,6 @@
     <string name="wearables_registrados">Wearables Registrados</string>
     <string name="selecciona_un_wearable_para_eliminar">Selecciona un Wearable para eliminar</string>
     <string name="wearable_eliminar">ID Wearable</string>
+    <string name="error_cant_inser_user">Error no se pudo insertar el usuario</string>
+    <string name="error_some_fiel_is_wrong">Algún campo es incorrecto revisalos</string>
 </resources>
