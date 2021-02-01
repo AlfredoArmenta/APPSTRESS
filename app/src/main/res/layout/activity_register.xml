@@ -16,7 +16,6 @@
             android:id="@+id/RBoleta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@android:drawable/ic_menu_edit"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"

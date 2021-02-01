@@ -16,11 +16,14 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -29,12 +32,16 @@ import com.example.estres2.actividades.bluetooth.ConectarBluno
 import com.example.estres2.actividades.iniciosesion.InicioSesion
 import com.example.estres2.almacenamiento.database.DB
 import com.example.estres2.almacenamiento.entidades.usuario.Usuario
+import com.example.estres2.ui.registros.FragmentRegistro
+import com.example.estres2.ui.viewmodel.MenuViewModel
+import com.example.estres2.util.reduceBitmap
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import java.io.FileNotFoundException
 
 class MenuPrincipal : AppCompatActivity() {
     private var mAppBarConfiguration: AppBarConfiguration? = null
+    private val menuViewModel: MenuViewModel by viewModels()
     @JvmField
     var Nombre: TextView? = null
     protected var Boleta: TextView? = null
@@ -55,12 +62,11 @@ class MenuPrincipal : AppCompatActivity() {
         mAppBarConfiguration = AppBarConfiguration.Builder(
                 R.id.nav_inicio, R.id.nav_graficas, R.id.nav_registro,
                 R.id.nav_configurar_cuenta, R.id.nav_eliminar)
-                .setDrawerLayout(drawer)
+                .setOpenableLayout(drawer)
                 .build()
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration!!)
         NavigationUI.setupWithNavController(navigationView, navController)
-
         // Se crea un componente View para poder mostrar el contenido
         val Hview = navigationView.getHeaderView(0)
         FotoUsuario = Hview.findViewById(R.id.MenuImagen)
@@ -118,7 +124,6 @@ class MenuPrincipal : AppCompatActivity() {
         finish()
     }
 
-    @SuppressLint("IntentReset")
     fun openGallery(view: View?) {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/"
@@ -129,19 +134,12 @@ class MenuPrincipal : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         val db = DB(applicationContext)
         if (resultCode == RESULT_OK) {
-            DatosUsuario!!.imagen = data!!.dataString!!
+            DatosUsuario?.imagen = data?.dataString!!
             if (db.updateImage(DatosUsuario!!)) {
-                Toast.makeText(applicationContext,
-                        "Se guardo correctamente la URL de la imagen",
-                        Toast.LENGTH_LONG).show()
-                FotoUsuario!!.setImageBitmap(reduceBitmap(applicationContext,
-                        data.dataString,
-                        512f,
-                        512f))
+                Toast.makeText(applicationContext, "Se guardo correctamente la URL de la imagen", Toast.LENGTH_LONG).show()
+                FotoUsuario?.setImageBitmap(reduceBitmap(applicationContext, data.dataString, 512f, 512f))
             } else {
-                Toast.makeText(applicationContext,
-                        "Ocurrio un error al guardar la URL de la imagen",
-                        Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "Ocurrio un error al guardar la URL de la imagen", Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -150,30 +148,5 @@ class MenuPrincipal : AppCompatActivity() {
         val siguiente = Intent(this@MenuPrincipal, InicioSesion::class.java)
         startActivity(siguiente)
         finish()
-    }
-
-    companion object {
-        fun reduceBitmap(
-                contexto: Context, uri: String?,
-                maxAncho: Float, maxAlto: Float
-        ): Bitmap? {
-            return try {
-                val options = BitmapFactory.Options()
-                options.inJustDecodeBounds = true
-                BitmapFactory.decodeStream(contexto.contentResolver
-                        .openInputStream(Uri.parse(uri)), null, options)
-                options.inSampleSize = Math.max(
-                        Math.ceil((options.outWidth / maxAncho).toDouble()),
-                        Math.ceil((options.outHeight / maxAlto).toDouble())).toInt()
-                options.inJustDecodeBounds = false
-                BitmapFactory.decodeStream(contexto.contentResolver
-                        .openInputStream(Uri.parse(uri)), null, options)
-            } catch (e: FileNotFoundException) {
-                Toast.makeText(contexto, "Fichero/recurso no encontrado",
-                        Toast.LENGTH_LONG).show()
-                e.printStackTrace()
-                null
-            }
-        }
     }
 }

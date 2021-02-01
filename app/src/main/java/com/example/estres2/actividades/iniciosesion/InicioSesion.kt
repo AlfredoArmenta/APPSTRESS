@@ -15,6 +15,7 @@ import com.example.estres2.actividades.registrar.Register
 import com.example.estres2.almacenamiento.database.DB
 import com.example.estres2.almacenamiento.entidades.usuario.Usuario
 import com.example.estres2.databinding.ActivityInicioSesionBinding
+import com.example.estres2.util.setIconDrawableAndChangeColor
 
 class InicioSesion : AppCompatActivity() {
     private lateinit var binding: ActivityInicioSesionBinding
@@ -42,35 +43,51 @@ class InicioSesion : AppCompatActivity() {
 
     private fun initializeObjects() {
         binding.apply {
-            User.doOnTextChanged { text, _, _, _ ->
-                correctBoleta = when {
-                    text.isNullOrEmpty() -> {
-                        User.setError(getString(R.string.SinBoleta), null)
-                        false
+            User.apply {
+                startIconDrawable = resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_edit, R.color.error_red)
+                editText?.doOnTextChanged { text, _, _, _ ->
+                    correctBoleta = when {
+                        text.isNullOrEmpty() -> {
+                            editText?.setError(getString(R.string.SinBoleta), null)
+                            false
+                        }
+                        text.length != 10 -> {
+                            editText?.setError(getString(R.string.LongBoleta), null)
+                            false
+                        }
+                        else -> {
+                            editText?.setError(null, null)
+                            true
+                        }
                     }
-                    text.length != 10 -> {
-                        User.setError(getString(R.string.LongBoleta), null)
-                        false
-                    }
-                    else -> {
-                        User.setError(null, null)
-                        true
+                    startIconDrawable = if(correctBoleta){
+                        resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_edit, R.color.correct_green)
+                    }else {
+                        resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_edit, R.color.error_red)
                     }
                 }
             }
-            Password.doOnTextChanged { text, _, _, _ ->
-                correctPassword = when {
-                    text.isNullOrEmpty() -> {
-                        Password.setError(getString(R.string.SinContraseña), null)
-                        false
+            Password.apply {
+                startIconDrawable = resources.setIconDrawableAndChangeColor(android.R.drawable.ic_lock_idle_lock, R.color.error_red)
+                editText?.doOnTextChanged { text, _, _, _ ->
+                    correctPassword = when {
+                        text.isNullOrEmpty() -> {
+                            editText?.setError(getString(R.string.SinContraseña), null)
+                            false
+                        }
+                        text.length !in 8..15 -> {
+                            editText?.setError(getString(R.string.Longitud_de_8_15_Caracteres), null)
+                            false
+                        }
+                        else -> {
+                            editText?.setError(null, null)
+                            true
+                        }
                     }
-                    text.length !in 8..15 -> {
-                        Password.setError(getString(R.string.Longitud_de_8_15_Caracteres), null)
-                        false
-                    }
-                    else -> {
-                        Password.setError(null, null)
-                        true
+                    startIconDrawable = if (correctPassword){
+                        resources.setIconDrawableAndChangeColor(android.R.drawable.ic_lock_idle_lock, R.color.correct_green)
+                    }else {
+                        resources.setIconDrawableAndChangeColor(android.R.drawable.ic_lock_idle_lock, R.color.error_red)
                     }
                 }
             }
@@ -80,14 +97,18 @@ class InicioSesion : AppCompatActivity() {
             Loggin.setOnClickListener {
                 if (correctBoleta && correctPassword) {
                     bd = DB(applicationContext)
-                    bd.getUser(User.text.toString())?.let { userIt -> setObjectBoleta(userIt) }
+                    bd.getUser(User.editText?.text.toString())?.let { userIt -> setObjectBoleta(userIt) }
                     if (isInitialized()) {
-                        when (Password.text.toString()) {
-                            getObjectBoleta().password -> { setNextActivity(Intent(this@InicioSesion, MenuPrincipal::class.java)) }
+                        when (Password.editText?.text.toString()) {
+                            getObjectBoleta().password -> {
+                                setNextActivity(Intent(this@InicioSesion, MenuPrincipal::class.java))
+                            }
 
-                            else -> { Toast.makeText(applicationContext, getText(R.string.ErrorContraseña), Toast.LENGTH_SHORT).show() }
+                            else -> {
+                                Toast.makeText(applicationContext, getText(R.string.ErrorContraseña), Toast.LENGTH_SHORT).show()
+                            }
                         }
-                    }else {
+                    } else {
                         Toast.makeText(applicationContext, getText(R.string.BoletaNoRegistrada), Toast.LENGTH_SHORT).show()
                     }
                 }

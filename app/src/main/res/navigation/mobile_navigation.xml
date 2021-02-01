@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/nav_inicio"
-        android:name="com.example.estres2.ui.inico.InicioFragment"
+        android:name="com.example.estres2.ui.inico.HomeFragment"
         android:label="@string/menu_inicio"
-        tools:layout="@layout/fragment_inicio" />
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_graficas"

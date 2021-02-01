@@ -44,12 +44,10 @@ class Register : AppCompatActivity() {
                 editText?.doOnTextChanged { text, _, _, _ ->
                     correctBoleta = when {
                         text.isNullOrEmpty() -> {
-                            startIconDrawable = resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_edit, R.color.error_red)
                             editText?.setError(getString(R.string.SinBoleta), null)
                             false
                         }
                         text.length != 10 -> {
-                            startIconDrawable = resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_edit, R.color.error_red)
                             editText?.setError(getString(R.string.LongBoleta), null)
                             false
                         }
@@ -58,11 +56,15 @@ class Register : AppCompatActivity() {
                                 Toast.makeText(context, getString(R.string.BoletaRegistrada), Toast.LENGTH_LONG).show()
                                 false
                             } else {
-                                startIconDrawable = resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_edit, R.color.correct_green)
                                 editText?.setError(null, null)
                                 true
                             }
                         }
+                    }
+                    startIconDrawable = if (correctBoleta){
+                        resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_edit, R.color.correct_green)
+                    }else {
+                        resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_edit, R.color.error_red)
                     }
                 }
             }
@@ -71,14 +73,18 @@ class Register : AppCompatActivity() {
                 editText?.doOnTextChanged { text, _, _, _ ->
                     correctNombre = when {
                         text.isNullOrEmpty() -> {
-                            startIconDrawable = resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_sort_alphabetically, R.color.error_red)
                             editText?.setError(getString(R.string.SinNombre), null)
                             false
                         }
                         else -> {
-                            startIconDrawable = resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_sort_alphabetically, R.color.correct_green)
+                            editText?.setError(null, null)
                             true
                         }
+                    }
+                    startIconDrawable = if (correctNombre){
+                        resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_sort_alphabetically, R.color.correct_green)
+                    }else {
+                        resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_sort_alphabetically, R.color.error_red)
                     }
                 }
             }
@@ -87,19 +93,22 @@ class Register : AppCompatActivity() {
                 editText?.doOnTextChanged { text, _, _, _ ->
                     correctEdad = when {
                         text.isNullOrEmpty() -> {
-                            startIconDrawable = resources.setIconDrawableAndChangeColor(R.drawable.ic_edad, R.color.error_red)
                             editText?.setError(getString(R.string.SinEdad), null)
                             false
                         }
                         text.toString().toInt() !in 20..25 -> {
-                            startIconDrawable = resources.setIconDrawableAndChangeColor(R.drawable.ic_edad, R.color.error_red)
                             editText?.setError(getString(R.string.RangoEdad), null)
                             false
                         }
                         else -> {
-                            startIconDrawable = resources.setIconDrawableAndChangeColor(R.drawable.ic_edad, R.color.correct_green)
+                            editText?.setError(null, null)
                             true
                         }
+                    }
+                    startIconDrawable = if (correctEdad){
+                        resources.setIconDrawableAndChangeColor(R.drawable.ic_edad, R.color.correct_green)
+                    }else {
+                        resources.setIconDrawableAndChangeColor(R.drawable.ic_edad, R.color.error_red)
                     }
                 }
             }
@@ -108,7 +117,7 @@ class Register : AppCompatActivity() {
 
             }
             RPassword.apply {
-                resources.setIconDrawableAndChangeColor(android.R.drawable.ic_lock_idle_lock, R.color.error_red)
+                startIconDrawable = resources.setIconDrawableAndChangeColor(android.R.drawable.ic_lock_idle_lock, R.color.error_red)
                 editText?.doOnTextChanged { text, _, _, _ ->
                     if (text.isNullOrEmpty()) {
                         editText?.setError(getString(R.string.SinContraseña), null)

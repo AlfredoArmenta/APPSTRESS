@@ -256,13 +256,13 @@ class DB(private var context: Context): SQLiteOpenHelper(context, NOMBRE_BD, nul
     }
 
     fun deletedRecord(Record: String): Boolean {
-        erase = this.writableDatabase.delete(TABLA_ARCHIVO, "$COLUMNA_ARCHIVO_ID = '$Record' ", null)
+        erase = writableDatabase.delete(TABLA_ARCHIVO, "$COLUMNA_ARCHIVO_ID = '$Record' ", null)
         this.writableDatabase.close()
         return erase!! >= 0
     }
 
     fun deletedRecordsAndDirectory(Boleta: String): Boolean {
-        erase = this.writableDatabase.delete(TABLA_ARCHIVO, "$COLUMNA_ARCHIVO_BOLETA_USUARIO = $Boleta", null)
+        erase = writableDatabase.delete(TABLA_ARCHIVO, "$COLUMNA_ARCHIVO_BOLETA_USUARIO = $Boleta", null)
         this.writableDatabase.close()
         return erase!! >= 0
     } // ********************** Fin de la clase DB ************************ //
