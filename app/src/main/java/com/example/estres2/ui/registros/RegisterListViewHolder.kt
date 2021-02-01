@@ -10,9 +10,7 @@ import com.example.estres2.databinding.ListaRegistrosBinding
 import com.example.estres2.ui.viewmodel.MenuViewModel
 import com.example.estres2.util.eraseRegister
 
-class ListaRegistrosViewHolder(private val viewBinding: ListaRegistrosBinding) :
-        RecyclerView.ViewHolder(viewBinding.root) {
-
+class RegisterListViewHolder(private val viewBinding: ListaRegistrosBinding) : RecyclerView.ViewHolder(viewBinding.root) {
     private lateinit var callbackErase: MenuViewModel
 
     fun onBinding(recordList: ListaRegistro, callback: MenuViewModel) {
