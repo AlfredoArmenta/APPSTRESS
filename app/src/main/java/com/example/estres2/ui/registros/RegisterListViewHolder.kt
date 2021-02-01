@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.estres2.R
+import com.example.estres2.almacenamiento.entidades.registros.UserRegister
 import com.example.estres2.databinding.ListaRegistrosBinding
 import com.example.estres2.ui.viewmodel.MenuViewModel
 import com.example.estres2.util.eraseRegister
@@ -13,11 +14,11 @@ import com.example.estres2.util.eraseRegister
 class RegisterListViewHolder(private val viewBinding: ListaRegistrosBinding) : RecyclerView.ViewHolder(viewBinding.root) {
     private lateinit var callbackErase: MenuViewModel
 
-    fun onBinding(recordList: ListaRegistro, callback: MenuViewModel) {
+    fun onBinding(recordList: UserRegister, callback: MenuViewModel) {
         callbackErase = callback
         viewBinding.apply {
-            RVTextView.text = recordList.nombreRegistro
-            RVEliminar.setImageDrawable(ContextCompat.getDrawable(root.context, recordList.imagenEliminar))
+            RVTextView.text = recordList.idRegister
+            RVEliminar.setImageDrawable(ContextCompat.getDrawable(root.context, recordList.imageRegister))
             if (RVTextView.text != "Carpeta Vacia") {
                 RVEliminar.setOnClickListener {
                     Toast.makeText(viewBinding.root.context, adapterPosition.toString(), Toast.LENGTH_LONG).show()

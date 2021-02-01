@@ -114,7 +114,6 @@ class Register : AppCompatActivity() {
             }
             RSemestre.apply {
                 adapter = adapterSemester
-
             }
             RPassword.apply {
                 startIconDrawable = resources.setIconDrawableAndChangeColor(android.R.drawable.ic_lock_idle_lock, R.color.error_red)

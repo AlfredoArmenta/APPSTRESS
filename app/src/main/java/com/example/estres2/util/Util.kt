@@ -27,6 +27,7 @@ fun reduceBitmap(context: Context, uri: String?, maxWidth: Float, maxHeight: Flo
     }
 }
 
+// Sólo falta actualizar este metodo para que se agreguen los elementos a la lista filtrandolos por el nombre, la función ya se encuentra en Util.kt
 fun eraseRegister(position: Int, context: Context): Int {
     var conteo = 0
     var cuentacsv = 0

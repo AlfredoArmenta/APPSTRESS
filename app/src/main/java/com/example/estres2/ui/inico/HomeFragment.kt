@@ -34,7 +34,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun userToRegards() {
-
         dataUser = getObjectBoleta()
         val hourFormat = Calendar.getInstance()
         val dayHour = hourFormat.get(Calendar.HOUR_OF_DAY)
@@ -42,16 +41,16 @@ class HomeFragment : Fragment() {
             txtInicio.apply {
                 text = when (dayHour) {
                     in 6..11 -> {
-                        String.format("Hola ${dataUser.nombre} Buenos dias")
+                        String.format("¡Hola ${dataUser.nombre} Buenos días!")
                     }
                     in 12..17 -> {
-                        String.format("Hola ${dataUser.nombre} Buenas tardes")
+                        String.format("¡Hola ${dataUser.nombre} Buenas tardes!")
                     }
                     in 18..23 -> {
-                        String.format("Hola ${dataUser.nombre} Buenas noches")
+                        String.format("¡Hola ${dataUser.nombre} Buenas noches!")
                     }
                     else -> {
-                        String.format("Hola ${dataUser.nombre} ¡Ya es tarde deberías dormir, para comenzar un buen día!")
+                        String.format("¡Hola ${dataUser.nombre} Ya es tarde deberías dormir, para comenzar un buen día!")
                     }
                 }
             }

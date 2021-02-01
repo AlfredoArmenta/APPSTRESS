@@ -20,21 +20,19 @@
             android:layout_marginBottom="@dimen/margin"
             android:gravity="center"
             android:text="@string/eliminarse_la_cuenta"
-            android:textSize="@dimen/text_size_list_register" />
+            android:textSize="@dimen/text_size_bluno_conectar" />
 
         <Button
             android:id="@+id/CEliminar"
             android:layout_width="@dimen/button_size_width_extended"
             android:layout_height="@dimen/button_size_height_text"
-            android:background="@drawable/cambia_sombra"
-            android:textColor="@color/colorPrimary"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="@dimen/margin"
-            android:clickable="true"
-            android:focusable="true"
+            android:background="@drawable/cambia_sombra"
             android:text="@string/eliminar_cuenta"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_size_bluno_conectar" />
 
     </LinearLayout>

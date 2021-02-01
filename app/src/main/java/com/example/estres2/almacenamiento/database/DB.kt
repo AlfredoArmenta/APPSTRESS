@@ -12,7 +12,7 @@ import com.example.estres2.almacenamiento.entidades.wearable.Wearable
 import kotlinx.coroutines.withContext
 import java.util.ArrayList
 
-class DB(private var context: Context): SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_BD) {
+class DB(context: Context): SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_BD) {
     private lateinit var row: Cursor
     private var auxUser: Usuario? = null
     private var userList: MutableList<Usuario> = ArrayList()

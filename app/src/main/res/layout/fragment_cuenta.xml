@@ -25,6 +25,7 @@
             android:textSize="@dimen/text_size_list_register" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/CFNombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin"
@@ -33,7 +34,6 @@
             android:layout_marginBottom="@dimen/margin">
 
             <EditText
-                android:id="@+id/CFNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="yes"
@@ -46,6 +46,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/CFEdad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin"
@@ -54,7 +55,6 @@
             android:layout_marginBottom="@dimen/margin">
 
             <EditText
-                android:id="@+id/CFEdad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="yes"
@@ -181,6 +181,7 @@
             android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/CFPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin"
@@ -190,7 +191,6 @@
             app:passwordToggleEnabled="true">
 
             <EditText
-                android:id="@+id/CFContraseña"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="true"

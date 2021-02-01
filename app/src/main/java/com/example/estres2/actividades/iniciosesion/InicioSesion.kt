@@ -19,7 +19,6 @@ import com.example.estres2.util.setIconDrawableAndChangeColor
 
 class InicioSesion : AppCompatActivity() {
     private lateinit var binding: ActivityInicioSesionBinding
-    private val mainViewModel: MainViewModel by viewModels()
     private var correctBoleta: Boolean = false
     private var correctPassword: Boolean = false
     private lateinit var bd: DB
@@ -29,16 +28,8 @@ class InicioSesion : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityInicioSesionBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setObservers()
         initializeObjects()
         UsuariosFake()
-    }
-
-    private fun setObservers() {
-        mainViewModel.apply {
-            boleta.observe(this@InicioSesion) {
-            }
-        }
     }
 
     private fun initializeObjects() {
@@ -136,24 +127,24 @@ class InicioSesion : AppCompatActivity() {
         user = Usuario("2015640017",
                 "Alfredo Armenta Espinosa",
                 "24",
-                "12",
                 "Masculino",
+                "12",
                 "Politecnico12@",
                 "")
         bd.insertUser(user)
         user = Usuario("2015640000",
                 "Fulanito Fulano Fulanote",
                 "24",
-                "12",
                 "Masculino",
+                "12",
                 "Politecnico12@",
                 "")
         bd.insertUser(user)
         user = Usuario("2015640408",
                 "Efraín Villegas Sánchez",
                 "24",
-                "12",
                 "Masculino",
+                "12",
                 "Tru\$tn01",
                 "")
         bd.insertUser(user)

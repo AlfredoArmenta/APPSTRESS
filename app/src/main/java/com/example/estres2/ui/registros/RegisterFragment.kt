@@ -16,18 +16,19 @@ import com.example.estres2.R
 import com.example.estres2.UsuarioBoleta.getObjectBoleta
 import com.example.estres2.almacenamiento.database.DB
 import com.example.estres2.almacenamiento.entidades.archivo.Archivo
+import com.example.estres2.almacenamiento.entidades.registros.UserRegister
 import com.example.estres2.almacenamiento.entidades.usuario.Usuario
 import com.example.estres2.databinding.FragmentRegistroBinding
 import com.example.estres2.ui.viewmodel.MenuViewModel
 import java.io.File
 
-class FragmentRegistro: Fragment() {
+class RegisterFragment : Fragment() {
     private var _binding: FragmentRegistroBinding? = null
     private val binding get() = _binding!!
     private val menuViewModel: MenuViewModel by viewModels()
     private lateinit var mContext: Context
     private lateinit var user: Usuario
-    private val lRegistro: MutableList<ListaRegistro> = ArrayList()
+    private val lRegistro: MutableList<UserRegister> = ArrayList()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -63,15 +64,15 @@ class FragmentRegistro: Fragment() {
     }
 
     private fun showRegister() {
-        val arrayFiles = obtenerRegistros()
+        val arrayFiles = getRegisters()
         lRegistro.clear()
         if (arrayFiles.isNotEmpty()) {
             for (element in arrayFiles) {
-                lRegistro.add(ListaRegistro(element, R.drawable.ic_registros_menu))
+                lRegistro.add(UserRegister(element, R.drawable.ic_registros_menu))
             }
         } else {
             Toast.makeText(mContext, "Carpeta Vacia", Toast.LENGTH_LONG).show()
-            lRegistro.add(ListaRegistro("Carpeta Vacia", R.drawable.ic_sin_registro))
+            lRegistro.add(UserRegister("Carpeta Vacia", R.drawable.ic_sin_registro))
         }
         val itemDecoration = DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL)
         ContextCompat.getDrawable(mContext, R.drawable.divider)?.let {
@@ -85,7 +86,7 @@ class FragmentRegistro: Fragment() {
         }
     }
 
-    fun obtenerRegistros(): List<String> {
+    private fun getRegisters(): List<String> {
         val item: MutableList<String> = ArrayList()
         val db = DB(mContext)
         user = getObjectBoleta()

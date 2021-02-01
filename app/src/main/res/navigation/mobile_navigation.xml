@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/nav_graficas"
-        android:name="com.example.estres2.ui.Graficas.GraficasFragment"
+        android:name="com.example.estres2.ui.graficas.GraficasFragment"
         android:label="@string/menu_gráficas"
-        tools:layout="@layout/fragment_graficas">
+        tools:layout="@layout/fragment_graphs">
         <action
             android:id="@+id/action_nav_graficas_to_nav_inicio"
             app:destination="@id/nav_inicio" />
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/nav_registro"
-        android:name="com.example.estres2.ui.registros.FragmentRegistro"
+        android:name="com.example.estres2.ui.registros.RegisterFragment"
         android:label="@string/registros"
         tools:layout="@layout/fragment_registro">
         <action
@@ -43,9 +43,9 @@
 
     <fragment
         android:id="@+id/nav_eliminar"
-        android:name="com.example.estres2.ui.eliminar.EliminarFragment"
+        android:name="com.example.estres2.ui.eliminar.DeleteFragment"
         android:label="@string/menu_eliminar"
-        tools:layout="@layout/fragment_eliminar">
+        tools:layout="@layout/fragment_delete_user">
         <action
             android:id="@+id/action_nav_eliminar_to_nav_inicio"
             app:destination="@id/nav_inicio" />

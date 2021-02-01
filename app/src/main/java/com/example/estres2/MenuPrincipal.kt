@@ -1,13 +1,8 @@
 package com.example.estres2
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Menu
@@ -21,9 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -32,12 +25,10 @@ import com.example.estres2.actividades.bluetooth.ConectarBluno
 import com.example.estres2.actividades.iniciosesion.InicioSesion
 import com.example.estres2.almacenamiento.database.DB
 import com.example.estres2.almacenamiento.entidades.usuario.Usuario
-import com.example.estres2.ui.registros.FragmentRegistro
 import com.example.estres2.ui.viewmodel.MenuViewModel
 import com.example.estres2.util.reduceBitmap
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
-import java.io.FileNotFoundException
 
 class MenuPrincipal : AppCompatActivity() {
     private var mAppBarConfiguration: AppBarConfiguration? = null

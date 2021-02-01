@@ -4,8 +4,8 @@ data class Usuario(
         var boleta: String,
         var nombre: String,
         var edad: String,
-        var semestre: String,
         var genero: String,
+        var semestre: String,
         var password: String,
         var imagen: String,
 )

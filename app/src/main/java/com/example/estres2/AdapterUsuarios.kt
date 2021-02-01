@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.estres2.AdapterUsuarios.UsuariosView
 import com.example.estres2.almacenamiento.entidades.usuario.Usuario
 
-class AdapterUsuarios(
-        var context: Context, var ListaUsuarios: List<Usuario>
+class AdapterUsuarios(var context: Context, var ListaUsuarios: List<Usuario>
 ) : RecyclerView.Adapter<UsuariosView>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsuariosView {
         val vista = LayoutInflater.from(parent.context).inflate(R.layout.vista_usuario, null, false)
@@ -23,8 +22,7 @@ class AdapterUsuarios(
         holder.MNombre.text = String.format("Nombre: %s", ListaUsuarios[position].nombre)
         holder.MEdad.text = String.format("Edad: %s", ListaUsuarios[position].edad)
         holder.MGenero.text = String.format("Genero: %s", ListaUsuarios[position].genero)
-        holder.MSemestre.text =
-                String.format("Semestre: %s", ListaUsuarios[position].semestre)
+        holder.MSemestre.text = String.format("Semestre: %s", ListaUsuarios[position].semestre)
         holder.MContraseña.text = String.format("Contraseña: %s", ListaUsuarios[position].password)
     }
 
