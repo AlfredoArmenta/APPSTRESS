@@ -1,13 +1,11 @@
 package com.example.estres2.actividades.registrar
 
 import android.content.Intent
-import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import com.example.estres2.R
 import com.example.estres2.actividades.iniciosesion.InicioSesion
@@ -21,7 +19,6 @@ class Register : AppCompatActivity() {
     private var correctBoleta: Boolean = false
     private var correctNombre: Boolean = false
     private var correctEdad: Boolean = false
-    private var correctSemestre: Boolean = false
     private var correctPassword: Boolean = false
     private lateinit var user: Usuario
     private lateinit var bd: DB
@@ -30,10 +27,10 @@ class Register : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        IniciarObjetos()
+        initializeObjects()
     }
 
-    private fun IniciarObjetos() {
+    private fun initializeObjects() {
         bd = DB(applicationContext)
         val semester = arrayOf("Selecciona tu semestre actual", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15")
         val adapterSemester = ArrayAdapter(applicationContext, R.layout.spinner_custom, semester)
@@ -206,4 +203,6 @@ class Register : AppCompatActivity() {
             }
         }
     }
+    // Se anula el botón que nos regresa
+    override fun onBackPressed() {}
 }

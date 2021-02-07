@@ -19,7 +19,7 @@
             android:layout_marginBottom="@dimen/margin"
             android:gravity="center_horizontal"
             android:textAlignment="center"
-            android:textSize="@dimen/text_size_bluno_conectar" />
+            android:textSize="@dimen/text_size_body1" />
 
     </LinearLayout>
 

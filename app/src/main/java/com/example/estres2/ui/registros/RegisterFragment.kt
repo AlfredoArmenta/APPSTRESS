@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.estres2.R
 import com.example.estres2.UsuarioBoleta.getObjectBoleta
 import com.example.estres2.almacenamiento.database.DB
-import com.example.estres2.almacenamiento.entidades.archivo.Archivo
 import com.example.estres2.almacenamiento.entidades.registros.UserRegister
 import com.example.estres2.almacenamiento.entidades.usuario.Usuario
 import com.example.estres2.databinding.FragmentRegistroBinding
@@ -28,7 +27,7 @@ class RegisterFragment : Fragment() {
     private val menuViewModel: MenuViewModel by viewModels()
     private lateinit var mContext: Context
     private lateinit var user: Usuario
-    private val lRegistro: MutableList<UserRegister> = ArrayList()
+    private val lRegister: MutableList<UserRegister> = ArrayList()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -55,7 +54,7 @@ class RegisterFragment : Fragment() {
             updateRegisters.observe(viewLifecycleOwner) {
                 when (it) {
                     true -> {
-                        Toast.makeText(context, "Se actualizo el estado del observador: $it", Toast.LENGTH_LONG).show()
+                        println("Se actualizo el estado del observador: $it")
                         showRegister()
                     }
                 }
@@ -65,14 +64,14 @@ class RegisterFragment : Fragment() {
 
     private fun showRegister() {
         val arrayFiles = getRegisters()
-        lRegistro.clear()
+        lRegister.clear()
         if (arrayFiles.isNotEmpty()) {
             for (element in arrayFiles) {
-                lRegistro.add(UserRegister(element, R.drawable.ic_registros_menu))
+                lRegister.add(UserRegister(element, R.drawable.ic_registros_menu))
             }
         } else {
             Toast.makeText(mContext, "Carpeta Vacia", Toast.LENGTH_LONG).show()
-            lRegistro.add(UserRegister("Carpeta Vacia", R.drawable.ic_sin_registro))
+            lRegister.add(UserRegister("Carpeta Vacia", R.drawable.ic_sin_registro))
         }
         val itemDecoration = DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL)
         ContextCompat.getDrawable(mContext, R.drawable.divider)?.let {
@@ -81,7 +80,7 @@ class RegisterFragment : Fragment() {
         binding.Resgistros.apply {
             setHasFixedSize(true)
             layoutManager = GridLayoutManager(mContext, 1, GridLayoutManager.VERTICAL, false)
-            adapter = RegisterListAdapter(lRegistro, menuViewModel)
+            adapter = RegisterListAdapter(lRegister, menuViewModel)
             addItemDecoration(itemDecoration)
         }
     }
@@ -91,11 +90,11 @@ class RegisterFragment : Fragment() {
         val db = DB(mContext)
         user = getObjectBoleta()
         val folder = File(Environment.getExternalStorageDirectory().path + "/Monitoreo" + user.boleta)
-        Toast.makeText(mContext, folder.path, Toast.LENGTH_LONG).show()
+        println("Ubicación de los archivos: ${folder.path}")
         if (folder.exists() && !folder.listFiles().isNullOrEmpty()) {
             folder.listFiles().also {
                 if (!it.isNullOrEmpty()) {
-                    for (file in (it)) if (file.path.endsWith(".csv") && db.getRecord(Archivo(file.name, user.boleta)))
+                    for (file in (it)) if (file.path.endsWith(".csv") && db.getRecord(file.name))
                         item.add(file.name)
                 }
             }

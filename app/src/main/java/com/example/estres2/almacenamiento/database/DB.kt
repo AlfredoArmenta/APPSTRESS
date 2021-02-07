@@ -240,8 +240,8 @@ class DB(context: Context): SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_B
         return fileList
     }
 
-    fun getRecord(Record: Archivo): Boolean {
-        row = this.readableDatabase.rawQuery("select $COLUMNA_ARCHIVO_ID from $TABLA_ARCHIVO where $COLUMNA_ARCHIVO_ID = '${Record.id}' ", null)
+    fun getRecord(Record: String?): Boolean {
+        row = this.readableDatabase.rawQuery("select $COLUMNA_ARCHIVO_ID from $TABLA_ARCHIVO where $COLUMNA_ARCHIVO_ID = '${Record}' ", null)
         return when {
             row.count != 0 -> {
                 row.moveToFirst()

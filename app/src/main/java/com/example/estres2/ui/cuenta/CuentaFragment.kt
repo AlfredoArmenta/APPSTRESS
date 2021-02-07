@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import com.example.estres2.MenuPrincipal
+import androidx.fragment.app.activityViewModels
+import com.example.estres2.MainViewModel
 import com.example.estres2.R
 import com.example.estres2.UsuarioBoleta.getObjectBoleta
+import com.example.estres2.UsuarioBoleta.setObjectBoleta
 import com.example.estres2.almacenamiento.database.DB
 import com.example.estres2.almacenamiento.entidades.usuario.Usuario
 import com.example.estres2.databinding.FragmentCuentaBinding
@@ -20,6 +22,7 @@ import com.example.estres2.util.setIconDrawableAndChangeColor
 class CuentaFragment : Fragment() {
     private var _binding: FragmentCuentaBinding? = null
     private val binding get() = _binding!!
+    private val mainViewModel: MainViewModel by activityViewModels()
     private var correctNombre: Boolean = true
     private var correctEdad: Boolean = true
     private var correctPassword: Boolean = true
@@ -196,9 +199,10 @@ class CuentaFragment : Fragment() {
             user.password = CFPassword.editText?.text.toString()
             user.imagen = user.imagen
             if (correctNombre && correctEdad && binding.CFSemestre.selectedItem.toString() != "Selecciona tu semestre actual" && correctPassword) {
-                if (bd.updateUser(user) && activity != null) {
+                if (bd.updateUser(user)) {
+                    setObjectBoleta(user)
+                    mainViewModel.updateUserDataFunc(true)
                     Toast.makeText(context, "Se actualizo correctamente.", Toast.LENGTH_SHORT).show()
-                    (activity as MenuPrincipal?)!!.Nombre!!.text = user.nombre
                 } else {
                     Toast.makeText(context, "Ocurrio un error al actualizar.", Toast.LENGTH_SHORT).show()
                 }

@@ -22,7 +22,7 @@
         android:requestLegacyExternalStorage="true">
 
         <activity
-            android:name=".MenuPrincipal"
+            android:name=".MainActivity"
             android:label="@string/title_activity_menu_principal"
             android:theme="@style/NoActionBar"
             android:configChanges="screenSize|orientation" />

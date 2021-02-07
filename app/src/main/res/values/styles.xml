@@ -13,12 +13,114 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <!--Principal font text-->
+    <style name="fontText">
+        <item name="fontFamily">@font/rosarivo</item>
+    </style>
+
+    <!--Style for TitleText-->
+    <style name="titleText1" parent="fontText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/margin</item>
+        <item name="android:layout_marginTop">@dimen/margin</item>
+        <item name="android:layout_marginBottom">@dimen/margin</item>
+        <item name="android:layout_marginEnd">@dimen/margin</item>
+        <item name="android:textSize">@dimen/text_size_display1</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!--Style for SubTitleText-->
+    <style name="subTitleText" parent="fontText">
+        <item name="android:textSize">@dimen/text_size_body1</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:textAlignment">textStart</item>
+    </style>
+
+    <!--Style for NormalText-->
+    <style name="normalText" parent="fontText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/margin</item>
+        <item name="android:layout_marginTop">@dimen/margin</item>
+        <item name="android:layout_marginBottom">@dimen/margin</item>
+        <item name="android:layout_marginEnd">@dimen/margin</item>
+        <item name="android:textSize">@dimen/text_size_body2</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:textAlignment">textStart</item>
+    </style>
+
+    <!--Style for SubNormalText-->
+    <style name="subNormalText" parent="fontText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_body3</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:textAlignment">textStart</item>
+    </style>
+
+    <!--Style for the TextInputLayout-->
+    <style name="textInputLayoutStyle" parent="subTitleText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!--Style for the password suggestions -->
+    <style name="passwordSuggestionText" parent="fontText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/margin</item>
+        <item name="android:textSize">@dimen/text_size_body3</item>
+        <item name="android:textColor">@color/error_red</item>
+    </style>
+
+    <!--Style for the buttons-->
+    <style name="buttonStyle" parent="fontText">
+        <item name="android:textAlignment">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/cambia_sombra</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/text_size_display2</item>
+    </style>
+
+    <!--Style for the title, for each fragment-->
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="customAppBarOverlay" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="fontFamily">@font/rosarivo</item>
+        <item name="android:textStyle">bold|italic</item>
+    </style>
 
+    <!--Style for Popup overlay, this find in the top-->
+    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
+
+    <style name="customPopupOverlay" parent="PopupOverlay">
+        <item name="fontFamily">@font/rosarivo</item>
+        <item name="android:textSize">@dimen/text_size_body3</item>
+    </style>
+
+    <!--Style for the spinner you can selection the semester-->
     <style name="mySpinnerItemStyle" parent="Base.Widget.AppCompat.Spinner">
         <item name="android:textColor">#FFFFFF</item>
     </style>
 
+    <!--Style for the Navigation View-->
+    <style name="Widget.Custom.NavigationView" parent="Widget.Design.NavigationView">
+        <item name="itemIconTint">@color/icon_selector</item>
+        <item name="itemTextColor">@color/icon_selector</item>
+    </style>
+
+    <!--Syle for the Navigation View Font-->
+    <style name="NewFontStyleNavigationView" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/rosarivo</item>
+    </style>
+
+    <!--Style for PopupMenu-->
+    <style name="MyPopupMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="fontFamily">@font/rosarivo</item>
+        <item name="android:textStyle">bold|italic</item>
+    </style>
 </resources>

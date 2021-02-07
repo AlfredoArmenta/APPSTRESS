@@ -2,7 +2,6 @@ package com.example.estres2.actividades.bluetooth
 
 import android.Manifest
 import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -18,7 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.estres2.AdapterWearable
-import com.example.estres2.MenuPrincipal
+import com.example.estres2.MainActivity
 import com.example.estres2.R
 import com.example.estres2.UsuarioBoleta.getObjectBoleta
 import com.example.estres2.almacenamiento.database.DB
@@ -299,7 +298,7 @@ class ConectarBluno : BlunoLibrary() {
         } catch (e: Exception) {
             Log.d("Cierre de archivo", e.toString())
         }
-        val siguiente = Intent(this@ConectarBluno, MenuPrincipal::class.java)
+        val siguiente = Intent(this@ConectarBluno, MainActivity::class.java)
         startActivity(siguiente)
         finish()
     }

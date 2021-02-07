@@ -41,7 +41,7 @@
                 android:ems="10"
                 android:hint="@string/nombre_completo"
                 android:inputType="textPersonName"
-                android:textSize="@dimen/text_size_bluno_conectar" />
+                android:textSize="@dimen/text_size_body1" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -62,7 +62,7 @@
                 android:ems="10"
                 android:hint="@string/edad"
                 android:inputType="number"
-                android:textSize="@dimen/text_size_bluno_conectar" />
+                android:textSize="@dimen/text_size_body1" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,7 +75,7 @@
             android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="@dimen/margin"
             android:text="@string/genero"
-            android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
+            android:textSize="@dimen/text_size_body3" />
 
         <RadioGroup
             android:layout_width="wrap_content"
@@ -91,14 +91,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/masculino"
-                android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
+                android:textSize="@dimen/text_size_body3" />
 
             <RadioButton
                 android:id="@+id/CFFemenino"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/femenino"
-                android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
+                android:textSize="@dimen/text_size_body3" />
 
         </RadioGroup>
 
@@ -111,7 +111,7 @@
             android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="@dimen/margin"
             android:text="@string/semestre"
-            android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
+            android:textSize="@dimen/text_size_body3" />
 
         <Spinner
             android:id="@+id/CFSemestre"
@@ -133,7 +133,7 @@
             android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="@dimen/margin"
             android:text="@string/la_contrasena_debe_contener"
-            android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
+            android:textSize="@dimen/text_size_body3" />
 
         <TextView
             android:id="@+id/CFNumero"
@@ -142,7 +142,7 @@
             android:layout_marginStart="@dimen/margin"
             android:text="@string/Debe_Contener_1_Numero"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
+            android:textSize="@dimen/text_size_body3" />
 
         <TextView
             android:id="@+id/CFLongitud"
@@ -151,7 +151,7 @@
             android:layout_marginStart="@dimen/margin"
             android:text="@string/Longitud_de_8_15_Caracteres"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
+            android:textSize="@dimen/text_size_body3" />
 
         <TextView
             android:id="@+id/CFMayuscula"
@@ -160,7 +160,7 @@
             android:layout_marginStart="@dimen/margin"
             android:text="@string/mayuscula"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
+            android:textSize="@dimen/text_size_body3" />
 
         <TextView
             android:id="@+id/CFMinuscula"
@@ -169,7 +169,7 @@
             android:layout_marginStart="@dimen/margin"
             android:text="@string/Minuscula"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
+            android:textSize="@dimen/text_size_body3" />
 
         <TextView
             android:id="@+id/CFCaracterEspecial"
@@ -178,7 +178,7 @@
             android:layout_marginStart="@dimen/margin"
             android:text="@string/Caracter_Especial"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="@dimen/text_size_datos_recibidos_bluno_conectar" />
+            android:textSize="@dimen/text_size_body3" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/CFPassword"
@@ -198,13 +198,13 @@
                 android:ems="10"
                 android:hint="@string/contrasena"
                 android:inputType="textPassword"
-                android:textSize="@dimen/text_size_bluno_conectar" />
+                android:textSize="@dimen/text_size_body1" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/CFAplicar"
-            android:layout_width="@dimen/button_size_width_normal"
+            android:layout_width="@dimen/button_size_width_text"
             android:layout_height="@dimen/button_size_height_text"
             android:background="@drawable/cambia_sombra"
             android:textColor="@color/colorPrimary"
@@ -215,7 +215,7 @@
             android:clickable="true"
             android:focusable="true"
             android:text="@string/aplicar"
-            android:textSize="@dimen/text_size_bluno_conectar" />
+            android:textSize="@dimen/text_size_body1" />
 
     </LinearLayout>
 

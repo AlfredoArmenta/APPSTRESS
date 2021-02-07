@@ -15,11 +15,9 @@
 
         <TextView
             android:id="@+id/RText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/titleText1"
             android:layout_marginTop="40dp"
-            android:text="@string/iniciar_sesion"
-            android:textSize="36sp" />
+            android:text="@string/iniciar_sesion" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -31,53 +29,47 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/User"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
+            style="@style/textInputLayoutStyle"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="40dp"
-            android:layout_marginEnd="@dimen/margin"
-            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginEnd="40dp"
             app:passwordToggleEnabled="true">
 
             <EditText
+                style="@style/subTitleText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:ems="10"
+                android:autofillHints="yes"
                 android:hint="@string/boleta"
-                android:inputType="number"
-                android:textSize="24sp" />
+                android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/Password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
+            style="@style/textInputLayoutStyle"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="40dp"
-            android:layout_marginEnd="@dimen/margin"
-            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginEnd="40dp"
             app:passwordToggleEnabled="true">
 
             <EditText
-                android:layout_width="wrap_content"
+                style="@style/subTitleText"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:ems="10"
+                android:autofillHints="yes"
                 android:hint="@string/contrasena"
-                android:inputType="textPassword"
-                android:textSize="24sp" />
+                android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/ForgotPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/subNormalText"
             android:layout_marginTop="10dp"
             android:background="#00FFFFFF"
             android:text="@string/olvidaste_tu_contrasena"
+            android:textAlignment="center"
             android:textStyle="bold|italic" />
 
         <LinearLayout
@@ -87,29 +79,17 @@
 
             <Button
                 android:id="@+id/Loggin"
-                android:layout_width="@dimen/button_size_width_normal"
+                style="@style/buttonStyle"
+                android:layout_width="@dimen/button_size_width_text"
                 android:layout_height="@dimen/button_size_height_text"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginTop="@dimen/margin"
-                android:layout_marginEnd="@dimen/margin"
-                android:layout_marginBottom="@dimen/margin"
-                android:background="@drawable/cambia_sombra"
-                android:text="@string/ingresar"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_size_bluno_conectar" />
+                android:text="@string/ingresar" />
 
             <Button
                 android:id="@+id/button_register_inicio_sesion"
-                android:layout_width="@dimen/button_size_width_normal"
+                style="@style/buttonStyle"
+                android:layout_width="@dimen/button_size_width_text"
                 android:layout_height="@dimen/button_size_height_text"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginTop="@dimen/margin"
-                android:layout_marginEnd="@dimen/margin"
-                android:layout_marginBottom="@dimen/margin"
-                android:background="@drawable/cambia_sombra"
-                android:text="@string/registrar"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_size_bluno_conectar" />
+                android:text="@string/registrar" />
 
         </LinearLayout>
 

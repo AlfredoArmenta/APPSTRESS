@@ -3,7 +3,8 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="blanco">#FFFFFF</color>
+    <color name="colorPrimaryText">#f5f5f5</color>
+    <color name="colorSecondaryText">#e0e0e0</color>
 
     <color name="error_red">#FF0000</color>
     <color name="correct_green">#76FF36</color>

@@ -3,7 +3,6 @@ package com.example.estres2.actividades.iniciosesion
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import com.example.estres2.*
@@ -51,9 +50,9 @@ class InicioSesion : AppCompatActivity() {
                             true
                         }
                     }
-                    startIconDrawable = if(correctBoleta){
+                    startIconDrawable = if (correctBoleta) {
                         resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_edit, R.color.correct_green)
-                    }else {
+                    } else {
                         resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_edit, R.color.error_red)
                     }
                 }
@@ -75,15 +74,12 @@ class InicioSesion : AppCompatActivity() {
                             true
                         }
                     }
-                    startIconDrawable = if (correctPassword){
+                    startIconDrawable = if (correctPassword) {
                         resources.setIconDrawableAndChangeColor(android.R.drawable.ic_lock_idle_lock, R.color.correct_green)
-                    }else {
+                    } else {
                         resources.setIconDrawableAndChangeColor(android.R.drawable.ic_lock_idle_lock, R.color.error_red)
                     }
                 }
-            }
-            ForgotPassword.setOnClickListener {
-                setNextActivity(Intent(this@InicioSesion, RecoverPassword::class.java))
             }
             Loggin.setOnClickListener {
                 if (correctBoleta && correctPassword) {
@@ -92,20 +88,27 @@ class InicioSesion : AppCompatActivity() {
                     if (isInitialized()) {
                         when (Password.editText?.text.toString()) {
                             getObjectBoleta().password -> {
-                                setNextActivity(Intent(this@InicioSesion, MenuPrincipal::class.java))
-                            }
-
-                            else -> {
+                                setNextActivity(Intent(this@InicioSesion, MainActivity::class.java))
+                            }else -> {
                                 Toast.makeText(applicationContext, getText(R.string.ErrorContraseña), Toast.LENGTH_SHORT).show()
                             }
                         }
                     } else {
                         Toast.makeText(applicationContext, getText(R.string.BoletaNoRegistrada), Toast.LENGTH_SHORT).show()
                     }
+                } else {
+                    Toast.makeText(applicationContext, if (!correctBoleta) { getString(R.string.ErrorBoleta) }
+                    else if (!correctPassword) { getString(R.string.ErrorContraseña) }
+                    else { ""}, Toast.LENGTH_LONG).show()
                 }
+            }
+            ForgotPassword.setOnClickListener {
+                setNextActivity(Intent(this@InicioSesion, RecoverPassword::class.java))
+                finish()
             }
             buttonRegisterInicioSesion.setOnClickListener {
                 setNextActivity(Intent(this@InicioSesion, Register::class.java))
+                finish()
             }
 
             MostrarArchivo.setOnClickListener {

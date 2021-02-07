@@ -22,10 +22,10 @@ class RecoverPassword : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRecoverPasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        InitializeObjetos()
+        initializeObjecs()
     }
 
-    private fun InitializeObjetos() {
+    private fun initializeObjecs() {
         bd = DB(applicationContext)
         binding.apply {
             CBoleta.apply {
@@ -127,6 +127,12 @@ class RecoverPassword : AppCompatActivity() {
                     Toast.makeText(applicationContext, R.string.SinContraseña, Toast.LENGTH_LONG).show()
                 }
             }
+            CCancel.setOnClickListener {
+                startActivity(Intent(applicationContext, InicioSesion::class.java))
+                finish()
+            }
         }
     }
+    // Se anula el botón que nos regresa
+    override fun onBackPressed() {}
 }

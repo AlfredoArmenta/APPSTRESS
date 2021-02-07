@@ -1,11 +1,16 @@
 package com.example.estres2.util
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Environment
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.estres2.UsuarioBoleta
 import com.example.estres2.almacenamiento.database.DB
 import java.io.File
@@ -27,29 +32,26 @@ fun reduceBitmap(context: Context, uri: String?, maxWidth: Float, maxHeight: Flo
     }
 }
 
-// Sólo falta actualizar este metodo para que se agreguen los elementos a la lista filtrandolos por el nombre, la función ya se encuentra en Util.kt
-fun eraseRegister(position: Int, context: Context): Int {
-    var conteo = 0
-    var cuentacsv = 0
+fun eraseRegister(register: String, context: Context): Boolean {
     val db = DB(context)
     val folder = File(Environment.getExternalStorageDirectory().toString() + "/Monitoreo" + UsuarioBoleta.getObjectBoleta().boleta)
     if (folder.exists()) {
-        val files = folder.listFiles()!!
-        for (i in files.indices) {
-            if (files[i].path.endsWith(".csv")) {
-                cuentacsv++
-                if (i == position + conteo) {
-                    if (db.deletedRecord(files[i].name)) {
-                        Toast.makeText(context, "Se elimino el registro correctamente.", Toast.LENGTH_LONG).show()
-                        files[i].delete()
-                    }
-                }
-            } else {
-                conteo++
+        folder.listFiles()?.iterator()?.forEach {
+            if (it.name == register && db.deletedRecord(it.name)) {
+                it.delete()
+                Toast.makeText(context, "Se elimino el registro correctamente.", Toast.LENGTH_LONG).show()
+                return true
             }
         }
-    } else {
-        Toast.makeText(context, "No existe la carpeta del usuario", Toast.LENGTH_LONG).show()
     }
-    return cuentacsv
+    Toast.makeText(context, "No existe la carpeta del usuario", Toast.LENGTH_LONG).show()
+    return false
+}
+
+fun requestPermissionExternalStorage(context: Context, activity: Activity){
+    // Permisos para almacenamiento externo
+    if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+    ) {
+        ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),0)
+    }
 }

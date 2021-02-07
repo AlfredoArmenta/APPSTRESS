@@ -9,15 +9,17 @@
 
     <dimen name="text_size_list_register">16sp</dimen>
 
-    <!-- Dimensiones de la actividad ConectarBluno-->
-    <dimen name="text_size_bluno_conectar">24sp</dimen>
-    <dimen name="text_size_datos_recibidos_bluno_conectar">14sp</dimen>
-    <dimen name="text_size_envio_datos_bluno_conectar">20sp</dimen>
+    <!-- Dimensiones de los textos-->
+    <dimen name="text_size_display1">36sp</dimen>
+    <dimen name="text_size_display2">24sp</dimen>
+    <dimen name="text_size_body1">24sp</dimen>
+    <dimen name="text_size_body2">20sp</dimen>
+    <dimen name="text_size_body3">16sp</dimen>
 
     <!-- Dimenciones de los botones -->
     <dimen name="button_size_height_text">60dp</dimen>
     <dimen name="button_size_height_icon">80dp</dimen>
-    <dimen name="button_size_width_normal">175dp</dimen>
+    <dimen name="button_size_width_text">200dp</dimen>
     <dimen name="button_size_width_extended">275dp</dimen>
 
     <!-- Dimenciones del boton flotante -->
@@ -28,5 +30,6 @@
 
     <!-- Dimenciones del RecyclerVew -->
     <dimen name="recyclerview_size_height">205dp</dimen>
+    <dimen name="menu_principal_margin_top_add_image">30dp</dimen>
 
 </resources>

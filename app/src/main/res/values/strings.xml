@@ -27,8 +27,9 @@
     // ************************* Mensajes de Error para el Inicio de Sesión
     ************************* //
     <string name="InicioSesion">Se inicio sesión correctamente</string>
+    <string name="ErrorBoleta">Boleta incorrecta</string>
     <string name="BoletaNoRegistrada">La boleta no ha sido registrada, registrala ahora</string>
-    <string name="ErrorContraseña">Contraseña no es correcta</string>
+    <string name="ErrorContraseña">Contraseña incorrecta</string>
 
     // ****************************** ****************************** ******************************
     //
@@ -165,4 +166,6 @@
     <string name="wearable_eliminar">ID Wearable</string>
     <string name="error_cant_inser_user">Error no se pudo insertar el usuario</string>
     <string name="error_some_fiel_is_wrong">Algún campo es incorrecto revisalos</string>
+    <string name="password_recover">Recuperar Contraseña</string>
+    <string name="add_image">add Image</string>
 </resources>

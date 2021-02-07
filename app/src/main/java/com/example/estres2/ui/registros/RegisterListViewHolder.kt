@@ -1,5 +1,6 @@
 package com.example.estres2.ui.registros
 
+import android.view.ContextThemeWrapper
 import android.view.Gravity
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -11,6 +12,7 @@ import com.example.estres2.databinding.ListaRegistrosBinding
 import com.example.estres2.ui.viewmodel.MenuViewModel
 import com.example.estres2.util.eraseRegister
 
+
 class RegisterListViewHolder(private val viewBinding: ListaRegistrosBinding) : RecyclerView.ViewHolder(viewBinding.root) {
     private lateinit var callbackErase: MenuViewModel
 
@@ -21,15 +23,15 @@ class RegisterListViewHolder(private val viewBinding: ListaRegistrosBinding) : R
             RVEliminar.setImageDrawable(ContextCompat.getDrawable(root.context, recordList.imageRegister))
             if (RVTextView.text != "Carpeta Vacia") {
                 RVEliminar.setOnClickListener {
-                    Toast.makeText(viewBinding.root.context, adapterPosition.toString(), Toast.LENGTH_LONG).show()
-                    showPopupMenu()
+                    showPopupMenu(recordList)
                 }
             }
         }
     }
 
-    private fun showPopupMenu() {
-        val popupMenu = PopupMenu(viewBinding.root.context, viewBinding.root)
+    private fun showPopupMenu(register: UserRegister) {
+        val wrapper= ContextThemeWrapper(viewBinding.root.context, R.style.MyPopupMenu)
+        val popupMenu = PopupMenu(wrapper, viewBinding.root)
         popupMenu.apply {
             inflate(R.menu.menu_registros)
             setOnMenuItemClickListener {
@@ -47,15 +49,10 @@ class RegisterListViewHolder(private val viewBinding: ListaRegistrosBinding) : R
                         true
                     }
                     R.id.action_eliminar -> {
-                        Toast.makeText(viewBinding.root.context, "Eliminar", Toast.LENGTH_LONG).show()
-                        if (eraseRegister(adapterPosition, viewBinding.root.context) <= 1) {
-                            viewBinding.apply {
-                                RVEliminar.setImageResource(R.drawable.ic_sin_registro)
-                                RVEliminar.setOnClickListener(null)
-                                RVTextView.text = "Carpeta Vacia"
-                            }
-                        } else {
+                        if (eraseRegister(register.idRegister, viewBinding.root.context)) {
                             callbackErase.updateRegisterList(true)
+                        } else {
+                            Toast.makeText(viewBinding.root.context, "No se elimino el registro", Toast.LENGTH_LONG).show()
                         }
                         true
                     }
