@@ -12,28 +12,18 @@
 
         <TextView
             android:id="@+id/txt_eliminar"
+            style="@style/subTitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
-            android:layout_marginBottom="@dimen/margin"
-            android:gravity="center"
             android:text="@string/eliminarse_la_cuenta"
-            android:textSize="@dimen/text_size_body1" />
+            android:textAlignment="center" />
 
         <Button
             android:id="@+id/CEliminar"
+            style="@style/buttonStyle"
             android:layout_width="@dimen/button_size_width_extended"
             android:layout_height="@dimen/button_size_height_text"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
-            android:layout_marginBottom="@dimen/margin"
-            android:background="@drawable/cambia_sombra"
-            android:text="@string/eliminar_cuenta"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/text_size_body1" />
+            android:text="@string/eliminar_cuenta" />
 
     </LinearLayout>
 

@@ -8,5 +8,6 @@
 
     <color name="error_red">#FF0000</color>
     <color name="correct_green">#76FF36</color>
+    <color name="color_red01">#8e0000</color>
 
 </resources>

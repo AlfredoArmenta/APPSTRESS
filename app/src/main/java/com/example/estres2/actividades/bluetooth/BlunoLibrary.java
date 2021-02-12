@@ -157,43 +157,31 @@ public abstract class BlunoLibrary extends AppCompatActivity {
                                 mConnectionState = connectionStateEnum.isToScan;
                                 onConectionStateChange(mConnectionState);
                                 mRegisterDevice = new AlertDialog.Builder(mainContext)
-                                        .setTitle("Registrar Dispositivo").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                Log.d(TAG, "Aceptar el registro");
-                                                Wearable wearable = new Wearable(mDeviceName, mDeviceAddress);
-                                                registrarWearable(wearable);
-                                                if (mBluetoothLeService.connect(mDeviceAddress)) {
-                                                    Log.d(TAG, "Connect request success");
-                                                    mConnectionState = connectionStateEnum.isConnecting;
-                                                    onConectionStateChange(mConnectionState);
-                                                    mHandler.postDelayed(mConnectingOverTimeRunnable, 10000);
-                                                } else {
-                                                    Log.d(TAG, "Connect request fail");
-                                                    mConnectionState = connectionStateEnum.isToScan;
-                                                    onConectionStateChange(mConnectionState);
-                                                }
+                                        .setTitle("Registrar Dispositivo").setPositiveButton("Aceptar", (dialog1, which1) -> {
+                                            Log.d(TAG, "Aceptar el registro");
+                                            Wearable wearable = new Wearable(mDeviceName, mDeviceAddress);
+                                            registrarWearable(wearable);
+                                            if (mBluetoothLeService.connect(mDeviceAddress)) {
+                                                Log.d(TAG, "Connect request success");
+                                                mConnectionState = connectionStateEnum.isConnecting;
+                                                onConectionStateChange(mConnectionState);
+                                                mHandler.postDelayed(mConnectingOverTimeRunnable, 10000);
+                                            } else {
+                                                Log.d(TAG, "Connect request fail");
+                                                mConnectionState = connectionStateEnum.isToScan;
+                                                onConectionStateChange(mConnectionState);
                                             }
-                                        }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                Log.d(TAG, "Cancelar el registro");
-                                            }
-                                        }).show();
+                                        }).setNegativeButton("Cancelar", (dialog12, which12) -> Log.d(TAG, "Cancelar el registro")).show();
                             }
                         }
                     }
                 })
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-
-                    @Override
-                    public void onCancel(DialogInterface arg0) {
-                        System.out.println("mBluetoothAdapter.stopLeScan");
-                        mConnectionState = connectionStateEnum.isToScan;
-                        onConectionStateChange(mConnectionState);
-                        mScanDeviceDialog.dismiss();
-                        scanLeDevice(false);
-                    }
+                .setOnCancelListener(arg0 -> {
+                    System.out.println("mBluetoothAdapter.stopLeScan");
+                    mConnectionState = connectionStateEnum.isToScan;
+                    onConectionStateChange(mConnectionState);
+                    mScanDeviceDialog.dismiss();
+                    scanLeDevice(false);
                 }).create();
     }
 

@@ -62,7 +62,6 @@ class GraficasFragment : Fragment() {
             x += 0.1
         }
         binding.apply {
-            textGraficas.text = "Vista de las gráficas"
             gridLabelRendererFC = FC.gridLabelRenderer
             gridLabelRendererFC.horizontalAxisTitle = "Tiempo (s)"
             gridLabelRendererFC.verticalAxisTitle = "Frecuencia Cardiaca"

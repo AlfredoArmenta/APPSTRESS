@@ -1,14 +1,19 @@
 package com.example.estres2.ui.eliminar
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.fonts.FontStyle
 import android.os.Bundle
 import android.os.Environment
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.estres2.R
 import com.example.estres2.UsuarioBoleta.getObjectBoleta
 import com.example.estres2.actividades.iniciosesion.InicioSesion
 import com.example.estres2.almacenamiento.database.DB
@@ -48,7 +53,17 @@ class DeleteFragment : Fragment() {
         bd = DB(mContext)
         binding.apply {
             CEliminar.setOnClickListener {
-                deleteAccount()
+                AlertDialog.Builder(ContextThemeWrapper(context, R.style.AlertDialogCustom))
+                        .setTitle("Eliminar Cuenta")
+                        .setIcon(R.drawable.ic_remove_user)
+                        .setMessage("Si aceptas se eliminarán los datos de la cuenta y los registros permanentemente.")
+                        .setPositiveButton("Aceptar") { _, _ ->
+                            deleteAccount()
+                        }
+                        .setNegativeButton("Cancelar") { _, _ ->
+                            Toast.makeText(context, "Se concervo la cuenta", Toast.LENGTH_LONG).show()
+                        }
+                        .show()
             }
         }
     }

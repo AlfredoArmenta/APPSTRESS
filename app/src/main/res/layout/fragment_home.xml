@@ -11,15 +11,10 @@
 
         <TextView
             android:id="@+id/txt_inicio"
+            style="@style/subTitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
-            android:layout_marginBottom="@dimen/margin"
-            android:gravity="center_horizontal"
-            android:textAlignment="center"
-            android:textSize="@dimen/text_size_body1" />
+            android:textAlignment="center" />
 
     </LinearLayout>
 

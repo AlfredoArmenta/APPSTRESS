@@ -20,7 +20,7 @@
     <dimen name="button_size_height_text">60dp</dimen>
     <dimen name="button_size_height_icon">80dp</dimen>
     <dimen name="button_size_width_text">200dp</dimen>
-    <dimen name="button_size_width_extended">275dp</dimen>
+    <dimen name="button_size_width_extended">350dp</dimen>
 
     <!-- Dimenciones del boton flotante -->
     <dimen name="button_size_height_floating">75dp</dimen>

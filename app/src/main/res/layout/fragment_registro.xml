@@ -7,33 +7,15 @@
     android:scrollbars="vertical"
     tools:context=".ui.registros.RegisterFragment">
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/Resgistros"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin"
-        android:layout_marginTop="@dimen/margin"
-        android:layout_marginEnd="@dimen/margin"
-        android:layout_marginBottom="@dimen/margin"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/registros"
-            android:textAlignment="center"
-            android:textSize="@dimen/text_size_list_register" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/Resgistros"
-            android:paddingStart="@dimen/margin"
-            android:paddingEnd="@dimen/margin"
-            android:paddingTop="@dimen/margin"
-            android:paddingBottom="@dimen/margin"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/recyclerview_size_height"
-            android:scrollbarThumbVertical="@drawable/scroll"
-            android:scrollbars="vertical" />
-
-    </LinearLayout>
+        android:layout_height="@dimen/recyclerview_size_height"
+        android:paddingStart="@dimen/margin"
+        android:paddingTop="@dimen/margin"
+        android:paddingEnd="@dimen/margin"
+        android:paddingBottom="@dimen/margin"
+        android:scrollbarThumbVertical="@drawable/scroll"
+        android:scrollbars="vertical" />
 
 </ScrollView>

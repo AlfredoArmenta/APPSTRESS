@@ -95,7 +95,9 @@
     </style>
 
     <!--Style for Popup overlay, this find in the top-->
-    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
+    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" >
+        <item name="android:gravity">center</item>
+    </style>
 
     <style name="customPopupOverlay" parent="PopupOverlay">
         <item name="fontFamily">@font/rosarivo</item>
@@ -122,5 +124,23 @@
     <style name="MyPopupMenu" parent="Widget.AppCompat.PopupMenu">
         <item name="fontFamily">@font/rosarivo</item>
         <item name="android:textStyle">bold|italic</item>
+    </style>
+    <!--Style for AlertDialog-->
+    <style name="AlertDialogCustom" parent="@android:style/Theme.Material">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="fontFamily">@font/rosarivo</item>
+        <item name="android:headerDividersEnabled">true</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.App.Button</item>
+    </style>
+
+    <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:fontFamily">@font/rosarivo</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="MyTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/rosarivo</item>
     </style>
 </resources>
