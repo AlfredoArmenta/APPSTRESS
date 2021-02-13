@@ -88,6 +88,7 @@ class InicioSesion : AppCompatActivity() {
                     if (isInitialized()) {
                         when (Password.editText?.text.toString()) {
                             getObjectBoleta().password -> {
+                                Toast.makeText(applicationContext, getText(R.string.InicioSesion), Toast.LENGTH_SHORT).show()
                                 setNextActivity(Intent(this@InicioSesion, MainActivity::class.java))
                             }else -> {
                                 Toast.makeText(applicationContext, getText(R.string.ErrorContraseña), Toast.LENGTH_SHORT).show()

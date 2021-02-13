@@ -37,7 +37,6 @@
                 android:layout_weight="1"
                 android:background="@drawable/cambia_sombra"
                 android:contentDescription="@string/comenzar_terminar_proceso_bluno"
-                android:onClick="animar"
                 android:src="@drawable/ic_comienza_monitoreo"
                 android:textColor="@color/colorPrimary" />
 
@@ -94,7 +93,8 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/wearable_eliminar"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:inputType="text" />
 
             <Button
                 android:id="@+id/boton_eliminar"
@@ -103,7 +103,6 @@
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
                 android:background="@drawable/cambia_sombra"
-                android:onClick="eliminarWearable"
                 android:text="@string/eliminar"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_size_body1" />
@@ -188,7 +187,6 @@
             android:layout_height="@dimen/button_size_height_text"
             android:background="@drawable/cambia_sombra"
             android:text="Registro Nuevo"
-            android:onClick="ExportarCSV"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_size_body1" />
 

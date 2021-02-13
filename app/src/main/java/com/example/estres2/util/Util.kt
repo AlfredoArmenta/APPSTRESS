@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Environment
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.content.ContextCompat
 import com.example.estres2.UsuarioBoleta
 import com.example.estres2.almacenamiento.database.DB
@@ -53,5 +54,19 @@ fun requestPermissionExternalStorage(context: Context, activity: Activity){
     if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
     ) {
         ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),0)
+    }
+}
+
+fun requestPermissionBluetooth(context: Context, activity: Activity) {
+    // Permisos para bluetooth
+    val permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+    if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            Toast.makeText(context,"Se requiere permiso para obtener datos de ubicación BLE", Toast.LENGTH_SHORT).show()
+        } else {
+            requestPermissions(activity,arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION), 1)
+        }
+    } else {
+        Toast.makeText(context, "Permisos de ubicación ya otorgados", Toast.LENGTH_SHORT).show()
     }
 }

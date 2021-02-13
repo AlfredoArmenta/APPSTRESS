@@ -18,7 +18,7 @@
     <string name="menu_comunicación">Comunicación</string>
 
     //Submenu Extras
-    <string name="menu_configurar_cuenta">Configurar Cuenta</string>
+    <string name="menu_configurar_cuenta">Cuenta</string>
     <string name="menu_share">Compartir</string>
     <string name="menu_eliminar">Eliminar Cuenta</string>
     // ****************************** ****************************** ******************************

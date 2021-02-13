@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMenuPrincipalBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Toast.makeText(applicationContext, getText(R.string.InicioSesion), Toast.LENGTH_SHORT).show()
         setObservers()
         initializeObjects()
     }
