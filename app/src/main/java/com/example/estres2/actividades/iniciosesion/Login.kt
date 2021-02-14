@@ -6,26 +6,26 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import com.example.estres2.*
-import com.example.estres2.UsuarioBoleta.getObjectBoleta
-import com.example.estres2.UsuarioBoleta.isInitialized
-import com.example.estres2.UsuarioBoleta.setObjectBoleta
+import com.example.estres2.util.UserObject.getObjectBoleta
+import com.example.estres2.util.UserObject.isInitialized
+import com.example.estres2.util.UserObject.setObjectBoleta
 import com.example.estres2.actividades.recuperarpassword.RecoverPassword
 import com.example.estres2.actividades.registrar.Register
-import com.example.estres2.almacenamiento.database.DB
-import com.example.estres2.almacenamiento.entidades.usuario.Usuario
-import com.example.estres2.databinding.ActivityInicioSesionBinding
+import com.example.estres2.almacenamiento.basededatos.DB
+import com.example.estres2.almacenamiento.entidades.usuario.User
+import com.example.estres2.databinding.ActivityLoginBinding
 import com.example.estres2.util.setIconDrawableAndChangeColor
 
-class InicioSesion : AppCompatActivity() {
-    private lateinit var binding: ActivityInicioSesionBinding
+class Login : AppCompatActivity() {
+    private lateinit var binding: ActivityLoginBinding
     private var correctBoleta: Boolean = false
     private var correctPassword: Boolean = false
     private lateinit var bd: DB
-    private lateinit var user: Usuario
+    private lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityInicioSesionBinding.inflate(layoutInflater)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initializeObjects()
         UsuariosFake()
@@ -89,8 +89,9 @@ class InicioSesion : AppCompatActivity() {
                         when (Password.editText?.text.toString()) {
                             getObjectBoleta().password -> {
                                 Toast.makeText(applicationContext, getText(R.string.InicioSesion), Toast.LENGTH_SHORT).show()
-                                setNextActivity(Intent(this@InicioSesion, MainActivity::class.java))
-                            }else -> {
+                                setNextActivity(Intent(this@Login, MainActivity::class.java))
+                            }
+                            else -> {
                                 Toast.makeText(applicationContext, getText(R.string.ErrorContraseña), Toast.LENGTH_SHORT).show()
                             }
                         }
@@ -98,26 +99,30 @@ class InicioSesion : AppCompatActivity() {
                         Toast.makeText(applicationContext, getText(R.string.BoletaNoRegistrada), Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(applicationContext, if (!correctBoleta) { getString(R.string.ErrorBoleta) }
-                    else if (!correctPassword) { getString(R.string.ErrorContraseña) }
-                    else { ""}, Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, if (!correctBoleta) {
+                        getString(R.string.ErrorBoleta)
+                    } else if (!correctPassword) {
+                        getString(R.string.ErrorContraseña)
+                    } else {
+                        ""
+                    }, Toast.LENGTH_LONG).show()
                 }
             }
             ForgotPassword.setOnClickListener {
-                setNextActivity(Intent(this@InicioSesion, RecoverPassword::class.java))
+                setNextActivity(Intent(this@Login, RecoverPassword::class.java))
                 finish()
             }
             buttonRegisterInicioSesion.setOnClickListener {
-                setNextActivity(Intent(this@InicioSesion, Register::class.java))
+                setNextActivity(Intent(this@Login, Register::class.java))
                 finish()
             }
 
             MostrarArchivo.setOnClickListener {
-                setNextActivity(Intent(this@InicioSesion, MostrarArchivos::class.java))
+                setNextActivity(Intent(this@Login, MostrarArchivos::class.java))
             }
 
             MostrarUsuario.setOnClickListener {
-                setNextActivity(Intent(this@InicioSesion, MostrarUsuarios::class.java))
+                setNextActivity(Intent(this@Login, MostrarUsuarios::class.java))
             }
         }
     }
@@ -128,7 +133,7 @@ class InicioSesion : AppCompatActivity() {
 
     private fun UsuariosFake() {
         val bd = DB(applicationContext)
-        user = Usuario("2015640017",
+        user = User("2015640017",
                 "Alfredo Armenta Espinosa",
                 "24",
                 "Masculino",
@@ -136,7 +141,7 @@ class InicioSesion : AppCompatActivity() {
                 "Politecnico12@",
                 "")
         bd.insertUser(user)
-        user = Usuario("2015640000",
+        user = User("2015640000",
                 "Fulanito Fulano Fulanote",
                 "24",
                 "Masculino",
@@ -144,7 +149,7 @@ class InicioSesion : AppCompatActivity() {
                 "Politecnico12@",
                 "")
         bd.insertUser(user)
-        user = Usuario("2015640408",
+        user = User("2015640408",
                 "Efraín Villegas Sánchez",
                 "24",
                 "Masculino",

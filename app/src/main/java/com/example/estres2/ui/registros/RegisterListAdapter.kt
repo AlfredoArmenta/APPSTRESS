@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.estres2.almacenamiento.entidades.registros.UserRegister
-import com.example.estres2.databinding.ListaRegistrosBinding
+import com.example.estres2.databinding.ItemRegistersBinding
 import com.example.estres2.ui.viewmodel.MenuViewModel
 
-class RegisterListAdapter(private val registerList: List<UserRegister>, private val callback: MenuViewModel): RecyclerView.Adapter<RegisterListViewHolder>() {
+class RegisterListAdapter(private val registerList: List<UserRegister>, private val callback: MenuViewModel) : RecyclerView.Adapter<RegisterListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RegisterListViewHolder = RegisterListViewHolder(
-            ListaRegistrosBinding.inflate(
+            ItemRegistersBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false

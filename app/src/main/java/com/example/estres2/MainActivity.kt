@@ -17,30 +17,30 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import com.example.estres2.UsuarioBoleta.getObjectBoleta
-import com.example.estres2.actividades.bluetooth.ConectarBluno
-import com.example.estres2.actividades.iniciosesion.InicioSesion
-import com.example.estres2.almacenamiento.database.DB
-import com.example.estres2.almacenamiento.entidades.usuario.Usuario
+import com.example.estres2.util.UserObject.getObjectBoleta
+import com.example.estres2.actividades.bluetooth.Bluno
+import com.example.estres2.actividades.iniciosesion.Login
+import com.example.estres2.almacenamiento.basededatos.DB
+import com.example.estres2.almacenamiento.entidades.usuario.User
 import com.example.estres2.util.reduceBitmap
-import com.example.estres2.databinding.ActivityMenuPrincipalBinding
+import com.example.estres2.databinding.ActivityMainBinding
 import com.example.estres2.util.requestPermissionExternalStorage
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMenuPrincipalBinding
+    private lateinit var binding: ActivityMainBinding
     private val mainViewModel: MainViewModel by viewModels()
     private lateinit var hView: View
     private lateinit var mAppBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
     private lateinit var userName: TextView
     private lateinit var userBoleta: TextView
-    private lateinit var userData: Usuario
+    private lateinit var userData: User
     private lateinit var userImage: ImageView
     private lateinit var addImageView: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMenuPrincipalBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setObservers()
         initializeObjects()
@@ -143,7 +143,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun goToBluno() {
-        startActivity(Intent(this@MainActivity, ConectarBluno::class.java))
+        startActivity(Intent(this@MainActivity, Bluno::class.java))
         finish()
     }
 
@@ -155,7 +155,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun backLogging() {
-        startActivity(Intent(this@MainActivity, InicioSesion::class.java))
+        startActivity(Intent(this@MainActivity, Login::class.java))
         finish()
     }
 }

@@ -13,27 +13,27 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.estres2.R
-import com.example.estres2.UsuarioBoleta.getObjectBoleta
-import com.example.estres2.almacenamiento.database.DB
+import com.example.estres2.util.UserObject.getObjectBoleta
+import com.example.estres2.almacenamiento.basededatos.DB
 import com.example.estres2.almacenamiento.entidades.registros.UserRegister
-import com.example.estres2.almacenamiento.entidades.usuario.Usuario
-import com.example.estres2.databinding.FragmentRegistroBinding
+import com.example.estres2.almacenamiento.entidades.usuario.User
+import com.example.estres2.databinding.FragmentRegistersBinding
 import com.example.estres2.ui.viewmodel.MenuViewModel
 import java.io.File
 
 class RegisterFragment : Fragment() {
-    private var _binding: FragmentRegistroBinding? = null
+    private var _binding: FragmentRegistersBinding? = null
     private val binding get() = _binding!!
     private val menuViewModel: MenuViewModel by viewModels()
     private lateinit var mContext: Context
-    private lateinit var user: Usuario
+    private lateinit var user: User
     private val lRegister: MutableList<UserRegister> = ArrayList()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentRegistroBinding.inflate(inflater, container, false)
+        _binding = FragmentRegistersBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -67,11 +67,11 @@ class RegisterFragment : Fragment() {
         lRegister.clear()
         if (arrayFiles.isNotEmpty()) {
             for (element in arrayFiles) {
-                lRegister.add(UserRegister(element, R.drawable.ic_registros_menu))
+                lRegister.add(UserRegister(element, R.drawable.ic_options_register))
             }
         } else {
             Toast.makeText(mContext, "Carpeta Vacia", Toast.LENGTH_LONG).show()
-            lRegister.add(UserRegister("Carpeta Vacia", R.drawable.ic_sin_registro))
+            lRegister.add(UserRegister("Carpeta Vacia", R.drawable.ic_not_registered))
         }
         val itemDecoration = DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL)
         ContextCompat.getDrawable(mContext, R.drawable.divider)?.let {

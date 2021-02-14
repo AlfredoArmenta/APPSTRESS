@@ -6,6 +6,7 @@
     <dimen name="nav_header_height">170dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="margin">10dp</dimen>
+    <dimen name="margin_input_text">5dp</dimen>
 
     <dimen name="text_size_list_register">16sp</dimen>
 

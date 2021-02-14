@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/nav_graficas"
-        android:name="com.example.estres2.ui.graficas.GraficasFragment"
+        android:name="com.example.estres2.ui.graficas.GraphFragment"
         android:label="@string/menu_gráficas"
         tools:layout="@layout/fragment_graphs">
         <action
@@ -25,7 +25,7 @@
         android:id="@+id/nav_registro"
         android:name="com.example.estres2.ui.registros.RegisterFragment"
         android:label="@string/registros"
-        tools:layout="@layout/fragment_registro">
+        tools:layout="@layout/fragment_registers">
         <action
             android:id="@+id/action_nav_registro_to_nav_inicio"
             app:destination="@id/nav_inicio" />
@@ -33,9 +33,9 @@
 
     <fragment
         android:id="@+id/nav_configurar_cuenta"
-        android:name="com.example.estres2.ui.cuenta.CuentaFragment"
+        android:name="com.example.estres2.ui.cuenta.AccountFragment"
         android:label="@string/menu_configurar_cuenta"
-        tools:layout="@layout/fragment_cuenta">
+        tools:layout="@layout/fragment_account">
         <action
             android:id="@+id/action_nav_configurar_cuenta_to_nav_inicio"
             app:destination="@id/nav_inicio" />

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbarThumbVertical="@drawable/scroll"
-    tools:context=".actividades.iniciosesion.InicioSesion">
+    tools:context=".actividades.iniciosesion.Login">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:contentDescription="@string/icono_de_inicio"
-            android:src="@drawable/ic_inicio_sesion" />
+            android:src="@drawable/ic_login" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/User"

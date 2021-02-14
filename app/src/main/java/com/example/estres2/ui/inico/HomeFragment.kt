@@ -5,15 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.estres2.UsuarioBoleta.getObjectBoleta
-import com.example.estres2.almacenamiento.entidades.usuario.Usuario
+import com.example.estres2.util.UserObject.getObjectBoleta
+import com.example.estres2.almacenamiento.entidades.usuario.User
 import com.example.estres2.databinding.FragmentHomeBinding
 import java.util.Calendar
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var dataUser: Usuario
+    private lateinit var dataUser: User
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,

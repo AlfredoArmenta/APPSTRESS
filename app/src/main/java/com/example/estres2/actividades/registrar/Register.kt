@@ -8,9 +8,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import com.example.estres2.R
-import com.example.estres2.actividades.iniciosesion.InicioSesion
-import com.example.estres2.almacenamiento.database.DB
-import com.example.estres2.almacenamiento.entidades.usuario.Usuario
+import com.example.estres2.actividades.iniciosesion.Login
+import com.example.estres2.almacenamiento.basededatos.DB
+import com.example.estres2.almacenamiento.entidades.usuario.User
 import com.example.estres2.databinding.ActivityRegisterBinding
 import com.example.estres2.util.setIconDrawableAndChangeColor
 
@@ -20,7 +20,7 @@ class Register : AppCompatActivity() {
     private var correctNombre: Boolean = false
     private var correctEdad: Boolean = false
     private var correctPassword: Boolean = false
-    private lateinit var user: Usuario
+    private lateinit var user: User
     private lateinit var bd: DB
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +49,7 @@ class Register : AppCompatActivity() {
                             false
                         }
                         else -> {
-                            if(bd.checkUser(editText?.text.toString())){
+                            if (bd.checkUser(editText?.text.toString())) {
                                 Toast.makeText(context, getString(R.string.BoletaRegistrada), Toast.LENGTH_LONG).show()
                                 false
                             } else {
@@ -58,9 +58,9 @@ class Register : AppCompatActivity() {
                             }
                         }
                     }
-                    startIconDrawable = if (correctBoleta){
+                    startIconDrawable = if (correctBoleta) {
                         resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_edit, R.color.correct_green)
-                    }else {
+                    } else {
                         resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_edit, R.color.error_red)
                     }
                 }
@@ -78,15 +78,15 @@ class Register : AppCompatActivity() {
                             true
                         }
                     }
-                    startIconDrawable = if (correctNombre){
+                    startIconDrawable = if (correctNombre) {
                         resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_sort_alphabetically, R.color.correct_green)
-                    }else {
+                    } else {
                         resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_sort_alphabetically, R.color.error_red)
                     }
                 }
             }
             REdad.apply {
-                startIconDrawable = resources.setIconDrawableAndChangeColor(R.drawable.ic_edad, R.color.error_red)
+                startIconDrawable = resources.setIconDrawableAndChangeColor(R.drawable.ic_age, R.color.error_red)
                 editText?.doOnTextChanged { text, _, _, _ ->
                     correctEdad = when {
                         text.isNullOrEmpty() -> {
@@ -102,10 +102,10 @@ class Register : AppCompatActivity() {
                             true
                         }
                     }
-                    startIconDrawable = if (correctEdad){
-                        resources.setIconDrawableAndChangeColor(R.drawable.ic_edad, R.color.correct_green)
-                    }else {
-                        resources.setIconDrawableAndChangeColor(R.drawable.ic_edad, R.color.error_red)
+                    startIconDrawable = if (correctEdad) {
+                        resources.setIconDrawableAndChangeColor(R.drawable.ic_age, R.color.correct_green)
+                    } else {
+                        resources.setIconDrawableAndChangeColor(R.drawable.ic_age, R.color.error_red)
                     }
                 }
             }
@@ -163,16 +163,16 @@ class Register : AppCompatActivity() {
                                 RTNumero.currentTextColor == Color.GREEN &&
                                 RTMinuscula.currentTextColor == Color.GREEN &&
                                 RTMayuscula.currentTextColor == Color.GREEN
-                        startIconDrawable = if (correctPassword){
+                        startIconDrawable = if (correctPassword) {
                             resources.setIconDrawableAndChangeColor(android.R.drawable.ic_lock_idle_lock, R.color.correct_green)
-                        }else {
+                        } else {
                             resources.setIconDrawableAndChangeColor(android.R.drawable.ic_lock_idle_lock, R.color.error_red)
                         }
                     }
                 }
             }
             RRegistrar.setOnClickListener {
-                user = Usuario("", "", "", "", "", "", "")
+                user = User("", "", "", "", "", "", "")
                 bd = DB(applicationContext)
                 user.boleta = RBoleta.editText?.text.toString()
                 user.nombre = RNombre.editText?.text.toString()
@@ -188,21 +188,22 @@ class Register : AppCompatActivity() {
                 if (correctBoleta && correctNombre && correctEdad && binding.RSemestre.selectedItem.toString() != "Selecciona tu semestre actual" && correctPassword) {
                     if (bd.insertUser(user)) {
                         Toast.makeText(applicationContext, getText(R.string.InicioCorrecto), Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(applicationContext, InicioSesion::class.java))
+                        startActivity(Intent(applicationContext, Login::class.java))
                         finish()
                     } else {
                         Toast.makeText(applicationContext, getString(R.string.error_cant_inser_user), Toast.LENGTH_SHORT).show()
                     }
-                }else {
+                } else {
                     Toast.makeText(applicationContext, getString(R.string.error_some_fiel_is_wrong), Toast.LENGTH_SHORT).show()
                 }
             }
             RCancel.setOnClickListener {
-                startActivity(Intent(applicationContext, InicioSesion::class.java))
+                startActivity(Intent(applicationContext, Login::class.java))
                 finish()
             }
         }
     }
+
     // Se anula el botón que nos regresa
     override fun onBackPressed() {}
 }

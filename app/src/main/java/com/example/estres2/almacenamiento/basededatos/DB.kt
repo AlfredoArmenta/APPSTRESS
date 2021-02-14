@@ -1,23 +1,21 @@
-package com.example.estres2.almacenamiento.database
+package com.example.estres2.almacenamiento.basededatos
 
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.widget.Toast
-import com.example.estres2.almacenamiento.entidades.archivo.Archivo
-import com.example.estres2.almacenamiento.entidades.usuario.Usuario
+import com.example.estres2.almacenamiento.entidades.archivo.RegisterFile
+import com.example.estres2.almacenamiento.entidades.usuario.User
 import com.example.estres2.almacenamiento.entidades.wearable.Wearable
-import kotlinx.coroutines.withContext
 import java.util.ArrayList
 
-class DB(context: Context): SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_BD) {
+class DB(context: Context) : SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_BD) {
     private lateinit var row: Cursor
-    private var auxUser: Usuario? = null
-    private var userList: MutableList<Usuario> = ArrayList()
+    private var auxUser: User? = null
+    private var userList: MutableList<User> = ArrayList()
     private var wearableList: MutableList<Wearable> = ArrayList()
-    private var fileList: MutableList<Archivo> = ArrayList()
+    private var fileList: MutableList<RegisterFile> = ArrayList()
     private var insert: Int? = null
     private var update: Int? = null
     private var erase: Int? = null
@@ -41,7 +39,7 @@ class DB(context: Context): SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_B
 
     // ********************** Funciones de Usuario *************************
     // Función que nos permite insertar un nuevo Usuario
-    fun insertUser(user: Usuario): Boolean {
+    fun insertUser(user: User): Boolean {
         val values = ContentValues()
         values.put(COLUMNA_USUARIO_BOLETA, user.boleta)
         values.put(COLUMNA_USUARIO_NOMBRE, user.nombre)
@@ -55,14 +53,14 @@ class DB(context: Context): SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_B
         return insert!! >= 0
     }
 
-    fun showUser(): List<Usuario> {
+    fun showUser(): List<User> {
         row = this.readableDatabase.rawQuery("select * from usuarios", null)
         when {
             row.count != 0 -> {
                 row.moveToFirst()
                 do {
                     userList.add(
-                            Usuario(
+                            User(
                                     row.getString(0),
                                     row.getString(1),
                                     row.getString(2),
@@ -98,12 +96,12 @@ class DB(context: Context): SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_B
         }
     }
 
-    fun getUser(Boleta: String): Usuario? {
+    fun getUser(Boleta: String): User? {
         row = this.readableDatabase.rawQuery("select *from $TABLA_USUARIO where $COLUMNA_USUARIO_BOLETA = $Boleta", null)
         when {
             row.count != 0 -> {
                 row.moveToFirst()
-                auxUser = Usuario(
+                auxUser = User(
                         row.getString(0),
                         row.getString(1),
                         row.getString(2),
@@ -118,20 +116,21 @@ class DB(context: Context): SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_B
         return auxUser
     }
 
-    fun checkUser(Boleta: String): Boolean{
+    fun checkUser(Boleta: String): Boolean {
         row = this.writableDatabase.rawQuery("select *from $TABLA_USUARIO where $COLUMNA_USUARIO_BOLETA = $Boleta", null)
         return when {
             row.count != 0 -> {
                 this.readableDatabase.close()
                 true
-            } else -> {
+            }
+            else -> {
                 this.readableDatabase.close()
                 false
             }
         }
     }
 
-    fun updateUser(user: Usuario): Boolean {
+    fun updateUser(user: User): Boolean {
         val values = ContentValues()
         values.put(COLUMNA_USUARIO_NOMBRE, user.nombre)
         values.put(COLUMNA_USUARIO_EDAD, user.edad)
@@ -151,7 +150,7 @@ class DB(context: Context): SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_B
 
     // ********************** Funciones de Imagen *************************
     // Función que nos permite insertar una nueva Imagen
-    fun updateImage(user: Usuario): Boolean {
+    fun updateImage(user: User): Boolean {
         val values = ContentValues()
         values.put(COLUMNA_USUARIO_IMAGEN, user.imagen)
         update = this.writableDatabase.update(TABLA_USUARIO, values, """$COLUMNA_USUARIO_BOLETA=${user.boleta}""", null)
@@ -212,23 +211,23 @@ class DB(context: Context): SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_B
 
     // ********************** Funciones de Archivo *************************
     // Función que nos permite insertar un nuevo archivo
-    fun insertRecord(Record: Archivo): Boolean {
+    fun insertRecord(record: RegisterFile): Boolean {
         val values = ContentValues()
-        values.put(COLUMNA_ARCHIVO_ID, Record.id)
-        values.put(COLUMNA_ARCHIVO_BOLETA_USUARIO, Record.boleta)
+        values.put(COLUMNA_ARCHIVO_ID, record.id)
+        values.put(COLUMNA_ARCHIVO_BOLETA_USUARIO, record.boleta)
         insert = this.writableDatabase.insert(TABLA_ARCHIVO, null, values).toInt()
         this.writableDatabase.close()
         return insert!! >= 0
     }
 
-    fun showRecord(): List<Archivo> {
+    fun showRecord(): List<RegisterFile> {
         row = this.readableDatabase.rawQuery("select * from archivo", null)
         when {
             row.count != 0 -> {
                 row.moveToFirst()
                 do {
                     fileList.add(
-                            Archivo(
+                            RegisterFile(
                                     row.getString(0),
                                     row.getString(1)
                             )

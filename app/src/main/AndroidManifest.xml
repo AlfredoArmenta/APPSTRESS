@@ -1,46 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.estres2">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.ACCESS_BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
 
     <application
-
         android:icon="@drawable/ic_icon_app"
         android:label="Stress"
+        android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar"
-        android:requestLegacyExternalStorage="true">
+        android:theme="@style/Theme.AppCompat.NoActionBar">
 
         <activity
             android:name=".MainActivity"
+            android:configChanges="screenSize|orientation"
             android:label="@string/title_activity_menu_principal"
-            android:theme="@style/NoActionBar"
-            android:configChanges="screenSize|orientation" />
+            android:theme="@style/NoActionBar" />
 
-        <activity android:name=".actividades.iniciosesion.InicioSesion">
+        <activity android:name=".actividades.iniciosesion.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".actividades.registrar.Register" android:label="Registrar Usuario" />
-        <activity android:name=".actividades.recuperarpassword.RecoverPassword" android:label="Restablecer contraseña" />
-        <activity android:name=".actividades.bluetooth.ConectarBluno" android:configChanges="screenSize|orientation"/>
+        <activity
+            android:name=".actividades.registrar.Register"
+            android:label="Registrar Usuario" />
+        <activity
+            android:name=".actividades.recuperarpassword.RecoverPassword"
+            android:label="Restablecer contraseña" />
+        <activity
+            android:name=".actividades.bluetooth.Bluno"
+            android:configChanges="screenSize|orientation" />
         <activity android:name=".MostrarUsuarios" />
-        <activity android:name=".MostrarArchivos"/>
-        <service android:name=".actividades.bluetooth.BluetoothLeService" android:enabled="true" />
+        <activity android:name=".MostrarArchivos" />
 
+        <service
+            android:name=".actividades.bluetooth.BluetoothLeService"
+            android:enabled="true" />
     </application>
-
 </manifest>

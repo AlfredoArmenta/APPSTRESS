@@ -5,13 +5,19 @@
     android:layout_height="match_parent"
     android:scrollbarThumbVertical="@drawable/scroll"
     android:scrollbars="vertical"
-    tools:context=".actividades.bluetooth.ConectarBluno">
+    tools:context=".actividades.bluetooth.Bluno">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical">
+
+        <TextView
+            style="@style/subTitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/conectar_bluetooth" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,38 +26,30 @@
 
             <ImageButton
                 android:id="@+id/buttonScanBlunoConected"
+                style="@style/buttonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/button_size_height_icon"
                 android:layout_weight="1"
-                android:background="@drawable/cambia_sombra"
                 android:contentDescription="@string/estados_de_la_conexion_con_la_pulsera"
-                android:src="@drawable/ic_estado_scan"
-                android:text="@string/texto_bluno_conectar_scan"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_size_body1" />
+                android:src="@drawable/ic_state_scan" />
 
             <ImageButton
                 android:id="@+id/control_bluno"
+                style="@style/buttonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/button_size_height_icon"
                 android:layout_weight="1"
-                android:background="@drawable/cambia_sombra"
                 android:contentDescription="@string/comenzar_terminar_proceso_bluno"
-                android:src="@drawable/ic_comienza_monitoreo"
-                android:textColor="@color/colorPrimary" />
+                android:src="@drawable/ic_start_monitoring" />
 
         </LinearLayout>
 
         <TextView
+            style="@style/normalText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
-            android:layout_marginBottom="@dimen/margin"
             android:text="@string/wearables_registrados"
-            android:textAlignment="center"
-            android:textSize="@dimen/text_size_body1" />
+            android:textAlignment="center" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvBluno_Mostrar_Wearables"
@@ -61,63 +59,17 @@
             android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="@dimen/margin"
-            android:scrollbarAlwaysDrawHorizontalTrack="true"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
             android:scrollbarThumbVertical="@drawable/scroll"
             android:scrollbars="vertical">
 
         </androidx.recyclerview.widget.RecyclerView>
 
         <TextView
+            style="@style/normalText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
-            android:layout_marginBottom="@dimen/margin"
-            android:text="@string/selecciona_un_wearable_para_eliminar"
-            android:textSize="@dimen/text_size_body2"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/Eliminar_Wearable"
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:ems="10"
-                android:hint="@string/wearable_eliminar"
-                android:textSize="24sp"
-                android:inputType="text" />
-
-            <Button
-                android:id="@+id/boton_eliminar"
-                android:layout_width="@dimen/button_size_width_text"
-                android:layout_height="@dimen/button_size_height_text"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginEnd="@dimen/margin"
-                android:background="@drawable/cambia_sombra"
-                android:text="@string/eliminar"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/text_size_body1" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/editText2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:ems="10"
             android:text="@string/text_bluno_conectar_received_data"
-            android:textAlignment="center"
-            android:textSize="25sp" />
+            android:textAlignment="center" />
 
         <ScrollView
             android:id="@+id/scrollView"
@@ -131,10 +83,9 @@
 
             <TextView
                 android:id="@+id/serialReveicedText"
+                style="@style/subNormalText"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:textSize="@dimen/text_size_body3" />
+                android:layout_height="wrap_content" />
 
         </ScrollView>
 
@@ -144,51 +95,36 @@
             android:layout_height="wrap_content"
             android:spinnerMode="dialog" />
 
-        <Button
-            android:id="@+id/buttonSerialSend"
-            android:layout_width="@dimen/button_size_width_extended"
-            android:layout_height="@dimen/button_size_height_text"
-            android:layout_marginBottom="@dimen/margin"
-            android:background="@drawable/cambia_sombra"
-            android:text="@string/text_button_bluno_conectar_send_data"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/text_size_body1" />
-
         <EditText
             android:id="@+id/serialSendText"
+            style="@style/normalText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
-            android:layout_marginBottom="@dimen/margin"
-            android:background="#555555"
+            android:autofillHints="yes"
             android:bufferType="editable"
-            android:ems="10"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:text="@string/ext_bluno_conectar_send_data"
-            android:textAlignment="center"
-            android:textSize="@dimen/text_size_body2"
-            tools:ignore="LabelFor" />
+            android:hint="@string/ext_bluno_conectar_send_data"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/buttonSerialSend"
+            style="@style/buttonStyle"
+            android:layout_width="@dimen/button_size_width_extended"
+            android:layout_height="@dimen/button_size_height_text"
+            android:text="@string/text_button_bluno_conectar_send_data" />
 
         <Button
             android:id="@+id/CSRegresar"
+            style="@style/buttonStyle"
             android:layout_width="@dimen/button_size_width_text"
             android:layout_height="@dimen/button_size_height_text"
-            android:layout_marginBottom="@dimen/margin"
-            android:background="@drawable/cambia_sombra"
-            android:text="@string/regresar"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/text_size_body1" />
+            android:text="@string/regresar" />
 
         <Button
             android:id="@+id/CSRegistro"
-            android:layout_width="250dp"
+            style="@style/buttonStyle"
+            android:layout_width="@dimen/button_size_width_extended"
             android:layout_height="@dimen/button_size_height_text"
-            android:background="@drawable/cambia_sombra"
-            android:text="Registro Nuevo"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/text_size_body1" />
+            android:text="Registro Nuevo" />
 
     </LinearLayout>
 

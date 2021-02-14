@@ -17,6 +17,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -24,7 +25,7 @@ import java.util.List;
  * given Bluetooth LE device.
  */
 public class BluetoothLeService extends Service {
-    private static String TAG = BluetoothLeService.class.getSimpleName();
+    private static final String TAG = BluetoothLeService.class.getSimpleName();
 
     private BluetoothManager mBluetoothManager;
     private BluetoothAdapter mBluetoothAdapter;
@@ -57,7 +58,7 @@ public class BluetoothLeService extends Service {
     }
 
     //ring buffer
-    private RingBuffer<BluetoothGattCharacteristicHelper> mCharacteristicRingBuffer = new RingBuffer<BluetoothGattCharacteristicHelper>(8);
+    private final RingBuffer<BluetoothGattCharacteristicHelper> mCharacteristicRingBuffer = new RingBuffer<>(8);
 
     public final static String ACTION_GATT_CONNECTED =
             "com.example.bluetooth.le.ACTION_GATT_CONNECTED";
@@ -69,8 +70,6 @@ public class BluetoothLeService extends Service {
             "com.example.bluetooth.le.ACTION_DATA_AVAILABLE";
     public final static String EXTRA_DATA =
             "com.example.bluetooth.le.EXTRA_DATA";
-//    public final static UUID UUID_HEART_RATE_MEASUREMENT =
-//            UUID.fromString(SampleGattAttributes.HEART_RATE_MEASUREMENT);
 
     // Implements callback methods for GATT events that the app cares about.  For example,
     // connection change and services discovered.
@@ -79,6 +78,7 @@ public class BluetoothLeService extends Service {
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             String intentAction;
             System.out.println("BluetoothGattCallback----onConnectionStateChange" + newState);
+
             if (newState == BluetoothProfile.STATE_CONNECTED) {
                 intentAction = ACTION_GATT_CONNECTED;
                 mConnectionState = STATE_CONNECTED;
@@ -105,6 +105,7 @@ public class BluetoothLeService extends Service {
         @Override
         public void onServicesDiscovered(BluetoothGatt gatt, int status) {
             System.out.println("onServicesDiscovered " + status);
+
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 broadcastUpdate(ACTION_GATT_SERVICES_DISCOVERED);
             } else {
@@ -119,19 +120,14 @@ public class BluetoothLeService extends Service {
                 //CharacteristicWrite success
                 if (status == BluetoothGatt.GATT_SUCCESS) {
                     System.out.println("onCharacteristicWrite success:" + new String(characteristic.getValue()));
+
                     if (mCharacteristicRingBuffer.isEmpty()) {
                         mIsWritingCharacteristic = false;
                     } else {
                         BluetoothGattCharacteristicHelper bluetoothGattCharacteristicHelper = mCharacteristicRingBuffer.next();
+
                         if (bluetoothGattCharacteristicHelper.mCharacteristicValue.length() > MAX_CHARACTERISTIC_LENGTH) {
-                            try {
-                                bluetoothGattCharacteristicHelper.mCharacteristic.setValue(bluetoothGattCharacteristicHelper.mCharacteristicValue.substring(0, MAX_CHARACTERISTIC_LENGTH).getBytes("ISO-8859-1"));
-
-                            } catch (UnsupportedEncodingException e) {
-                                // this should never happen because "US-ASCII" is hard-coded.
-                                throw new IllegalStateException(e);
-                            }
-
+                            bluetoothGattCharacteristicHelper.mCharacteristic.setValue(bluetoothGattCharacteristicHelper.mCharacteristicValue.substring(0, MAX_CHARACTERISTIC_LENGTH).getBytes(StandardCharsets.ISO_8859_1));
 
                             if (mBluetoothGatt.writeCharacteristic(bluetoothGattCharacteristicHelper.mCharacteristic)) {
                                 System.out.println("writeCharacteristic init " + new String(bluetoothGattCharacteristicHelper.mCharacteristic.getValue()) + ":success");
@@ -140,12 +136,7 @@ public class BluetoothLeService extends Service {
                             }
                             bluetoothGattCharacteristicHelper.mCharacteristicValue = bluetoothGattCharacteristicHelper.mCharacteristicValue.substring(MAX_CHARACTERISTIC_LENGTH);
                         } else {
-                            try {
-                                bluetoothGattCharacteristicHelper.mCharacteristic.setValue(bluetoothGattCharacteristicHelper.mCharacteristicValue.getBytes("ISO-8859-1"));
-                            } catch (UnsupportedEncodingException e) {
-                                // this should never happen because "US-ASCII" is hard-coded.
-                                throw new IllegalStateException(e);
-                            }
+                            bluetoothGattCharacteristicHelper.mCharacteristic.setValue(bluetoothGattCharacteristicHelper.mCharacteristicValue.getBytes(StandardCharsets.ISO_8859_1));
 
                             if (mBluetoothGatt.writeCharacteristic(bluetoothGattCharacteristicHelper.mCharacteristic)) {
                                 System.out.println("writeCharacteristic init " + new String(bluetoothGattCharacteristicHelper.mCharacteristic.getValue()) + ":success");
@@ -153,12 +144,7 @@ public class BluetoothLeService extends Service {
                                 System.out.println("writeCharacteristic init " + new String(bluetoothGattCharacteristicHelper.mCharacteristic.getValue()) + ":failure");
                             }
                             bluetoothGattCharacteristicHelper.mCharacteristicValue = "";
-
-//	            			System.out.print("before pop:");
-//	            			System.out.println(mCharacteristicRingBuffer.size());
                             mCharacteristicRingBuffer.pop();
-//	            			System.out.print("after pop:");
-//	            			System.out.println(mCharacteristicRingBuffer.size());
                         }
                     }
                 }
@@ -166,14 +152,9 @@ public class BluetoothLeService extends Service {
                 else if (status == WRITE_NEW_CHARACTERISTIC) {
                     if ((!mCharacteristicRingBuffer.isEmpty()) && !mIsWritingCharacteristic) {
                         BluetoothGattCharacteristicHelper bluetoothGattCharacteristicHelper = mCharacteristicRingBuffer.next();
-                        if (bluetoothGattCharacteristicHelper.mCharacteristicValue.length() > MAX_CHARACTERISTIC_LENGTH) {
 
-                            try {
-                                bluetoothGattCharacteristicHelper.mCharacteristic.setValue(bluetoothGattCharacteristicHelper.mCharacteristicValue.substring(0, MAX_CHARACTERISTIC_LENGTH).getBytes("ISO-8859-1"));
-                            } catch (UnsupportedEncodingException e) {
-                                // this should never happen because "US-ASCII" is hard-coded.
-                                throw new IllegalStateException(e);
-                            }
+                        if (bluetoothGattCharacteristicHelper.mCharacteristicValue.length() > MAX_CHARACTERISTIC_LENGTH) {
+                            bluetoothGattCharacteristicHelper.mCharacteristic.setValue(bluetoothGattCharacteristicHelper.mCharacteristicValue.substring(0, MAX_CHARACTERISTIC_LENGTH).getBytes(StandardCharsets.ISO_8859_1));
 
                             if (mBluetoothGatt.writeCharacteristic(bluetoothGattCharacteristicHelper.mCharacteristic)) {
                                 System.out.println("writeCharacteristic init " + new String(bluetoothGattCharacteristicHelper.mCharacteristic.getValue()) + ":success");
@@ -182,33 +163,15 @@ public class BluetoothLeService extends Service {
                             }
                             bluetoothGattCharacteristicHelper.mCharacteristicValue = bluetoothGattCharacteristicHelper.mCharacteristicValue.substring(MAX_CHARACTERISTIC_LENGTH);
                         } else {
-                            try {
-                                bluetoothGattCharacteristicHelper.mCharacteristic.setValue(bluetoothGattCharacteristicHelper.mCharacteristicValue.getBytes("ISO-8859-1"));
-                            } catch (UnsupportedEncodingException e) {
-                                // this should never happen because "US-ASCII" is hard-coded.
-                                throw new IllegalStateException(e);
-                            }
-
+                            bluetoothGattCharacteristicHelper.mCharacteristic.setValue(bluetoothGattCharacteristicHelper.mCharacteristicValue.getBytes(StandardCharsets.ISO_8859_1));
 
                             if (mBluetoothGatt.writeCharacteristic(bluetoothGattCharacteristicHelper.mCharacteristic)) {
                                 System.out.println("writeCharacteristic init " + new String(bluetoothGattCharacteristicHelper.mCharacteristic.getValue()) + ":success");
-//	            	        	System.out.println((byte)bluetoothGattCharacteristicHelper.mCharacteristic.getValue()[0]);
-//	            	        	System.out.println((byte)bluetoothGattCharacteristicHelper.mCharacteristic.getValue()[1]);
-//	            	        	System.out.println((byte)bluetoothGattCharacteristicHelper.mCharacteristic.getValue()[2]);
-//	            	        	System.out.println((byte)bluetoothGattCharacteristicHelper.mCharacteristic.getValue()[3]);
-//	            	        	System.out.println((byte)bluetoothGattCharacteristicHelper.mCharacteristic.getValue()[4]);
-//	            	        	System.out.println((byte)bluetoothGattCharacteristicHelper.mCharacteristic.getValue()[5]);
-
                             } else {
                                 System.out.println("writeCharacteristic init " + new String(bluetoothGattCharacteristicHelper.mCharacteristic.getValue()) + ":failure");
                             }
                             bluetoothGattCharacteristicHelper.mCharacteristicValue = "";
-
-//		            			System.out.print("before pop:");
-//		            			System.out.println(mCharacteristicRingBuffer.size());
                             mCharacteristicRingBuffer.pop();
-//		            			System.out.print("after pop:");
-//		            			System.out.println(mCharacteristicRingBuffer.size());
                         }
                     }
 
@@ -262,30 +225,13 @@ public class BluetoothLeService extends Service {
     private void broadcastUpdate(final BluetoothGattCharacteristic characteristic) {
         final Intent intent = new Intent(BluetoothLeService.ACTION_DATA_AVAILABLE);
         System.out.println("BluetoothLeService broadcastUpdate");
-        // This is special handling for the Heart Rate Measurement profile.  Data parsing is
-        // carried out as per profile specifications:
-        // http://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.heart_rate_measurement.xml
-//        if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
-//            int flag = characteristic.getProperties();
-//            int format = -1;
-//            if ((flag & 0x01) != 0) {
-//                format = BluetoothGattCharacteristic.FORMAT_UINT16;
-//                Log.d(TAG, "Heart rate format UINT16.");
-//            } else {
-//                format = BluetoothGattCharacteristic.FORMAT_UINT8;
-//                Log.d(TAG, "Heart rate format UINT8.");
-//            }
-//            final int heartRate = characteristic.getIntValue(format, 1);
-//            Log.d(TAG, String.format("Received heart rate: %d", heartRate));
-//            intent.putExtra(EXTRA_DATA, String.valueOf(heartRate));
-//        } else {
         // For all other profiles, writes the data formatted in HEX.
         final byte[] data = characteristic.getValue();
+
         if (data != null && data.length > 0) {
             intent.putExtra(EXTRA_DATA, new String(data));
             sendBroadcast(intent);
         }
-//        }
     }
 
     public class LocalBinder extends Binder {
@@ -319,6 +265,7 @@ public class BluetoothLeService extends Service {
         // For API level 18 and above, get a reference to BluetoothAdapter through
         // BluetoothManager.
         System.out.println("BluetoothLeService initialize" + mBluetoothManager);
+
         if (mBluetoothManager == null) {
             mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
             if (mBluetoothManager == null) {
@@ -326,13 +273,12 @@ public class BluetoothLeService extends Service {
                 return false;
             }
         }
-
         mBluetoothAdapter = mBluetoothManager.getAdapter();
+
         if (mBluetoothAdapter == null) {
             Log.e(TAG, "Unable to obtain a BluetoothAdapter.");
             return false;
         }
-
         return true;
     }
 
@@ -352,19 +298,19 @@ public class BluetoothLeService extends Service {
             return false;
         }
 
-        // Previously connected device.  Try to reconnect.
-//        if (mBluetoothDeviceAddress != null && address.equals(mBluetoothDeviceAddress)
-//                && mBluetoothGatt != null) {
-//            Log.d(TAG, "Trying to use an existing mBluetoothGatt for connection.");
-//            if (mBluetoothGatt.connect()) {
-//            	System.out.println("mBluetoothGatt connect");
-//                mConnectionState = STATE_CONNECTING;
-//                return true;
-//            } else {
-//            	System.out.println("mBluetoothGatt else connect");
-//                return false;
-//            }
-//        }
+        // Previously connected device. Try to reconnect.
+        if (address.equals(mBluetoothDeviceAddress)
+                && mBluetoothGatt != null) {
+            Log.d(TAG, "Trying to use an existing mBluetoothGatt for connection.");
+            if (mBluetoothGatt.connect()) {
+                System.out.println("mBluetoothGatt connect");
+                mConnectionState = STATE_CONNECTING;
+                return true;
+            } else {
+                System.out.println("mBluetoothGatt else connect");
+                return false;
+            }
+        }
 
         final BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
         if (device == null) {
@@ -459,7 +405,6 @@ public class BluetoothLeService extends Service {
         //The progress of onCharacteristicWrite and writeCharacteristic is almost the same. So callback function is called directly here
         //for details see the onCharacteristicWrite function
         mGattCallback.onCharacteristicWrite(mBluetoothGatt, characteristic, WRITE_NEW_CHARACTERISTIC);
-
     }
 
     /**
@@ -468,25 +413,12 @@ public class BluetoothLeService extends Service {
      * @param characteristic Characteristic to act on.
      * @param enabled        If true, enable notification.  False otherwise.
      */
-    public void setCharacteristicNotification(BluetoothGattCharacteristic characteristic,
-                                              boolean enabled) {
+    public void setCharacteristicNotification(BluetoothGattCharacteristic characteristic, boolean enabled) {
         if (mBluetoothAdapter == null || mBluetoothGatt == null) {
             Log.w(TAG, "BluetoothAdapter not initialized");
             return;
         }
         mBluetoothGatt.setCharacteristicNotification(characteristic, enabled);
-
-        //BluetoothGattDescriptor descriptor = characteristic.getDescriptor(characteristic.getUuid());
-        //descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-        //mBluetoothGatt.writeDescriptor(descriptor);
-
-        // This is specific to Heart Rate Measurement.
-//        if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
-//            BluetoothGattDescriptor descriptor = characteristic.getDescriptor(
-//                    UUID.fromString(SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG));
-//            descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-//            mBluetoothGatt.writeDescriptor(descriptor);
-//        }
     }
 
     /**
@@ -497,9 +429,6 @@ public class BluetoothLeService extends Service {
      */
     public List<BluetoothGattService> getSupportedGattServices() {
         if (mBluetoothGatt == null) return null;
-
         return mBluetoothGatt.getServices();
     }
-
-
 }

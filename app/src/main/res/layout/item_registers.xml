@@ -23,6 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="5"
         android:contentDescription="@string/imagen_registros"
-        android:src="@drawable/ic_sin_registro" />
+        android:src="@drawable/ic_not_registered" />
 
 </LinearLayout>

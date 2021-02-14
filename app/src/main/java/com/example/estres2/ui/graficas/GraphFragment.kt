@@ -13,7 +13,7 @@ import com.jjoe64.graphview.GridLabelRenderer
 import kotlin.math.cos
 import kotlin.math.sin
 
-class GraficasFragment : Fragment() {
+class GraphFragment : Fragment() {
     private var _binding: FragmentGraphsBinding? = null
     private val binding get() = _binding!!
     private lateinit var gridLabelRendererFC: GridLabelRenderer

@@ -4,10 +4,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    // Estos string puede eliminarse
-    <string name="nav_header_title">Armenta Espinosa Alfredo</string>
-    <string name="nav_header_subtitle">2015640017</string>
-    // ***************************************************************
     <string name="nav_header_desc">Navegador</string>
     <string name="action_settings">Cerrar sesión</string>
 
@@ -168,4 +164,5 @@
     <string name="error_some_fiel_is_wrong">Algún campo es incorrecto revisalos</string>
     <string name="password_recover">Recuperar Contraseña</string>
     <string name="add_image">add Image</string>
+    <string name="borrar_wearable">Borrar wearable</string>
 </resources>

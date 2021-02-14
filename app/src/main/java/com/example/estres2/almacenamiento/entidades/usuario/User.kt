@@ -1,6 +1,6 @@
 package com.example.estres2.almacenamiento.entidades.usuario
 
-data class Usuario(
+data class User(
         var boleta: String,
         var nombre: String,
         var edad: String,

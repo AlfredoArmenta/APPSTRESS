@@ -12,15 +12,17 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ScrollView
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.estres2.AdapterWearable
+import com.example.estres2.actividades.bluetooth.adapters.AdapterWearable
 import com.example.estres2.MainActivity
 import com.example.estres2.R
-import com.example.estres2.UsuarioBoleta.getObjectBoleta
-import com.example.estres2.almacenamiento.database.DB
-import com.example.estres2.almacenamiento.entidades.archivo.Archivo
-import com.example.estres2.almacenamiento.entidades.usuario.Usuario
+import com.example.estres2.util.UserObject.getObjectBoleta
+import com.example.estres2.actividades.bluetooth.viewmodel.BlunoViewModel
+import com.example.estres2.almacenamiento.basededatos.DB
+import com.example.estres2.almacenamiento.entidades.archivo.RegisterFile
+import com.example.estres2.almacenamiento.entidades.usuario.User
 import com.example.estres2.almacenamiento.entidades.wearable.Wearable
 import com.example.estres2.databinding.ActivityBlunoBinding
 import com.example.estres2.util.requestPermissionBluetooth
@@ -31,11 +33,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ConectarBluno : BlunoLibrary() {
+class Bluno : BlunoLibrary() {
     private lateinit var binding: ActivityBlunoBinding
     private lateinit var context: Context
     private lateinit var blue: BluetoothAdapter
-    private lateinit var userObject: Usuario
+    private lateinit var userObject: User
+    private val blunoViewModel: BlunoViewModel by viewModels()
     private var wearablesList: MutableList<Wearable> = ArrayList()
     private var fileWriter: FileWriter? = null
 
@@ -44,6 +47,7 @@ class ConectarBluno : BlunoLibrary() {
         binding = ActivityBlunoBinding.inflate(layoutInflater)
         setContentView(binding.root)
         context = applicationContext
+        setObserves()
         initializeObjects()
         requestPermissionBluetooth(context, this)
         onCreateProcess() //onCreate Process by BlunoLibrary
@@ -82,30 +86,28 @@ class ConectarBluno : BlunoLibrary() {
         binding.apply {
             when (theConnectionState) {
                 connectionStateEnum.isConnected -> {
-                    buttonScanBlunoConected.setImageResource(R.drawable.ic_estado_conectado)
+                    buttonScanBlunoConected.setImageResource(R.drawable.ic_state_connect)
                     controlBluno.isEnabled = true
                 }
                 connectionStateEnum.isConnecting -> {
-                    botonEliminar.isEnabled = false
-                    getWearables(context)
-                    buttonScanBlunoConected.setImageResource(R.drawable.ic_estado_conectando)
+                    blunoViewModel.updateWearablesList(true)
+                    buttonScanBlunoConected.setImageResource(R.drawable.ic_state_connecting)
                     controlBluno.isEnabled = false
                 }
                 connectionStateEnum.isToScan -> {
-                    botonEliminar.isEnabled = true
-                    buttonScanBlunoConected.setImageResource(R.drawable.ic_estado_scan)
+                    buttonScanBlunoConected.setImageResource(R.drawable.ic_state_scan)
                     controlBluno.isEnabled = false
                 }
                 connectionStateEnum.isScanning -> {
-                    buttonScanBlunoConected.setImageResource(R.drawable.ic_estado_is_scanning)
+                    buttonScanBlunoConected.setImageResource(R.drawable.ic_state_scanning)
                     controlBluno.isEnabled = false
                 }
                 connectionStateEnum.isDisconnecting -> {
-                    buttonScanBlunoConected.setImageResource(R.drawable.ic_estado_desconectando)
+                    buttonScanBlunoConected.setImageResource(R.drawable.ic_state_disconnecting)
                     controlBluno.isEnabled = false
                 }
                 else -> {
-                    buttonScanBlunoConected.setImageResource(R.drawable.ic_estado_no_conectado)
+                    buttonScanBlunoConected.setImageResource(R.drawable.ic_state_not_connect)
                     controlBluno.isEnabled = false
                 }
             }
@@ -125,6 +127,16 @@ class ConectarBluno : BlunoLibrary() {
         }
     }
 
+    private fun setObserves() {
+        blunoViewModel.apply {
+            updateWearables.observe(owner = this@Bluno) {
+                if (it) {
+                    getWearables(context)
+                }
+            }
+        }
+    }
+
     private fun initializeObjects() {
         userObject = getObjectBoleta()
         serialBegin(115200) //set the Uart Baudrate on BLE chip to 115200
@@ -132,7 +144,7 @@ class ConectarBluno : BlunoLibrary() {
                 "Teoria de las Comunicaciones", "Variable Compleja", "Protocolos de Internet", "Comunicaciones Digitales",
                 "Sistemas Distribuidos", "Metodologia", "Sistemas Celulares", "Multimedia", "Señales y Sistemas", "Probabilidad",
                 "Programacion de Dispositivos Moviles", "PT1", "PT2")
-        val adapterUnit = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, learningUnit)
+        val adapterUnit = ArrayAdapter(this, R.layout.spinner_custom, learningUnit)
         getWearables(this)
 
         binding.apply {
@@ -150,9 +162,6 @@ class ConectarBluno : BlunoLibrary() {
             }
             controlBluno.setOnClickListener {
                 animation()
-            }
-            botonEliminar.setOnClickListener {
-             eraserWearable()
             }
             CSRegistro.setOnClickListener {
                 exportCSV()
@@ -178,7 +187,7 @@ class ConectarBluno : BlunoLibrary() {
         println(folder.path)
         Log.d("Hora", hourDateFormat.format(Date()))
         val file = folder.toString() + "/" + userObject.boleta + "_" + hourDateFormat.format(Date()).trim { it <= ' ' } + ".csv"
-        if (db.insertRecord(Archivo(userObject.boleta + "_" + hourDateFormat.format(Date()).trim { it <= ' ' } + ".csv", userObject.boleta))) {
+        if (db.insertRecord(RegisterFile(userObject.boleta + "_" + hourDateFormat.format(Date()).trim { it <= ' ' } + ".csv", userObject.boleta))) {
             try {
                 fileWriter = FileWriter(file)
                 fileWriter?.append(userObject.boleta)?.append("\n")
@@ -199,11 +208,11 @@ class ConectarBluno : BlunoLibrary() {
             if (CMMateria.selectedItem.toString() != "Selecciona una materia") {
                 controlBluno.isSelected = !controlBluno.isSelected
                 if (controlBluno.isSelected) {
-                    controlBluno.setImageResource(R.drawable.ic_detener_monitoreo)
+                    controlBluno.setImageResource(R.drawable.ic_stop_monitoring)
                     serialSend("Play")
                     exportCSV()
                 } else {
-                    controlBluno.setImageResource(R.drawable.ic_comienza_monitoreo)
+                    controlBluno.setImageResource(R.drawable.ic_start_monitoring)
                     serialSend("Stop")
                     try {
                         fileWriter?.append("Fin del registro")
@@ -226,29 +235,20 @@ class ConectarBluno : BlunoLibrary() {
         wearablesList = bd.showWearable() as MutableList<Wearable>
         if (wearablesList.isEmpty())
             wearablesList.add(Wearable("Wearable no registrado", "sin mac"))
-        val adapter = AdapterWearable(context, wearablesList)
+        val adapter = AdapterWearable(wearablesList, blunoViewModel)
         binding.apply {
             rvBlunoMostrarWearables.layoutManager = GridLayoutManager(context, 1)
             rvBlunoMostrarWearables.adapter = adapter
         }
     }
 
-    private fun eraserWearable() {
-        val bd = DB(applicationContext)
-        if (bd.deleteWearable(binding.EliminarWearable.text.toString())) {
-            Toast.makeText(this, "Se Elimino correctamente el Wearable", Toast.LENGTH_LONG).show()
-            getWearables(this)
-        } else {
-            Toast.makeText(this, "No se Borro ni madres", Toast.LENGTH_LONG).show()
-        }
-    }
-
     private fun back() {
-        try { fileWriter?.close()
+        try {
+            fileWriter?.close()
         } catch (e: Exception) {
             Log.d("Cierre de archivo", e.toString())
         }
-        startActivity(Intent(this@ConectarBluno, MainActivity::class.java))
+        startActivity(Intent(this@Bluno, MainActivity::class.java))
         finish()
     }
 

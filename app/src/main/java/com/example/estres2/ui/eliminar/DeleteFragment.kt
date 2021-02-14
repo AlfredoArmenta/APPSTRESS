@@ -2,9 +2,7 @@ package com.example.estres2.ui.eliminar
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.fonts.FontStyle
 import android.os.Bundle
 import android.os.Environment
 import android.view.ContextThemeWrapper
@@ -14,10 +12,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.estres2.R
-import com.example.estres2.UsuarioBoleta.getObjectBoleta
-import com.example.estres2.actividades.iniciosesion.InicioSesion
-import com.example.estres2.almacenamiento.database.DB
-import com.example.estres2.almacenamiento.entidades.usuario.Usuario
+import com.example.estres2.util.UserObject.getObjectBoleta
+import com.example.estres2.actividades.iniciosesion.Login
+import com.example.estres2.almacenamiento.basededatos.DB
+import com.example.estres2.almacenamiento.entidades.usuario.User
 import com.example.estres2.databinding.FragmentDeleteUserBinding
 import java.io.File
 
@@ -25,7 +23,7 @@ class DeleteFragment : Fragment() {
     private var _binding: FragmentDeleteUserBinding? = null
     private val binding get() = _binding!!
     private lateinit var mContext: Context
-    private lateinit var user: Usuario
+    private lateinit var user: User
     private lateinit var bd: DB
 
     override fun onCreateView(
@@ -107,7 +105,7 @@ class DeleteFragment : Fragment() {
     }
 
     private fun back() {
-        startActivity(Intent(context, InicioSesion::class.java))
+        startActivity(Intent(context, Login::class.java))
         activity?.finish()
     }
 }

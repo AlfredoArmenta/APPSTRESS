@@ -7,8 +7,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import com.example.estres2.R
-import com.example.estres2.actividades.iniciosesion.InicioSesion
-import com.example.estres2.almacenamiento.database.DB
+import com.example.estres2.actividades.iniciosesion.Login
+import com.example.estres2.almacenamiento.basededatos.DB
 import com.example.estres2.databinding.ActivityRecoverPasswordBinding
 import com.example.estres2.util.setIconDrawableAndChangeColor
 
@@ -45,9 +45,9 @@ class RecoverPassword : AppCompatActivity() {
                             true
                         }
                     }
-                    startIconDrawable = if (correctBoleta){
+                    startIconDrawable = if (correctBoleta) {
                         resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_edit, R.color.correct_green)
-                    }else {
+                    } else {
                         resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_edit, R.color.error_red)
                     }
                 }
@@ -104,9 +104,9 @@ class RecoverPassword : AppCompatActivity() {
                                 CTNumero.currentTextColor == Color.GREEN &&
                                 CTMinuscula.currentTextColor == Color.GREEN &&
                                 CTMayuscula.currentTextColor == Color.GREEN
-                        startIconDrawable = if (correctPassword){
+                        startIconDrawable = if (correctPassword) {
                             resources.setIconDrawableAndChangeColor(android.R.drawable.ic_lock_idle_lock, R.color.correct_green)
-                        }else {
+                        } else {
                             resources.setIconDrawableAndChangeColor(android.R.drawable.ic_lock_idle_lock, R.color.error_red)
                         }
                     }
@@ -116,7 +116,7 @@ class RecoverPassword : AppCompatActivity() {
                 if (correctBoleta && correctPassword) {
                     if (bd.recoverPassword(CBoleta.editText?.text.toString(), CPassword.editText?.text.toString())) {
                         Toast.makeText(applicationContext, getText(R.string.ActualizoCorrectamente), Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(applicationContext, InicioSesion::class.java))
+                        startActivity(Intent(applicationContext, Login::class.java))
                         finish()
                     } else {
                         Toast.makeText(applicationContext, getText(R.string.BoletaNoRegistrada), Toast.LENGTH_SHORT).show()
@@ -128,11 +128,12 @@ class RecoverPassword : AppCompatActivity() {
                 }
             }
             CCancel.setOnClickListener {
-                startActivity(Intent(applicationContext, InicioSesion::class.java))
+                startActivity(Intent(applicationContext, Login::class.java))
                 finish()
             }
         }
     }
+
     // Se anula el botón que nos regresa
     override fun onBackPressed() {}
 }

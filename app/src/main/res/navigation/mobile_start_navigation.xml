@@ -8,9 +8,9 @@
 
     <activity
         android:id="@+id/nav_inicio_sesion"
-        android:name="com.example.estres2.actividades.iniciosesion.InicioSesion"
+        android:name="com.example.estres2.actividades.iniciosesion.Login"
         android:label="@string/iniciar_sesion"
-        tools:layout="@layout/activity_inicio_sesion"/>
+        tools:layout="@layout/activity_login"/>
 
     <activity
         android:id="@+id/nav_registrar"

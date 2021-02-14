@@ -66,6 +66,10 @@
     <style name="textInputLayoutStyle" parent="subTitleText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/margin_input_text</item>
+        <item name="android:layout_marginBottom">@dimen/margin_input_text</item>
+        <item name="android:layout_marginStart">@dimen/margin</item>
+        <item name="android:layout_marginEnd">@dimen/margin</item>
     </style>
 
     <!--Style for the password suggestions -->
@@ -81,7 +85,7 @@
     <style name="buttonStyle" parent="fontText">
         <item name="android:textAlignment">center</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/cambia_sombra</item>
+        <item name="android:background">@drawable/btn_shadow</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/text_size_display2</item>
     </style>

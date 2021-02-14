@@ -34,6 +34,6 @@
         app:fabCustomSize="@dimen/button_fab_custom_size_floating"
         app:fabSize="auto"
         app:maxImageSize="@dimen/button_max_size_image_floating"
-        app:srcCompat="@drawable/ic_conectar_pulsera" />
+        app:srcCompat="@drawable/ic_connect_wearable" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

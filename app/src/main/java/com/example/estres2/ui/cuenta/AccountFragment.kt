@@ -12,21 +12,21 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.estres2.MainViewModel
 import com.example.estres2.R
-import com.example.estres2.UsuarioBoleta.getObjectBoleta
-import com.example.estres2.UsuarioBoleta.setObjectBoleta
-import com.example.estres2.almacenamiento.database.DB
-import com.example.estres2.almacenamiento.entidades.usuario.Usuario
-import com.example.estres2.databinding.FragmentCuentaBinding
+import com.example.estres2.util.UserObject.getObjectBoleta
+import com.example.estres2.util.UserObject.setObjectBoleta
+import com.example.estres2.almacenamiento.basededatos.DB
+import com.example.estres2.almacenamiento.entidades.usuario.User
+import com.example.estres2.databinding.FragmentAccountBinding
 import com.example.estres2.util.setIconDrawableAndChangeColor
 
-class CuentaFragment : Fragment() {
-    private var _binding: FragmentCuentaBinding? = null
+class AccountFragment : Fragment() {
+    private var _binding: FragmentAccountBinding? = null
     private val binding get() = _binding!!
     private val mainViewModel: MainViewModel by activityViewModels()
     private var correctNombre: Boolean = true
     private var correctEdad: Boolean = true
     private var correctPassword: Boolean = true
-    private lateinit var user: Usuario
+    private lateinit var user: User
     private lateinit var bd: DB
     private lateinit var mContext: Context
 
@@ -35,7 +35,7 @@ class CuentaFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentCuentaBinding.inflate(inflater, container, false)
+        _binding = FragmentAccountBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -51,10 +51,10 @@ class CuentaFragment : Fragment() {
     }
 
     private fun initializeObjects() {
-        user = getObjectBoleta()
-        bd = DB(mContext)
         val semester = arrayOf("Selecciona tu semestre actual", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15")
         val adapterSemester = ArrayAdapter(mContext, R.layout.spinner_custom, semester)
+        user = getObjectBoleta()
+        bd = DB(mContext)
 
         binding.apply {
             CFBoleta.text = user.boleta
@@ -81,7 +81,7 @@ class CuentaFragment : Fragment() {
             }
             CFEdad.apply {
                 editText?.setText(user.edad)
-                startIconDrawable = resources.setIconDrawableAndChangeColor(R.drawable.ic_edad, R.color.correct_green)
+                startIconDrawable = resources.setIconDrawableAndChangeColor(R.drawable.ic_age, R.color.correct_green)
                 editText?.doOnTextChanged { text, _, _, _ ->
                     correctEdad = when {
                         text.isNullOrEmpty() -> {
@@ -98,9 +98,9 @@ class CuentaFragment : Fragment() {
                         }
                     }
                     startIconDrawable = if (correctEdad) {
-                        resources.setIconDrawableAndChangeColor(R.drawable.ic_edad, R.color.correct_green)
+                        resources.setIconDrawableAndChangeColor(R.drawable.ic_age, R.color.correct_green)
                     } else {
-                        resources.setIconDrawableAndChangeColor(R.drawable.ic_edad, R.color.error_red)
+                        resources.setIconDrawableAndChangeColor(R.drawable.ic_age, R.color.error_red)
                     }
                 }
             }

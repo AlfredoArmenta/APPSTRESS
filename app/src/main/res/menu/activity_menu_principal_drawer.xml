@@ -7,7 +7,7 @@
 
         <item
             android:id="@+id/nav_inicio"
-            android:icon="@drawable/ic_inicio"
+            android:icon="@drawable/ic_menu_home"
             android:title="@string/menu_inicio" />
 
         <item
@@ -17,7 +17,7 @@
 
         <item
             android:id="@+id/nav_registro"
-            android:icon="@drawable/ic_menu_registros"
+            android:icon="@drawable/ic_menu_registers"
             android:title="@string/registros" />
 
         <item android:title="@string/herramientas">

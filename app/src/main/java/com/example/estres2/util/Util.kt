@@ -12,8 +12,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.content.ContextCompat
-import com.example.estres2.UsuarioBoleta
-import com.example.estres2.almacenamiento.database.DB
+import com.example.estres2.almacenamiento.basededatos.DB
 import java.io.File
 import java.io.FileNotFoundException
 import kotlin.math.ceil
@@ -35,7 +34,7 @@ fun reduceBitmap(context: Context, uri: String?, maxWidth: Float, maxHeight: Flo
 
 fun eraseRegister(register: String, context: Context): Boolean {
     val db = DB(context)
-    val folder = File(Environment.getExternalStorageDirectory().toString() + "/Monitoreo" + UsuarioBoleta.getObjectBoleta().boleta)
+    val folder = File(Environment.getExternalStorageDirectory().toString() + "/Monitoreo" + UserObject.getObjectBoleta().boleta)
     if (folder.exists()) {
         folder.listFiles()?.iterator()?.forEach {
             if (it.name == register && db.deletedRecord(it.name)) {
@@ -49,11 +48,11 @@ fun eraseRegister(register: String, context: Context): Boolean {
     return false
 }
 
-fun requestPermissionExternalStorage(context: Context, activity: Activity){
+fun requestPermissionExternalStorage(context: Context, activity: Activity) {
     // Permisos para almacenamiento externo
     if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
     ) {
-        ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),0)
+        requestPermissions(activity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
     }
 }
 
@@ -62,9 +61,9 @@ fun requestPermissionBluetooth(context: Context, activity: Activity) {
     val permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
     if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_FINE_LOCATION)) {
-            Toast.makeText(context,"Se requiere permiso para obtener datos de ubicación BLE", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Se requiere permiso para obtener datos de ubicación BLE", Toast.LENGTH_SHORT).show()
         } else {
-            requestPermissions(activity,arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION), 1)
+            requestPermissions(activity, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION), 1)
         }
     } else {
         Toast.makeText(context, "Permisos de ubicación ya otorgados", Toast.LENGTH_SHORT).show()

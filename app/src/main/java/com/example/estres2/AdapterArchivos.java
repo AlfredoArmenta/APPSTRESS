@@ -9,38 +9,38 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.estres2.almacenamiento.entidades.archivo.Archivo;
+import com.example.estres2.almacenamiento.entidades.archivo.RegisterFile;
 
 import java.util.List;
 
 public class AdapterArchivos extends RecyclerView.Adapter<AdapterArchivos.ArchivoView> {
     // Creanos un objecto context y un objeto List
     Context context;
-    List<Archivo> ListaArchivos;
+    List<RegisterFile> listaRegisterFiles;
 
     // Aquí inicializamos el constructor
-    public AdapterArchivos(Context context, List<Archivo> ListaArchivo) {
+    public AdapterArchivos(Context context, List<RegisterFile> listaRegisterFile) {
         this.context = context;
-        this.ListaArchivos = ListaArchivo;
+        this.listaRegisterFiles = listaRegisterFile;
     }
 
     @NonNull
     @Override
     public ArchivoView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.vista_archivo, null, false);
+        View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_file, null, false);
         return new ArchivoView(vista);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ArchivoView holder, int position) {
         // Aquí asignamos los valores de las listas a los objetos TextView
-        holder.M_Id_archivo.setText(String.format("Id: %s", ListaArchivos.get(position).getId()));
-        holder.M_Boleta.setText(String.format("Mac: %s", ListaArchivos.get(position).getBoleta()));
+        holder.M_Id_archivo.setText(String.format("Id: %s", listaRegisterFiles.get(position).getId()));
+        holder.M_Boleta.setText(String.format("Mac: %s", listaRegisterFiles.get(position).getBoleta()));
     }
 
     @Override
     public int getItemCount() {
-        return ListaArchivos.size();
+        return listaRegisterFiles.size();
     }
 
     public static class ArchivoView extends RecyclerView.ViewHolder {
