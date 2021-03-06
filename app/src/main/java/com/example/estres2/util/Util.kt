@@ -15,7 +15,10 @@ import androidx.core.content.ContextCompat
 import com.example.estres2.almacenamiento.basededatos.DB
 import java.io.File
 import java.io.FileNotFoundException
+import kotlin.math.abs
 import kotlin.math.ceil
+import kotlin.math.ln
+import kotlin.math.min
 
 fun reduceBitmap(context: Context, uri: String?, maxWidth: Float, maxHeight: Float): Bitmap? {
     return try {
@@ -68,4 +71,65 @@ fun requestPermissionBluetooth(context: Context, activity: Activity) {
     } else {
         Toast.makeText(context, "Permisos de ubicación ya otorgados", Toast.LENGTH_SHORT).show()
     }
+}
+
+fun SampEn(y: DoubleArray, M: Int, r: Double): Double {
+    val n = y.size
+    val lastRun = IntArray(n)
+    val run = IntArray(n)
+
+    var j: Int
+    var nj: Int
+
+    val A = DoubleArray(M)
+    val B = DoubleArray(M)
+    val p = DoubleArray(M)
+    val e = DoubleArray(M)
+
+    for (i in 0 until n.minus(1)) {
+        nj = if (i == 0) {
+            n.minus(2)
+        } else {
+            n.minus(i).minus(2)
+        }
+        val y1 = y[i]
+
+        for (jj in 0 until nj + 1) {
+            j = if (i == 0) {
+                jj.plus(1)
+            } else {
+                jj.plus(i + 1)
+            }
+
+            if (abs((y[j] - y1)) < r) {
+                run[jj] = lastRun[jj].plus(1)
+                val m1 = min(M, run[jj])
+
+                for (m in 0 until m1) {
+                    A[m] = A[m].plus(1)
+
+                    if (j < (n - 1)) {
+                        B[m] = B[m].plus(1)
+                    }
+                }
+            } else {
+                run[jj] = 0
+            }
+        }
+        for (l in 0 until nj + 1) {
+            lastRun[l] = run[l]
+        }
+    }
+
+    val N = n * (n.minus(1)) / 2
+
+    B[2] = B[1]
+    B[1] = B[0]
+    B[0] = N.toDouble()
+
+    for (x in 0 until M) {
+        p[x] = A[x] / B[x]
+        e[x] = (-1) * ln(p[x])
+    }
+    return e[2]
 }

@@ -20,6 +20,7 @@ import com.example.estres2.almacenamiento.entidades.usuario.User
 import com.example.estres2.databinding.FragmentRegistersBinding
 import com.example.estres2.ui.viewmodel.MenuViewModel
 import java.io.File
+import com.example.estres2.util.SampEn
 
 class RegisterFragment : Fragment() {
     private var _binding: FragmentRegistersBinding? = null
@@ -28,6 +29,7 @@ class RegisterFragment : Fragment() {
     private lateinit var mContext: Context
     private lateinit var user: User
     private val lRegister: MutableList<UserRegister> = ArrayList()
+    private val test: DoubleArray = doubleArrayOf(0.0, 1.0, 1.0, 2.0, 2.0, 2.0, 2.0)
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +44,11 @@ class RegisterFragment : Fragment() {
         mContext = binding.root.context
         setObservers()
         showRegister()
+        readRegister()
+    }
+
+    private fun readRegister() {
+
     }
 
     override fun onDestroy() {
@@ -83,6 +90,8 @@ class RegisterFragment : Fragment() {
             adapter = RegisterListAdapter(lRegister, menuViewModel)
             addItemDecoration(itemDecoration)
         }
+
+        binding.Stress.text = "${SampEn(test, 3, 0.2)}"
     }
 
     private fun getRegisters(): List<String> {
