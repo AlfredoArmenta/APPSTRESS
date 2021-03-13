@@ -32,9 +32,10 @@ class MainViewModel : ViewModel() {
         val fileName = Environment.getExternalStorageDirectory().toString() + "/Monitoreo" + UserObject.getObjectBoleta().boleta + "/ACC.csv"
         println(" ********** $fileName ********** ")
         val file = File(fileName)
-        viewModelScope.launch(Dispatchers.Default) {
+        lateinit var lines: List<String>
+        viewModelScope.launch(Dispatchers.IO) {
             try {
-                val lines: List<String> = file.readLines()
+                lines = file.readLines()
                 lines.forEach { line ->
                     println(line)
                 }
@@ -44,6 +45,8 @@ class MainViewModel : ViewModel() {
             } finally {
                 println(" ____________ CSV Read Finished ____________ ")
             }
+            println(lines.first())
+            println(lines.last())
         }
     }
 
