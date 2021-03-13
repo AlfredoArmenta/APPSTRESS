@@ -10,22 +10,24 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.estres2.MainViewModel
 import com.example.estres2.R
 import com.example.estres2.util.UserObject.getObjectBoleta
 import com.example.estres2.almacenamiento.basededatos.DB
 import com.example.estres2.almacenamiento.entidades.registros.UserRegister
 import com.example.estres2.almacenamiento.entidades.usuario.User
 import com.example.estres2.databinding.FragmentRegistersBinding
-import com.example.estres2.ui.viewmodel.MenuViewModel
 import java.io.File
 import com.example.estres2.util.SampEn
+import kotlinx.coroutines.cancel
 
 class RegisterFragment : Fragment() {
     private var _binding: FragmentRegistersBinding? = null
     private val binding get() = _binding!!
-    private val menuViewModel: MenuViewModel by viewModels()
+    private val menuViewModel: MainViewModel by viewModels()
     private lateinit var mContext: Context
     private lateinit var user: User
     private val lRegister: MutableList<UserRegister> = ArrayList()

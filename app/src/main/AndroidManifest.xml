@@ -9,8 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
 
     <uses-feature
         android:name="android.hardware.bluetooth_le"
@@ -28,14 +27,13 @@
             android:configChanges="screenSize|orientation"
             android:label="@string/title_activity_menu_principal"
             android:theme="@style/NoActionBar" />
-
         <activity android:name=".actividades.iniciosesion.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".actividades.registrar.Register"
             android:label="Registrar Usuario" />
@@ -52,4 +50,5 @@
             android:name=".actividades.bluetooth.BluetoothLeService"
             android:enabled="true" />
     </application>
+
 </manifest>

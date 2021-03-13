@@ -6,16 +6,17 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.estres2.MainViewModel
 import com.example.estres2.R
 import com.example.estres2.almacenamiento.entidades.registros.UserRegister
 import com.example.estres2.databinding.ItemRegistersBinding
-import com.example.estres2.ui.viewmodel.MenuViewModel
 import com.example.estres2.util.eraseRegister
+import com.example.estres2.util.readRegister
 
 class RegisterListViewHolder(private val viewBinding: ItemRegistersBinding) : RecyclerView.ViewHolder(viewBinding.root) {
-    private lateinit var callbackErase: MenuViewModel
+    private lateinit var callbackErase: MainViewModel
 
-    fun onBinding(recordList: UserRegister, callback: MenuViewModel) {
+    fun onBinding(recordList: UserRegister, callback: MainViewModel) {
         callbackErase = callback
         viewBinding.apply {
             RVTextView.text = recordList.idRegister
@@ -37,6 +38,7 @@ class RegisterListViewHolder(private val viewBinding: ItemRegistersBinding) : Re
                 when (it.itemId) {
                     R.id.action_analizar -> {
                         Toast.makeText(viewBinding.root.context, "Analizar", Toast.LENGTH_LONG).show()
+                        readRegister(register.idRegister, callbackErase)
                         true
                     }
                     R.id.action_graficar -> {

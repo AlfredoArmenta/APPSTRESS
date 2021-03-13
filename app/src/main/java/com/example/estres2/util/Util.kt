@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.content.ContextCompat
+import com.example.estres2.MainViewModel
 import com.example.estres2.almacenamiento.basededatos.DB
 import java.io.File
 import java.io.FileNotFoundException
@@ -49,6 +50,22 @@ fun eraseRegister(register: String, context: Context): Boolean {
     }
     Toast.makeText(context, "No existe la carpeta del usuario", Toast.LENGTH_LONG).show()
     return false
+}
+
+fun readRegister(nameRegister: String, callback: MainViewModel){
+    callback.starProgress()
+//    try {
+//        val fileName = Environment.getExternalStorageDirectory().toString() + "/Monitoreo" + UserObject.getObjectBoleta().boleta + "/ACC.csv"
+//        println(" ********** $fileName ********** ")
+//        val lines: List<String> = File(fileName).readLines()
+//        lines.forEach{line ->
+//            println(line)
+//        }
+//    }catch (e: Exception){
+//        e.printStackTrace()
+//    }finally {
+//        println(" ____________ CSV Read Finished ____________ ")
+//    }
 }
 
 fun requestPermissionExternalStorage(context: Context, activity: Activity) {
