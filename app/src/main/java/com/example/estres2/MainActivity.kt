@@ -206,32 +206,34 @@ class MainActivity : AppCompatActivity() {
         NotificationManagerCompat.from(this).apply {
             notify(NOTIFICATION_0, notification.build())
         }
-        lifecycleScope.launch(context = Dispatchers.Default) {
-            val job: Job = launch(context = Dispatchers.IO) {
+        lifecycleScope.launch(context = Dispatchers.Main) {
+            val read = withContext(context = Dispatchers.IO) {
                 readRegister("ACC.csv")
                 NotificationManagerCompat.from(applicationContext).apply {
                     notification.setContentTitle("Analisis 50%")
                     notification.setContentText("Analisis Iniciado")
                     notify(NOTIFICATION_0, notification.build())
                 }
+            }
 
-//                sampEn(fc, 2, 0.2)
-                NotificationManagerCompat.from(applicationContext).apply {
-                    notification.setContentTitle("Analisis 75%")
-                    notification.setContentText("FC analizada")
-                    notify(NOTIFICATION_0, notification.build())
-                }
+            val fcCoroutine = async(Dispatchers.IO) {
+                println("*****************FC**************************")
+                sampEn(fc, 3, 0.2)
+            }
 
-//                sampEn(gsr, 2, 0.2)
+            val gsrCoroutine = async(Dispatchers.IO) {
+                println("*****************GSR**************************")
+                sampEn(gsr, 3, 0.2)
+            }
+
+            if((fcCoroutine.await() + gsrCoroutine.await()) >= 0){
                 NotificationManagerCompat.from(applicationContext).apply {
                     notification.setContentTitle("Analisis 100%")
                     notification.setContentText("Analisis Terminado")
-                    notification.setProgress(0, 0,false)
+                    notification.setProgress(0, 0, false)
                     notify(NOTIFICATION_0, notification.build())
                 }
             }
-            job.join()
-            job.cancel()
         }
     }
 
@@ -244,7 +246,7 @@ class MainActivity : AppCompatActivity() {
 //        val gsr: MutableList<String> = ArrayList()
 //        val gsrTime: MutableList<String> = ArrayList()
         try {
-            val file = FileReader(File(Environment.getExternalStorageDirectory().toString() + "/Monitoreo" + getObjectBoleta().boleta + "/" + nameRegister))
+            val file = FileReader(File(Environment.getExternalStorageDirectory().toString() + "/Monitoreo" + getObjectBoleta().boleta + "/ACC.csv"))
             val parse = CSVParserBuilder().withSeparator(',').build()
             val cvsReader = CSVReaderBuilder(file)
                     .withCSVParser(parse)
