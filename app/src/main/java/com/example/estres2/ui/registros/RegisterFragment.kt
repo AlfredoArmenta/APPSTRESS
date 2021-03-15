@@ -9,8 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewModelScope
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.estres2.MainViewModel
@@ -21,17 +20,16 @@ import com.example.estres2.almacenamiento.entidades.registros.UserRegister
 import com.example.estres2.almacenamiento.entidades.usuario.User
 import com.example.estres2.databinding.FragmentRegistersBinding
 import java.io.File
-import com.example.estres2.util.SampEn
-import kotlinx.coroutines.cancel
+import com.example.estres2.util.sampEn
 
 class RegisterFragment : Fragment() {
     private var _binding: FragmentRegistersBinding? = null
     private val binding get() = _binding!!
-    private val menuViewModel: MainViewModel by viewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var mContext: Context
     private lateinit var user: User
     private val lRegister: MutableList<UserRegister> = ArrayList()
-    private val test: DoubleArray = doubleArrayOf(0.0, 1.0, 1.0, 2.0, 2.0, 2.0, 2.0)
+    private val test: MutableList<Double> = ArrayList(listOf(0.0, 1.0, 1.0, 2.0, 2.0, 2.0, 2.0))
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -59,7 +57,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun setObservers() {
-        menuViewModel.apply {
+        mainViewModel.apply {
             updateRegisters.observe(viewLifecycleOwner) {
                 when (it) {
                     true -> {
@@ -89,11 +87,11 @@ class RegisterFragment : Fragment() {
         binding.Resgistros.apply {
             setHasFixedSize(true)
             layoutManager = GridLayoutManager(mContext, 1, GridLayoutManager.VERTICAL, false)
-            adapter = RegisterListAdapter(lRegister, menuViewModel)
+            adapter = RegisterListAdapter(lRegister, mainViewModel)
             addItemDecoration(itemDecoration)
         }
 
-        binding.Stress.text = "${SampEn(test, 3, 0.2)}"
+        binding.Stress.text = "${sampEn(test, 3, 0.2)}"
     }
 
     private fun getRegisters(): List<String> {

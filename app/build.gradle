@@ -75,7 +75,7 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
     implementation "android.arch.lifecycle:viewmodel:$lifecycle_version"
 
-    implementation group: 'net.sf.opencsv', name: 'opencsv', version: '2.3'
+    implementation 'com.opencsv:opencsv:4.6'
 }
 repositories {
     mavenCentral()

@@ -10,14 +10,14 @@ import com.example.estres2.MainViewModel
 import com.example.estres2.R
 import com.example.estres2.almacenamiento.entidades.registros.UserRegister
 import com.example.estres2.databinding.ItemRegistersBinding
+import com.example.estres2.util.FileObject
 import com.example.estres2.util.eraseRegister
-import com.example.estres2.util.readRegister
 
 class RegisterListViewHolder(private val viewBinding: ItemRegistersBinding) : RecyclerView.ViewHolder(viewBinding.root) {
-    private lateinit var callbackErase: MainViewModel
+    private lateinit var callbackMainViewModel: MainViewModel
 
     fun onBinding(recordList: UserRegister, callback: MainViewModel) {
-        callbackErase = callback
+        callbackMainViewModel = callback
         viewBinding.apply {
             RVTextView.text = recordList.idRegister
             RVEliminar.setImageDrawable(ContextCompat.getDrawable(root.context, recordList.imageRegister))
@@ -38,20 +38,23 @@ class RegisterListViewHolder(private val viewBinding: ItemRegistersBinding) : Re
                 when (it.itemId) {
                     R.id.action_analizar -> {
                         Toast.makeText(viewBinding.root.context, "Analizar", Toast.LENGTH_LONG).show()
-                        readRegister(register.idRegister, callbackErase)
+                        FileObject.setNameFile(register.idRegister)
+                        callbackMainViewModel.updateNotification(true)
                         true
                     }
                     R.id.action_graficar -> {
+                        callbackMainViewModel.updateNotification(true)
                         Toast.makeText(viewBinding.root.context, "Gráficar", Toast.LENGTH_LONG).show()
                         true
                     }
                     R.id.action_ambas -> {
+                        callbackMainViewModel.updateNotification(true)
                         Toast.makeText(viewBinding.root.context, "Graficar y Analizar", Toast.LENGTH_LONG).show()
                         true
                     }
                     R.id.action_eliminar -> {
                         if (eraseRegister(register.idRegister, viewBinding.root.context)) {
-                            callbackErase.updateRegisterList(true)
+                            callbackMainViewModel.updateRegisterList(true)
                         } else {
                             Toast.makeText(viewBinding.root.context, "No se elimino el registro", Toast.LENGTH_LONG).show()
                         }

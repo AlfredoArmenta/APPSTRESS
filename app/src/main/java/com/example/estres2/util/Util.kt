@@ -14,8 +14,11 @@ import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.content.ContextCompat
 import com.example.estres2.MainViewModel
 import com.example.estres2.almacenamiento.basededatos.DB
+import com.opencsv.CSVParserBuilder
+import com.opencsv.CSVReaderBuilder
 import java.io.File
 import java.io.FileNotFoundException
+import java.io.FileReader
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.ln
@@ -52,22 +55,6 @@ fun eraseRegister(register: String, context: Context): Boolean {
     return false
 }
 
-fun readRegister(nameRegister: String, callback: MainViewModel){
-    callback.starProgress()
-//    try {
-//        val fileName = Environment.getExternalStorageDirectory().toString() + "/Monitoreo" + UserObject.getObjectBoleta().boleta + "/ACC.csv"
-//        println(" ********** $fileName ********** ")
-//        val lines: List<String> = File(fileName).readLines()
-//        lines.forEach{line ->
-//            println(line)
-//        }
-//    }catch (e: Exception){
-//        e.printStackTrace()
-//    }finally {
-//        println(" ____________ CSV Read Finished ____________ ")
-//    }
-}
-
 fun requestPermissionExternalStorage(context: Context, activity: Activity) {
     // Permisos para almacenamiento externo
     if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
@@ -90,8 +77,9 @@ fun requestPermissionBluetooth(context: Context, activity: Activity) {
     }
 }
 
-fun SampEn(y: DoubleArray, M: Int, r: Double): Double {
+fun sampEn(y: MutableList<Double>, M: Int, r: Double): Double {
     val n = y.size
+    println(y.size)
     val lastRun = IntArray(n)
     val run = IntArray(n)
 
@@ -136,6 +124,7 @@ fun SampEn(y: DoubleArray, M: Int, r: Double): Double {
         for (l in 0 until nj + 1) {
             lastRun[l] = run[l]
         }
+        println(i)
     }
 
     val N = n * (n.minus(1)) / 2

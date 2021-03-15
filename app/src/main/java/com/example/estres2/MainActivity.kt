@@ -1,7 +1,13 @@
 package com.example.estres2
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
@@ -12,7 +18,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.observe
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
@@ -24,8 +32,16 @@ import com.example.estres2.almacenamiento.basededatos.DB
 import com.example.estres2.almacenamiento.entidades.usuario.User
 import com.example.estres2.util.reduceBitmap
 import com.example.estres2.databinding.ActivityMainBinding
+import com.example.estres2.util.FileObject
 import com.example.estres2.util.requestPermissionExternalStorage
+import com.example.estres2.util.sampEn
+import com.opencsv.CSVParserBuilder
+import com.opencsv.CSVReaderBuilder
+import kotlinx.coroutines.*
+import java.io.File
+import java.io.FileReader
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel: MainViewModel by viewModels()
@@ -37,24 +53,45 @@ class MainActivity : AppCompatActivity() {
     private lateinit var userData: User
     private lateinit var userImage: ImageView
     private lateinit var addImageView: ImageButton
+    private lateinit var notification: NotificationCompat.Builder
+
+    private var fc: MutableList<Double> = ArrayList()
+    private var fcTime: MutableList<Double> = ArrayList()
+    private var gsr: MutableList<Double> = ArrayList()
+    private var gsrTime: MutableList<Double> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setObservers()
+        createNotificationChannel()
         initializeObjects()
+        setObservers()
     }
 
     private fun setObservers() {
         mainViewModel.apply {
-            updateUserData.observe(owner = this@MainActivity) {
-                println("Entro al observer")
+            updateUserData.observe(this@MainActivity) {
                 if (it) {
                     userData = getObjectBoleta()
                     userName.text = userData.nombre
                     userBoleta.text = userData.boleta
-                    println("ESe actualizó el Usuario")
+                    println("Se actualizó el Usuario")
+                }
+            }
+            updateNotification.observe(this@MainActivity) { status ->
+                if (status) {
+                    setNotification()
+                }
+            }
+
+            updateStateNotification.observe(this@MainActivity) { state ->
+                if (state) {
+                    NotificationManagerCompat.from(applicationContext).apply {
+                        notification.setContentText("Analisis Finalizado")
+                        notification.setProgress(0, 0, false)
+                        notify(NOTIFICATION_0, notification.build())
+                    }
                 }
             }
         }
@@ -142,6 +179,148 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun createNotificationChannel() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Analysis Notification"
+            val descriptionText = "Notification Description"
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel(CHANNEL_0_ID, name, importance).apply {
+                description = descriptionText
+                titleColor = Color.RED
+            }
+            val notificationManager : NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun setNotification() {
+        notification = NotificationCompat.Builder(this, CHANNEL_0_ID).apply {
+            setContentTitle("Analisis 0%")
+            setContentText("Leyendo Archivo")
+            setSubText("Estimación")
+            setSmallIcon(R.drawable.ic_login)
+            color = Color.MAGENTA
+            priority = NotificationCompat.PRIORITY_LOW
+            setProgress(0, 0,true)
+        }
+        NotificationManagerCompat.from(this).apply {
+            notify(NOTIFICATION_0, notification.build())
+        }
+        lifecycleScope.launch(context = Dispatchers.Default) {
+            val job: Job = launch(context = Dispatchers.IO) {
+                readRegister("ACC.csv")
+                NotificationManagerCompat.from(applicationContext).apply {
+                    notification.setContentTitle("Analisis 50%")
+                    notification.setContentText("Analisis Iniciado")
+                    notify(NOTIFICATION_0, notification.build())
+                }
+
+//                sampEn(fc, 2, 0.2)
+                NotificationManagerCompat.from(applicationContext).apply {
+                    notification.setContentTitle("Analisis 75%")
+                    notification.setContentText("FC analizada")
+                    notify(NOTIFICATION_0, notification.build())
+                }
+
+//                sampEn(gsr, 2, 0.2)
+                NotificationManagerCompat.from(applicationContext).apply {
+                    notification.setContentTitle("Analisis 100%")
+                    notification.setContentText("Analisis Terminado")
+                    notification.setProgress(0, 0,false)
+                    notify(NOTIFICATION_0, notification.build())
+                }
+            }
+            job.join()
+            job.cancel()
+        }
+    }
+
+    private fun readRegister(nameRegister: String){
+        lateinit var boleta: String
+        lateinit var materia: String
+        lateinit var fecha: String
+//        val fc: MutableList<String> = ArrayList()
+//        val fcTime: MutableList<String> = ArrayList()
+//        val gsr: MutableList<String> = ArrayList()
+//        val gsrTime: MutableList<String> = ArrayList()
+        try {
+            val file = FileReader(File(Environment.getExternalStorageDirectory().toString() + "/Monitoreo" + getObjectBoleta().boleta + "/" + nameRegister))
+            val parse = CSVParserBuilder().withSeparator(',').build()
+            val cvsReader = CSVReaderBuilder(file)
+                    .withCSVParser(parse)
+                    .build()
+
+            val lines = cvsReader.readAll()
+
+            var i = 0
+
+            for (row in lines) {
+                var j = 0
+                for (cell in row) {
+                    when (i) {
+                        0 -> {
+                            boleta = cell
+                        }
+                        1 -> {
+                            materia = cell
+                        }
+                        2 -> {
+                            fecha = cell
+                        }
+                        else -> {
+                            when (j) {
+//                                0 -> {
+//                                    fc.add(cell)
+//                                }
+//                                1 -> {
+//                                    fcTime.add(cell)
+//                                }
+//                                2 -> {
+//                                    gsr.add(cell)
+//                                }
+//                                else -> {
+//                                    gsrTime.add(cell)
+//                                }
+                                0 -> {
+                                    fc.add(cell.toDouble())
+                                }
+                                1 -> {
+                                    fcTime.add(cell.toDouble())
+                                }
+                                2 -> {
+                                    gsr.add(cell.toDouble())
+                                }
+                                else -> {
+                                    gsrTime.add(cell.toDouble())
+                                }
+                            }
+                        }
+                    }
+                    j += 1
+                }
+                i += 1
+            }
+        } catch (e: Exception) {
+            e.printStackTrace();
+        } finally {
+            NotificationManagerCompat.from(this).apply {
+                notification.setContentTitle("Analisis 50%")
+                notification.setContentText("Lectura Terminada")
+                notify(NOTIFICATION_0, notification.build())
+            }
+            println(" ____________ CSV Read Finished ____________ ")
+        }
+
+
+            println("Boleta: $boleta")
+            println("Materia: $materia")
+            println("Fecha: $fecha")
+            println("FC: ${fc.first()} Long: ${fc.size}")
+            println("FCTIME: Long: ${fcTime.size}")
+            println("GSR: Long: ${gsr.size}")
+            println("GSRTIME: Long: ${gsrTime.size}")
+    }
+
     private fun goToBluno() {
         startActivity(Intent(this@MainActivity, Bluno::class.java))
         finish()
@@ -157,5 +336,10 @@ class MainActivity : AppCompatActivity() {
     private fun backLogging() {
         startActivity(Intent(this@MainActivity, Login::class.java))
         finish()
+    }
+    companion object {
+        const val CHANNEL_0_ID = "Channel_0"
+        const val NOTIFICATION_0 = 0
+        const val MAX_PROGRESS = 100
     }
 }
