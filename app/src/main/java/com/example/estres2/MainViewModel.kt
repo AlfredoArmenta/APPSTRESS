@@ -14,13 +14,21 @@ class MainViewModel : ViewModel() {
     val updateRegisters: LiveData<Boolean>
         get() = _updateRegisters
 
-    private var _updateNotification = MutableLiveData<Boolean>()
-    val updateNotification: LiveData<Boolean>
-        get() = _updateNotification
+    private var _updateNotificationAnalysis = MutableLiveData<Boolean>()
+    val updateNotificationAnalysis: LiveData<Boolean>
+        get() = _updateNotificationAnalysis
 
-    private var _updateStateNotification: MutableLiveData<Boolean> = MutableLiveData()
-    val updateStateNotification: LiveData<Boolean>
-        get() = _updateStateNotification
+    private var _updateNotificationGraph: MutableLiveData<Boolean> = MutableLiveData()
+    val updateNotificationGraph: LiveData<Boolean>
+        get() = _updateNotificationGraph
+
+    private var _updateNotificationAnalysisAndGraph: MutableLiveData<Boolean> = MutableLiveData()
+    val updateNotificationAnalysisAndGraph: LiveData<Boolean>
+        get() = _updateNotificationAnalysisAndGraph
+
+    private var _test: MutableLiveData<Boolean> = MutableLiveData()
+    val test: LiveData<Boolean>
+        get() = _test
 
     fun updateUserDataFunc(update: Boolean) {
         _updateUserData.value = update
@@ -30,16 +38,26 @@ class MainViewModel : ViewModel() {
         _updateRegisters.value = update
     }
 
-    fun updateNotification(update: Boolean) {
-        _updateNotification.value = update
+    fun updateNotificationAnalysis(update: Boolean) {
+        _updateNotificationAnalysis.value = update
     }
 
-    fun updateStateNotification(update: Boolean) {
-        _updateStateNotification.value = update
+    fun updateNotificationGraph(update: Boolean) {
+        _updateNotificationGraph.value = update
+    }
+
+    fun updateNotificationAnalysisAndGraph(update: Boolean) {
+        _updateNotificationAnalysisAndGraph.value = update
+    }
+
+    fun updateTest(update: Boolean) {
+        _test.value = update
     }
 
     init {
         _updateUserData.value = false
-        _updateNotification.value = false
+        _updateNotificationAnalysis.value = false
+        _updateNotificationGraph.value = false
+        _updateNotificationAnalysisAndGraph.value = false
     }
 }

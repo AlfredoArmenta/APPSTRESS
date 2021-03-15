@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.content.ContextCompat
-import com.example.estres2.MainViewModel
 import com.example.estres2.almacenamiento.basededatos.DB
 import com.opencsv.CSVParserBuilder
 import com.opencsv.CSVReaderBuilder
@@ -75,6 +74,67 @@ fun requestPermissionBluetooth(context: Context, activity: Activity) {
     } else {
         Toast.makeText(context, "Permisos de ubicación ya otorgados", Toast.LENGTH_SHORT).show()
     }
+}
+
+fun readRegister() {
+    try {
+        val file = FileReader(File(Environment.getExternalStorageDirectory().toString() + "/Monitoreo" + UserObject.getObjectBoleta().boleta + "/ACC.csv"))
+        val parse = CSVParserBuilder().withSeparator(',').build()
+        val cvsReader = CSVReaderBuilder(file)
+                .withCSVParser(parse)
+                .build()
+
+        val lines = cvsReader.readAll()
+
+        var i = 0
+
+        for (row in lines) {
+            var j = 0
+            for (cell in row) {
+                when (i) {
+                    0 -> {
+                        FileCharacteristics.setBoletaFile(cell)
+                    }
+                    1 -> {
+                        FileCharacteristics.setMateriaFile(cell)
+                    }
+                    2 -> {
+                        FileCharacteristics.setFechaFile(cell)
+                    }
+                    else -> {
+                        when (j) {
+                            0 -> {
+                                FileCharacteristics.setFc(cell)
+                            }
+                            1 -> {
+                                FileCharacteristics.setFcTime(cell)
+                            }
+                            2 -> {
+                                FileCharacteristics.setGsr(cell)
+                            }
+                            else -> {
+                                FileCharacteristics.setGsrTime(cell)
+                            }
+                        }
+                    }
+                }
+                j += 1
+            }
+            i += 1
+        }
+    } catch (e: Exception) {
+        e.printStackTrace();
+    } finally {
+        println(" ____________ CSV Read Finished ____________ ")
+    }
+
+//            println("Boleta: $boleta")
+//            println("Materia: $materia")
+//            println("Fecha: $fecha")
+//            println("FC: ${fc.first()} Long: ${fc.size}")
+//            println("FCTIME: Long: ${fcTime.size}")
+//            println("GSR: Long: ${gsr.size}")
+//            println("GSRTIME: Long: ${gsrTime.size}")
 }
 
 fun sampEn(y: MutableList<Double>, M: Int, r: Double): Double {

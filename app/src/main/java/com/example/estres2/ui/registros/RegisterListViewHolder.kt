@@ -39,17 +39,17 @@ class RegisterListViewHolder(private val viewBinding: ItemRegistersBinding) : Re
                     R.id.action_analizar -> {
                         Toast.makeText(viewBinding.root.context, "Analizar", Toast.LENGTH_LONG).show()
                         FileObject.setNameFile(register.idRegister)
-                        callbackMainViewModel.updateNotification(true)
+                        callbackMainViewModel.updateNotificationAnalysis(true)
                         true
                     }
                     R.id.action_graficar -> {
-                        callbackMainViewModel.updateNotification(true)
                         Toast.makeText(viewBinding.root.context, "Gráficar", Toast.LENGTH_LONG).show()
+                        callbackMainViewModel.updateNotificationGraph(true)
                         true
                     }
                     R.id.action_ambas -> {
-                        callbackMainViewModel.updateNotification(true)
                         Toast.makeText(viewBinding.root.context, "Graficar y Analizar", Toast.LENGTH_LONG).show()
+                        callbackMainViewModel.updateNotificationAnalysisAndGraph(true)
                         true
                     }
                     R.id.action_eliminar -> {
