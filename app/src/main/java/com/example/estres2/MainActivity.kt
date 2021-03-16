@@ -68,24 +68,28 @@ class MainActivity : AppCompatActivity() {
             }
             updateNotificationAnalysis.observe(this@MainActivity) { status ->
                 if (status) {
-                    setNotification()
-                    analysisSampEn()
+                    setNotification("Analisis")
+                    analysisSampEn(false)
                     binding.appBarMenu.fab.isEnabled = false
+                    println("Notificación Analisis")
                 }
             }
 
             updateNotificationGraph.observe(this@MainActivity) { state ->
                 if (state) {
-                    setNotification()
+                    setNotification("Graficación")
+                    graphSampEn()
                     binding.appBarMenu.fab.isEnabled = false
+                    println("Notificación Gráficar")
                 }
             }
 
             updateNotificationAnalysisAndGraph.observe(this@MainActivity) { state ->
                 if (state) {
-                    setNotification()
-                    analysisSampEn()
+                    setNotification("Analizando y Graficando")
+                    analysisSampEn(true)
                     binding.appBarMenu.fab.isEnabled = false
+                    println("Notificación Analisis y Gráficar")
                 }
             }
         }
@@ -187,13 +191,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setNotification() {
+    private fun setNotification(titleNotification: String) {
         notification = NotificationCompat.Builder(this, CHANNEL_0_ID).apply {
-            setContentTitle("Analisis")
+            setContentTitle(titleNotification)
             setContentText("Leyendo Archivo")
             setSubText("Estimación")
             setSmallIcon(R.drawable.ic_login)
-            color = Color.MAGENTA
+            color = Color.GRAY
             priority = NotificationCompat.PRIORITY_LOW
             setProgress(0, 0, true)
         }
@@ -202,37 +206,51 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun analysisSampEn() {
+    private fun analysisSampEn(graph: Boolean) {
         lifecycleScope.launch(context = Dispatchers.Main) {
-            val read = withContext(context = Dispatchers.IO) {
+            withContext(context = Dispatchers.IO) {
                 readRegister()
                 NotificationManagerCompat.from(applicationContext).apply {
-                    notification.setContentTitle("Analisis")
-                    notification.setContentText("Analisis Iniciado")
+                    notification.setContentText("Lectura Terminada")
                     notify(NOTIFICATION_0, notification.build())
                 }
             }
 
             val fcCoroutine = async(Dispatchers.IO) {
                 println("*****************FC**************************")
-                sampEn(FileCharacteristics.getFc(), 3, 0.2)
+                EntropyObject.setEntropy(sampEn(FileCharacteristics.getFc(), 3, 0.2))
+                1
             }
 
             val gsrCoroutine = async(Dispatchers.IO) {
                 println("*****************GSR**************************")
-                sampEn(FileCharacteristics.getGsr(), 3, 0.2)
+                EntropyObject.setEntropy(sampEn(FileCharacteristics.getGsr(), 3, 0.2))
+                1
             }
 
             if ((fcCoroutine.await() + gsrCoroutine.await()) >= 0) {
                 NotificationManagerCompat.from(applicationContext).apply {
-                    notification.setContentTitle("Analisis")
-                    notification.setContentText("Analisis Terminado")
+                    notification.setContentText("Completado. Tu estado actual es: Estresado")
                     notification.setProgress(0, 0, false)
                     notify(NOTIFICATION_0, notification.build())
                 }
-                mainViewModel.updateTest(true)
+                mainViewModel.updateGraph(graph)
                 binding.appBarMenu.fab.isEnabled = true
             }
+        }
+    }
+
+    private fun graphSampEn() {
+        lifecycleScope.launch(context = Dispatchers.Main) {
+            withContext(context = Dispatchers.IO) {
+                readRegister()
+                NotificationManagerCompat.from(applicationContext).apply {
+                    notification.setContentText("Completado")
+                    notification.setProgress(0, 0, false)
+                    notify(NOTIFICATION_0, notification.build())
+                }
+            }
+            mainViewModel.updateGraph(true)
         }
     }
 
@@ -256,6 +274,5 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val CHANNEL_0_ID = "Channel_0"
         const val NOTIFICATION_0 = 0
-        const val MAX_PROGRESS = 100
     }
 }

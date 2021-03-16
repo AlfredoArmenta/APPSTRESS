@@ -90,6 +90,11 @@
         <item name="android:textSize">@dimen/text_size_display2</item>
     </style>
 
+    <style name="buttonImageStyle" parent="buttonStyle">
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">50dp</item>
+    </style>
+
     <!--Style for the title, for each fragment-->
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

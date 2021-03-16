@@ -4,14 +4,14 @@
     tools:context=".ui.registros.RegisterFragment">
 
     <item
-        android:id="@+id/action_graficar"
-        android:orderInCategory="100"
-        android:title="@string/graficar" />
-
-    <item
         android:id="@+id/action_analizar"
         android:orderInCategory="100"
         android:title="@string/analizar" />
+
+    <item
+        android:id="@+id/action_graficar"
+        android:orderInCategory="100"
+        android:title="@string/graficar" />
 
     <item
         android:id="@+id/action_ambas"

@@ -26,9 +26,9 @@ class MainViewModel : ViewModel() {
     val updateNotificationAnalysisAndGraph: LiveData<Boolean>
         get() = _updateNotificationAnalysisAndGraph
 
-    private var _test: MutableLiveData<Boolean> = MutableLiveData()
-    val test: LiveData<Boolean>
-        get() = _test
+    private var _stateGraph: MutableLiveData<Boolean> = MutableLiveData()
+    val stateGraph: LiveData<Boolean>
+        get() = _stateGraph
 
     fun updateUserDataFunc(update: Boolean) {
         _updateUserData.value = update
@@ -50,8 +50,8 @@ class MainViewModel : ViewModel() {
         _updateNotificationAnalysisAndGraph.value = update
     }
 
-    fun updateTest(update: Boolean) {
-        _test.value = update
+    fun updateGraph(update: Boolean) {
+        _stateGraph.value = update
     }
 
     init {
@@ -59,5 +59,6 @@ class MainViewModel : ViewModel() {
         _updateNotificationAnalysis.value = false
         _updateNotificationGraph.value = false
         _updateNotificationAnalysisAndGraph.value = false
+        _stateGraph.value = false
     }
 }

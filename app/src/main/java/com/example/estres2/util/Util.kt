@@ -77,6 +77,7 @@ fun requestPermissionBluetooth(context: Context, activity: Activity) {
 }
 
 fun readRegister() {
+
     try {
         val file = FileReader(File(Environment.getExternalStorageDirectory().toString() + "/Monitoreo" + UserObject.getObjectBoleta().boleta + "/ACC.csv"))
         val parse = CSVParserBuilder().withSeparator(',').build()
@@ -198,4 +199,12 @@ fun sampEn(y: MutableList<Double>, M: Int, r: Double): Double {
         e[x] = (-1) * ln(p[x])
     }
     return e[2]
+}
+
+fun setDataGraph () {
+    val size = FileCharacteristics.getFc().size
+    for (i in 0 until size) {
+        EntropyObject.setGraphFC(FileCharacteristics.getFcTime()[i], FileCharacteristics.getFc()[i])
+        EntropyObject.setGraphGSR(FileCharacteristics.getGsrTime()[i], FileCharacteristics.getGsr()[i])
+    }
 }

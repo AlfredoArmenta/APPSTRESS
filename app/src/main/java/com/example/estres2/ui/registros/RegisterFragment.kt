@@ -19,14 +19,20 @@ import com.example.estres2.almacenamiento.basededatos.DB
 import com.example.estres2.almacenamiento.entidades.registros.UserRegister
 import com.example.estres2.almacenamiento.entidades.usuario.User
 import com.example.estres2.databinding.FragmentRegistersBinding
+import com.example.estres2.util.EntropyObject
+import com.example.estres2.util.setDataGraph
+import com.jjoe64.graphview.GridLabelRenderer
 import java.io.File
 
 class RegisterFragment : Fragment() {
+    private val mainViewModel: MainViewModel by activityViewModels()
     private var _binding: FragmentRegistersBinding? = null
     private val binding get() = _binding!!
-    private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var mContext: Context
     private lateinit var user: User
+    private lateinit var gridLabelRendererFC: GridLabelRenderer
+    private lateinit var gridLabelRendererGSR: GridLabelRenderer
+    private lateinit var gridLabelRendererFCYGSR: GridLabelRenderer
     private val lRegister: MutableList<UserRegister> = ArrayList()
 
     override fun onCreateView(
@@ -40,8 +46,9 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mContext = binding.root.context
-        setObservers()
+        initializedObjects()
         showRegister()
+        setObservers()
     }
 
     override fun onDestroy() {
@@ -52,17 +59,63 @@ class RegisterFragment : Fragment() {
     private fun setObservers() {
         mainViewModel.apply {
             updateRegisters.observe(viewLifecycleOwner) {
-                when (it) {
-                    true -> {
-                        println("Se actualizo el estado del observador: $it")
-                        showRegister()
+                if (it) {
+                    println("Se actualizo el estado del observador: $it")
+                    showRegister()
+                }
+            }
+            stateGraph.observe(viewLifecycleOwner) { update ->
+                binding.apply {
+                    if (update) {
+                        removeSeries()
+                        setDataGraph()
+                        setGraphs()
+                    } else {
+                        FC.visibility = View.INVISIBLE
+                        GSR.visibility = View.INVISIBLE
+                        FCYGSR.visibility = View.INVISIBLE
                     }
                 }
             }
-            test.observe(viewLifecycleOwner) { update ->
-                if (update) {
-                    binding.Stress.text = "Se Actualizo SampEn"
-                }
+        }
+    }
+
+    private fun initializedObjects() {
+        binding.apply {
+            FC.visibility = View.VISIBLE
+            GSR.visibility = View.VISIBLE
+            FCYGSR.visibility = View.VISIBLE
+            gridLabelRendererFC = FC.gridLabelRenderer
+            gridLabelRendererFC.horizontalAxisTitle = "Tiempo (s)"
+            gridLabelRendererFC.verticalAxisTitle = "Frecuencia Cardiaca"
+            gridLabelRendererGSR = GSR.gridLabelRenderer
+            gridLabelRendererGSR.horizontalAxisTitle = "Tiempo (s)"
+            gridLabelRendererGSR.verticalAxisTitle = "Kilo Ohm"
+            gridLabelRendererFCYGSR = FCYGSR.gridLabelRenderer
+            gridLabelRendererFCYGSR.horizontalAxisTitle = "Tiempo (s)"
+            gridLabelRendererFCYGSR.verticalAxisTitle = "Frecuencia Cardiaca y Kilo Ohm"
+        }
+    }
+
+    private fun setGraphs() {
+        binding.apply {
+            FC.apply {
+                addSeries(EntropyObject.getGraphFC())
+                title = "Frecuencia Cardiaca"
+                viewport.isScalable = true
+                viewport.isScrollable = true
+                viewport.setScalableY(true)
+            }
+
+            GSR.apply {
+                addSeries(EntropyObject.getGraphGSR())
+                title = "Respuesta Galvánica de la Piel"
+            }
+
+            FCYGSR.apply {
+                addSeries(EntropyObject.getGraphFC())
+                addSeries(EntropyObject.getGraphGSR())
+                title = "Frecuencia Cardiaca y Respuesta Galvánica de la Piel"
             }
         }
     }
@@ -108,5 +161,13 @@ class RegisterFragment : Fragment() {
             Toast.makeText(mContext, "No existe la carpeta del usuario", Toast.LENGTH_LONG).show()
         }
         return item
+    }
+
+    private fun removeSeries() {
+        binding.apply {
+            FC.removeAllSeries()
+            GSR.removeAllSeries()
+            FCYGSR.removeAllSeries()
+        }
     }
 }

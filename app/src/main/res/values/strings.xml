@@ -137,7 +137,7 @@
     <string name="registros">Registros</string>
     <string name="graficar">Graficar</string>
     <string name="analizar">Analizar</string>
-    <string name="graficar_y_analizar">Graficar y Analizar</string>
+    <string name="graficar_y_analizar">Analizar y Graficar</string>
     <string name="eliminar">Eliminar</string>
     <string name="name_registro">Name_Registro</string>
     <string name="imagen_registros">Imagen representativa de los registros obtenidos del usuario</string>
