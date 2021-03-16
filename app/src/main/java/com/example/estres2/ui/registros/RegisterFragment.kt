@@ -116,12 +116,18 @@ class RegisterFragment : Fragment() {
             GSR.apply {
                 addSeries(EntropyObject.getGraphGSR())
                 title = "Respuesta Galvánica de la Piel"
+                viewport.isScalable = true
+                viewport.isScrollable = true
+                viewport.setScalableY(true)
             }
 
             FCYGSR.apply {
                 addSeries(EntropyObject.getGraphFC())
                 addSeries(EntropyObject.getGraphGSR())
                 title = "Frecuencia Cardiaca y Respuesta Galvánica de la Piel"
+                viewport.isScalable = true
+                viewport.isScrollable = true
+                viewport.setScalableY(true)
             }
         }
     }
