@@ -12,16 +12,6 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_graficas"
-        android:name="com.example.estres2.ui.graficas.GraphFragment"
-        android:label="@string/menu_gráficas"
-        tools:layout="@layout/fragment_graphs">
-        <action
-            android:id="@+id/action_nav_graficas_to_nav_inicio"
-            app:destination="@id/nav_inicio" />
-    </fragment>
-
-    <fragment
         android:id="@+id/nav_registro"
         android:name="com.example.estres2.ui.registros.RegisterFragment"
         android:label="@string/registros"

@@ -139,7 +139,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             mAppBarConfiguration = AppBarConfiguration.Builder(
-                    R.id.nav_inicio, R.id.nav_graficas, R.id.nav_registro,
+                    R.id.nav_inicio, R.id.nav_registro,
                     R.id.nav_configurar_cuenta, R.id.nav_eliminar)
                     .setOpenableLayout(drawerLayout)
                     .build()

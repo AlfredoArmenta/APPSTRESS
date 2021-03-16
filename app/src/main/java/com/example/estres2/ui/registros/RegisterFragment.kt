@@ -46,7 +46,7 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mContext = binding.root.context
-        initializedObjects()
+        initializedParameterGraphs()
         showRegister()
         setObservers()
     }
@@ -69,22 +69,28 @@ class RegisterFragment : Fragment() {
                     if (update) {
                         removeSeries()
                         setDataGraph()
+                        setVisibilityGraph()
                         setGraphs()
                     } else {
-                        FC.visibility = View.INVISIBLE
-                        GSR.visibility = View.INVISIBLE
-                        FCYGSR.visibility = View.INVISIBLE
+                        FC.visibility = View.GONE
+                        GSR.visibility = View.GONE
+                        FCYGSR.visibility = View.GONE
                     }
                 }
             }
         }
     }
 
-    private fun initializedObjects() {
+    private fun setVisibilityGraph() {
         binding.apply {
             FC.visibility = View.VISIBLE
             GSR.visibility = View.VISIBLE
             FCYGSR.visibility = View.VISIBLE
+        }
+    }
+
+    private fun initializedParameterGraphs() {
+        binding.apply {
             gridLabelRendererFC = FC.gridLabelRenderer
             gridLabelRendererFC.horizontalAxisTitle = "Tiempo (s)"
             gridLabelRendererFC.verticalAxisTitle = "Frecuencia Cardiaca"
