@@ -1,11 +1,6 @@
 package com.example.estres2
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Menu
@@ -19,6 +14,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -51,7 +47,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        createNotificationChannel()
         initializeObjects()
         setObservers()
     }
@@ -177,27 +172,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Analysis Notification"
-            val descriptionText = "Notification Description"
-            val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(CHANNEL_0_ID, name, importance).apply {
-                description = descriptionText
-                titleColor = Color.RED
-            }
-            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
-
     private fun setNotification(titleNotification: String) {
         notification = NotificationCompat.Builder(this, CHANNEL_0_ID).apply {
             setContentTitle(titleNotification)
             setContentText("Leyendo Archivo")
             setSubText("Estimación")
             setSmallIcon(R.drawable.ic_login)
-            color = Color.GRAY
+            color = ContextCompat.getColor(applicationContext, R.color.colorPrimary)
             priority = NotificationCompat.PRIORITY_LOW
             setProgress(0, 0, true)
         }
@@ -230,7 +211,8 @@ class MainActivity : AppCompatActivity() {
 
             if ((fcCoroutine.await() + gsrCoroutine.await()) >= 0) {
                 NotificationManagerCompat.from(applicationContext).apply {
-                    notification.setContentText("Completado. Tu estado actual es: Estresado")
+                    notification.setContentText("Análisis terminado")
+                    notification.setStyle(NotificationCompat.BigTextStyle().bigText("Análisis completado tu estado actual es: Estresado/no Estresado"))
                     notification.setProgress(0, 0, false)
                     notify(NOTIFICATION_0, notification.build())
                 }

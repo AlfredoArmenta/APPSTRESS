@@ -1,13 +1,11 @@
 package com.example.estres2.util
 
-import android.graphics.Color
-import com.jjoe64.graphview.series.DataPoint
-import com.jjoe64.graphview.series.LineGraphSeries
+import com.github.mikephil.charting.data.Entry
 
 object EntropyObject {
     private var entropyUser: Double = 0.0
-    private val fc1: LineGraphSeries<DataPoint> = LineGraphSeries()
-    private val gsr1: LineGraphSeries<DataPoint> = LineGraphSeries()
+    private var fc = ArrayList<Entry>()
+    private var gsr = ArrayList<Entry>()
 
     fun setEntropy(entropy: Double) {
         entropyUser = entropy
@@ -15,22 +13,20 @@ object EntropyObject {
 
     fun getEntropy(): Double = entropyUser
 
-    fun setGraphFC(x: Double, y: Double) {
-        fc1.appendData(DataPoint(x, y), true, FileCharacteristics.getFc().size)
+    fun setGraphFC(x: Float, y: Float) {
+        fc.add(Entry(x, y))
     }
 
-    fun getGraphFC(): LineGraphSeries<DataPoint> = fc1
+    fun getGraphFC(): ArrayList<Entry> = fc
 
-    fun setGraphGSR(x: Double, y: Double) {
-        gsr1.appendData(DataPoint(x, y), true, FileCharacteristics.getGsr().size)
+    fun setGraphGSR(x: Float, y: Float) {
+        gsr.add(Entry(x, y))
     }
 
-    fun getGraphGSR(): LineGraphSeries<DataPoint> = gsr1
+    fun getGraphGSR(): ArrayList<Entry> = gsr
 
-    init {
-        fc1.color = Color.rgb(226, 91, 34)
-        fc1.thickness = 6
-        fc1.isDrawBackground = true
-        fc1.backgroundColor = Color.argb(60, 95, 226, 156)
+    fun resetVariables() {
+        fc.clear()
+        gsr.clear()
     }
 }

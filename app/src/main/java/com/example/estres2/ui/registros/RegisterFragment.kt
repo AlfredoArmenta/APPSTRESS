@@ -1,6 +1,8 @@
 package com.example.estres2.ui.registros
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.Paint
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
@@ -20,8 +22,11 @@ import com.example.estres2.almacenamiento.entidades.registros.UserRegister
 import com.example.estres2.almacenamiento.entidades.usuario.User
 import com.example.estres2.databinding.FragmentRegistersBinding
 import com.example.estres2.util.EntropyObject
-import com.example.estres2.util.setDataGraph
-import com.jjoe64.graphview.GridLabelRenderer
+import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import java.io.File
 
 class RegisterFragment : Fragment() {
@@ -30,9 +35,6 @@ class RegisterFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var mContext: Context
     private lateinit var user: User
-    private lateinit var gridLabelRendererFC: GridLabelRenderer
-    private lateinit var gridLabelRendererGSR: GridLabelRenderer
-    private lateinit var gridLabelRendererFCYGSR: GridLabelRenderer
     private val lRegister: MutableList<UserRegister> = ArrayList()
 
     override fun onCreateView(
@@ -46,7 +48,6 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mContext = binding.root.context
-        initializedParameterGraphs()
         showRegister()
         setObservers()
     }
@@ -67,14 +68,22 @@ class RegisterFragment : Fragment() {
             stateGraph.observe(viewLifecycleOwner) { update ->
                 binding.apply {
                     if (update) {
-                        removeSeries()
-                        setDataGraph()
                         setVisibilityGraph()
                         setGraphs()
                     } else {
+                        registerGraph.visibility = View.GONE
+
                         FC.visibility = View.GONE
+                        textFc.visibility = View.GONE
+                        textTimeFc.visibility = View.GONE
+
                         GSR.visibility = View.GONE
+                        textGsr.visibility = View.GONE
+                        textTimeGsr.visibility = View.GONE
+
                         FCYGSR.visibility = View.GONE
+                        textFcgsr.visibility = View.GONE
+                        textTimeFcgsr.visibility = View.GONE
                     }
                 }
             }
@@ -83,51 +92,94 @@ class RegisterFragment : Fragment() {
 
     private fun setVisibilityGraph() {
         binding.apply {
-            FC.visibility = View.VISIBLE
-            GSR.visibility = View.VISIBLE
-            FCYGSR.visibility = View.VISIBLE
-        }
-    }
+            registerGraph.visibility = View.VISIBLE
 
-    private fun initializedParameterGraphs() {
-        binding.apply {
-            gridLabelRendererFC = FC.gridLabelRenderer
-            gridLabelRendererFC.horizontalAxisTitle = "Tiempo (s)"
-            gridLabelRendererFC.verticalAxisTitle = "Frecuencia Cardiaca"
-            gridLabelRendererGSR = GSR.gridLabelRenderer
-            gridLabelRendererGSR.horizontalAxisTitle = "Tiempo (s)"
-            gridLabelRendererGSR.verticalAxisTitle = "Kilo Ohm"
-            gridLabelRendererFCYGSR = FCYGSR.gridLabelRenderer
-            gridLabelRendererFCYGSR.horizontalAxisTitle = "Tiempo (s)"
-            gridLabelRendererFCYGSR.verticalAxisTitle = "Frecuencia Cardiaca y Kilo Ohm"
+            FC.visibility = View.VISIBLE
+            textFc.visibility = View.VISIBLE
+            textTimeFc.visibility = View.VISIBLE
+
+            GSR.visibility = View.VISIBLE
+            textGsr.visibility = View.VISIBLE
+            textTimeGsr.visibility = View.VISIBLE
+
+            FCYGSR.visibility = View.VISIBLE
+            textFcgsr.visibility = View.VISIBLE
+            textTimeFcgsr.visibility = View.VISIBLE
         }
     }
 
     private fun setGraphs() {
+
+        val lineDataSetFcAndGsr = ArrayList<ILineDataSet>()
+
+        val lineDataSetFC = LineDataSet(EntropyObject.getGraphFC(), "Frecuencia Cardiaca")
+        lineDataSetFC.setDrawCircles(false)
+        lineDataSetFC.setValueTextColors(listOf(Color.WHITE))
+        lineDataSetFC.color = Color.MAGENTA
+        lineDataSetFC.setDrawValues(false)
+
+        val lineDataSetGSR = LineDataSet(EntropyObject.getGraphGSR(), "Respuesta Galvánica de la Piel")
+        lineDataSetGSR.setDrawCircles(false)
+        lineDataSetGSR.color = Color.CYAN
+        lineDataSetFC.setDrawValues(false)
+
+        lineDataSetFcAndGsr.apply {
+            add(lineDataSetFC)
+            add(lineDataSetGSR)
+        }
+
         binding.apply {
+
             FC.apply {
-                addSeries(EntropyObject.getGraphFC())
-                title = "Frecuencia Cardiaca"
-                viewport.isScalable = true
-                viewport.isScrollable = true
-                viewport.setScalableY(true)
+                clear()
+                setDrawBorders(true)
+                axisLeft.textColor = ContextCompat.getColor(context, R.color.colorPrimaryText)
+                axisLeft.textSize = 14f
+                axisRight.isEnabled = false
+                xAxis.textColor = Color.WHITE
+                xAxis.position = XAxis.XAxisPosition.BOTTOM
+                xAxis.textSize = 14f
+                xAxis.setDrawLabels(true)
+                setBorderColor(ContextCompat.getColor(context, R.color.colorPrimaryText))
+                setDrawGridBackground(false)
+                setTouchEnabled(true)
+                isDragEnabled = true
+                setScaleEnabled(true)
+                data = LineData(lineDataSetFC)
             }
-
             GSR.apply {
-                addSeries(EntropyObject.getGraphGSR())
-                title = "Respuesta Galvánica de la Piel"
-                viewport.isScalable = true
-                viewport.isScrollable = true
-                viewport.setScalableY(true)
+                clear()
+                setDrawBorders(true)
+                setDrawGridBackground(false)
+                axisLeft.textColor = ContextCompat.getColor(context, R.color.colorPrimaryText)
+                axisLeft.textSize = 14f
+                axisRight.isEnabled = false
+                xAxis.textColor = Color.WHITE
+                xAxis.position = XAxis.XAxisPosition.BOTTOM
+                xAxis.textSize = 14f
+                xAxis.setDrawLabels(true)
+                setBorderColor(ContextCompat.getColor(context, R.color.colorPrimaryText))
+                setTouchEnabled(true)
+                isDragEnabled = true
+                setScaleEnabled(true)
+                data = LineData(lineDataSetGSR)
             }
-
             FCYGSR.apply {
-                addSeries(EntropyObject.getGraphFC())
-                addSeries(EntropyObject.getGraphGSR())
-                title = "Frecuencia Cardiaca y Respuesta Galvánica de la Piel"
-                viewport.isScalable = true
-                viewport.isScrollable = true
-                viewport.setScalableY(true)
+                clear()
+                setDrawBorders(true)
+                setDrawGridBackground(false)
+                axisLeft.textColor = ContextCompat.getColor(context, R.color.colorPrimaryText)
+                axisLeft.textSize = 14f
+                axisRight.isEnabled = false
+                xAxis.textColor = Color.WHITE
+                xAxis.position = XAxis.XAxisPosition.BOTTOM
+                xAxis.textSize = 14f
+                xAxis.setDrawLabels(true)
+                setBorderColor(ContextCompat.getColor(context, R.color.colorPrimaryText))
+                setTouchEnabled(true)
+                isDragEnabled = true
+                setScaleEnabled(true)
+                data = LineData((lineDataSetFcAndGsr))
             }
         }
     }
@@ -173,13 +225,5 @@ class RegisterFragment : Fragment() {
             Toast.makeText(mContext, "No existe la carpeta del usuario", Toast.LENGTH_LONG).show()
         }
         return item
-    }
-
-    private fun removeSeries() {
-        binding.apply {
-            FC.removeAllSeries()
-            GSR.removeAllSeries()
-            FCYGSR.removeAllSeries()
-        }
     }
 }

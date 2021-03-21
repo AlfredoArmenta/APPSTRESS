@@ -10,11 +10,8 @@ import com.example.estres2.MainViewModel
 import com.example.estres2.R
 import com.example.estres2.almacenamiento.entidades.registros.UserRegister
 import com.example.estres2.databinding.ItemRegistersBinding
-import com.example.estres2.util.EntropyObject
-import com.example.estres2.util.FileCharacteristics
 import com.example.estres2.util.FileObject
 import com.example.estres2.util.eraseRegister
-import com.jjoe64.graphview.series.DataPoint
 
 class RegisterListViewHolder(private val viewBinding: ItemRegistersBinding) : RecyclerView.ViewHolder(viewBinding.root) {
     private lateinit var callbackMainViewModel: MainViewModel
@@ -42,21 +39,18 @@ class RegisterListViewHolder(private val viewBinding: ItemRegistersBinding) : Re
                     R.id.action_analizar -> {
                         Toast.makeText(viewBinding.root.context, "Analizar", Toast.LENGTH_LONG).show()
                         FileObject.setNameFile(register.idRegister)
-                        clearDataGraph()
                         callbackMainViewModel.updateNotificationAnalysis(true)
                         true
                     }
                     R.id.action_graficar -> {
                         Toast.makeText(viewBinding.root.context, "Gráficar", Toast.LENGTH_LONG).show()
                         FileObject.setNameFile(register.idRegister)
-                        clearDataGraph()
                         callbackMainViewModel.updateNotificationGraph(true)
                         true
                     }
                     R.id.action_ambas -> {
-                        Toast.makeText(viewBinding.root.context, "Graficar y Analizar", Toast.LENGTH_LONG).show()
+                        Toast.makeText(viewBinding.root.context, "Gráficar y Analizar", Toast.LENGTH_LONG).show()
                         FileObject.setNameFile(register.idRegister)
-                        clearDataGraph()
                         callbackMainViewModel.updateNotificationAnalysisAndGraph(true)
                         true
                     }
@@ -74,14 +68,5 @@ class RegisterListViewHolder(private val viewBinding: ItemRegistersBinding) : Re
             gravity = Gravity.END
             show()
         }
-    }
-
-    private fun clearDataGraph() {
-        FileCharacteristics.getFc().clear()
-        FileCharacteristics.getFcTime().clear()
-        FileCharacteristics.getGsr().clear()
-        FileCharacteristics.getGsrTime().clear()
-        EntropyObject.getGraphFC().resetData(arrayOf(DataPoint(0.0,0.0)))
-        EntropyObject.getGraphGSR().resetData(arrayOf(DataPoint(0.0,0.0)))
     }
 }

@@ -4,10 +4,10 @@ object FileCharacteristics {
     lateinit var boleta: String
     lateinit var materia: String
     lateinit var fecha: String
-    private var fc: MutableList<Double> = ArrayList()
-    private var fcTime: MutableList<Double> = ArrayList()
-    private var gsr: MutableList<Double> = ArrayList()
-    private var gsrTime: MutableList<Double> = ArrayList()
+    private var fc = ArrayList<Float>()
+    private var fcTime = ArrayList<Float>()
+    private var gsr: ArrayList<Float> = ArrayList()
+    private var gsrTime: ArrayList<Float> = ArrayList()
 
     fun setBoletaFile(boletaObject: String) {
         boleta = boletaObject
@@ -40,26 +40,33 @@ object FileCharacteristics {
     }
 
     fun setFc(fcObject: String) {
-        fc.add(fcObject.toDouble())
+        fc.add(fcObject.toFloat())
     }
 
-    fun getFc(): MutableList<Double> = fc
+    fun getFc(): ArrayList<Float> = fc
 
     fun setFcTime(fcTimeObject: String) {
-        fcTime.add(fcTimeObject.toDouble())
+        fcTime.add(fcTimeObject.toFloat())
     }
 
-    fun getFcTime(): MutableList<Double> = fcTime
+    fun getFcTime(): ArrayList<Float> = fcTime
 
     fun setGsr(gsrObject: String) {
-        gsr.add(gsrObject.toDouble())
+        gsr.add(gsrObject.toFloat())
     }
 
-    fun getGsr(): MutableList<Double> = gsr
+    fun getGsr(): ArrayList<Float> = gsr
 
     fun setGsrTime(gsrTimeObject: String) {
-        gsrTime.add(gsrTimeObject.toDouble())
+        gsrTime.add(gsrTimeObject.toFloat())
     }
 
-    fun getGsrTime(): MutableList<Double> = gsrTime
+    fun getGsrTime(): ArrayList<Float> = gsrTime
+
+    fun resetVariables() {
+        fc.clear()
+        fcTime.clear()
+        gsr.clear()
+        gsrTime.clear()
+    }
 }

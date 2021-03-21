@@ -11,9 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/recyclerview_size_height"
         android:paddingStart="@dimen/margin"
-        android:paddingTop="@dimen/margin"
         android:paddingEnd="@dimen/margin"
-        android:paddingBottom="@dimen/margin"
         android:scrollbarThumbVertical="@drawable/scroll"
         android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,6 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/menu_gráficas"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/Resgistros" />
@@ -42,39 +41,107 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.jjoe64.graphview.GraphView
-                android:id="@+id/FC"
-                android:layout_width="match_parent"
-                android:layout_height="500dp"
+            <TextView
+                android:id="@+id/text_fc"
+                style="@style/subNormalText"
+                android:text="Frecuencia Cardiaca"
+                android:textAlignment="center"
                 android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/FC"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.jjoe64.graphview.GraphView
-                android:id="@+id/GSR"
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/FC"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:layout_marginTop="@dimen/margin"
+                android:layout_height="400dp"
                 android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_fc" />
+
+            <TextView
+                android:id="@+id/text_time_fc"
+                style="@style/subNormalText"
+                android:text="Tiempo (s)"
+                android:textAlignment="center"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/GSR"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/FC" />
 
-            <com.jjoe64.graphview.GraphView
-                android:id="@+id/FCYGSR"
-                android:layout_width="wrap_content"
-                android:layout_height="500dp"
-                android:layout_marginTop="@dimen/margin"
+            <TextView
+                android:id="@+id/text_gsr"
+                style="@style/subNormalText"
+                android:text="Respuesta Galvánica de la Piel"
+                android:textAlignment="center"
+                android:visibility="gone"
+                android:layout_marginTop="50dp"
+                app:layout_constraintBottom_toTopOf="@id/GSR"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_time_fc" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/GSR"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_marginTop="50dp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_time_fc" />
+
+            <TextView
+                android:id="@+id/text_time_gsr"
+                style="@style/subNormalText"
+                android:text="Tiempo (s) "
+                android:textAlignment="center"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/text_fcgsr"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/GSR" />
+
+            <TextView
+                android:id="@+id/text_fcgsr"
+                style="@style/subNormalText"
+                android:text="Frecuencia Cardiaca \n y Respuesta Galvánica de la Piel"
+                android:textAlignment="center"
+                android:visibility="gone"
+                android:layout_marginTop="50dp"
+                app:layout_constraintBottom_toTopOf="@id/FCYGSR"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_time_gsr" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/FCYGSR"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:visibility="gone"
+                android:layout_marginTop="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/GSR" />
+
+            <TextView
+                android:id="@+id/text_time_fcgsr"
+                style="@style/subNormalText"
+                android:text="Tiempo (s) "
+                android:textAlignment="center"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/FCYGSR" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

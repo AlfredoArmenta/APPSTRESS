@@ -77,7 +77,8 @@ fun requestPermissionBluetooth(context: Context, activity: Activity) {
 }
 
 fun readRegister() {
-
+    EntropyObject.resetVariables()
+    FileCharacteristics.resetVariables()
     try {
         val file = FileReader(File(Environment.getExternalStorageDirectory().toString() + "/Monitoreo" + UserObject.getObjectBoleta().boleta + "/ACC.csv"))
         val parse = CSVParserBuilder().withSeparator(',').build()
@@ -128,7 +129,7 @@ fun readRegister() {
     } finally {
         println(" ____________ CSV Read Finished ____________ ")
     }
-
+    setDataGraph()
 //            println("Boleta: $boleta")
 //            println("Materia: $materia")
 //            println("Fecha: $fecha")
@@ -138,7 +139,7 @@ fun readRegister() {
 //            println("GSRTIME: Long: ${gsrTime.size}")
 }
 
-fun sampEn(y: MutableList<Double>, M: Int, r: Double): Double {
+fun sampEn(y: ArrayList<Float>, M: Int, r: Double): Double {
     val n = y.size
     println(y.size)
     val lastRun = IntArray(n)
@@ -203,7 +204,7 @@ fun sampEn(y: MutableList<Double>, M: Int, r: Double): Double {
 
 fun setDataGraph () {
     val size = FileCharacteristics.getFc().size
-    for (i in 0 until size) {
+    for (i in 0 until size - 1) {
         EntropyObject.setGraphFC(FileCharacteristics.getFcTime()[i], FileCharacteristics.getFc()[i])
         EntropyObject.setGraphGSR(FileCharacteristics.getGsrTime()[i], FileCharacteristics.getGsr()[i])
     }

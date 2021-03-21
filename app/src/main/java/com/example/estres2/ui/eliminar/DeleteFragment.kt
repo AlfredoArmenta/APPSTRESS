@@ -10,7 +10,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.estres2.MainActivity
 import com.example.estres2.R
 import com.example.estres2.util.UserObject.getObjectBoleta
 import com.example.estres2.actividades.iniciosesion.Login
@@ -25,6 +29,7 @@ class DeleteFragment : Fragment() {
     private lateinit var mContext: Context
     private lateinit var user: User
     private lateinit var bd: DB
+    private lateinit var notification: NotificationCompat.Builder
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -75,6 +80,7 @@ class DeleteFragment : Fragment() {
                 if (bd.deletedRecordsAndDirectory(user.boleta)) {
                     Toast.makeText(mContext, "Archivos borrados de la base de datos correctamente.", Toast.LENGTH_LONG).show()
                     deleteUser()
+                    setNotification()
                     back()
                 } else {
                     Toast.makeText(mContext, "Los archivos no fueron borrados de la base de datos correctamente.", Toast.LENGTH_LONG).show()
@@ -102,6 +108,20 @@ class DeleteFragment : Fragment() {
             deleteRecursive(child)
         }
         fileOrDirectory.delete()
+    }
+
+    private fun setNotification() {
+        notification = NotificationCompat.Builder(requireContext(), MainActivity.CHANNEL_0_ID).apply {
+            setContentTitle("Cuenta")
+            setContentText("Se ha eliminado la cuenta")
+            setSubText("Información Personal")
+            setSmallIcon(R.drawable.ic_login)
+            color = ContextCompat.getColor(requireContext(), R.color.colorPrimary)
+            priority = NotificationCompat.PRIORITY_LOW
+        }
+        NotificationManagerCompat.from(requireContext()).apply {
+            notify(MainActivity.NOTIFICATION_0, notification.build())
+        }
     }
 
     private fun back() {

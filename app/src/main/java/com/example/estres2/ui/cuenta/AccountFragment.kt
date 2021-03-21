@@ -7,9 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.example.estres2.MainActivity
 import com.example.estres2.MainViewModel
 import com.example.estres2.R
 import com.example.estres2.util.UserObject.getObjectBoleta
@@ -29,6 +33,7 @@ class AccountFragment : Fragment() {
     private lateinit var user: User
     private lateinit var bd: DB
     private lateinit var mContext: Context
+    private lateinit var notification: NotificationCompat.Builder
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -203,10 +208,25 @@ class AccountFragment : Fragment() {
                     setObjectBoleta(user)
                     mainViewModel.updateUserDataFunc(true)
                     Toast.makeText(context, "Se actualizo correctamente.", Toast.LENGTH_SHORT).show()
+                    setNotification()
                 } else {
                     Toast.makeText(context, "Ocurrio un error al actualizar.", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+    }
+
+    private fun setNotification() {
+        notification = NotificationCompat.Builder(requireContext(), MainActivity.CHANNEL_0_ID).apply {
+            setContentTitle("Cuenta")
+            setContentText("Se ha actualizado tu cuenta")
+            setSubText("Información Personal")
+            setSmallIcon(R.drawable.ic_login)
+            color = ContextCompat.getColor(requireContext(), R.color.colorPrimary)
+            priority = NotificationCompat.PRIORITY_LOW
+        }
+        NotificationManagerCompat.from(requireContext()).apply {
+            notify(MainActivity.NOTIFICATION_0, notification.build())
         }
     }
 }
