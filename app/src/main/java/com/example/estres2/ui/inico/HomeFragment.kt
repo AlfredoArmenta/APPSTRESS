@@ -64,14 +64,14 @@ class HomeFragment : Fragment() {
     private fun setCardView() {
         val cards = listOf(
                 CardView(R.drawable.ic_add_image,
-                        "Titulo 1",
-                        "Subtitulo 1"),
+                        "Título 1",
+                        "Subtítulo 1"),
                 CardView(R.drawable.ic_add_image,
-                        "Titulo 2",
-                        "Subtitulo 2"),
+                        "Título 2",
+                        "Subtítulo 2"),
                 CardView(R.drawable.ic_add_image,
-                        "Titulo 3",
-                        "Subtitulo 3")
+                        "Título 3",
+                        "Subtítulo 3")
         )
         binding.apply {
             viewPagerCards.apply {

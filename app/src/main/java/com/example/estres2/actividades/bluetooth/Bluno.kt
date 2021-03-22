@@ -40,7 +40,8 @@ class Bluno : BlunoLibrary() {
     private lateinit var userObject: User
     private val blunoViewModel: BlunoViewModel by viewModels()
     private var wearablesList: MutableList<Wearable> = ArrayList()
-    private var fileWriter: FileWriter? = null
+    private lateinit var fileWriter: FileWriter
+    private var stateMonitoring: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,7 +119,8 @@ class Bluno : BlunoLibrary() {
         binding.apply {
             serialReveicedText.text = String.format("%s%s", serialReveicedText.text, theString) //append the text into the EditText
             try {
-                fileWriter!!.write(theString)
+                fileWriter.append(theString)
+                fileWriter.append("\n")
                 Log.d("Escritura", "Se escribió correctamente")
             } catch (e: Exception) {
                 Log.d("Escritura", "Ocurrio un error al ecribir")
@@ -149,7 +151,6 @@ class Bluno : BlunoLibrary() {
 
         binding.apply {
             controlBluno.isEnabled = false
-            controlBluno.isSelected = true
             CMMateria.adapter = adapterUnit
             blue = BluetoothAdapter.getDefaultAdapter()
             buttonScanBlunoConected.setOnClickListener {
@@ -190,10 +191,10 @@ class Bluno : BlunoLibrary() {
         if (db.insertRecord(RegisterFile(userObject.boleta + "_" + hourDateFormat.format(Date()).trim { it <= ' ' } + ".csv", userObject.boleta))) {
             try {
                 fileWriter = FileWriter(file)
-                fileWriter?.append(userObject.boleta)?.append("\n")
-                fileWriter?.append(binding.CMMateria.selectedItem.toString())?.append("\n")
-                fileWriter?.append(hourDateFormat.format(Date()))?.append("\n")
-                fileWriter?.append("MuestraFC, TiempoFC, MuestraGSR, TiempoGSR")?.append("\n")
+                fileWriter.append(userObject.boleta).append("\n")
+                fileWriter.append(binding.CMMateria.selectedItem.toString()).append("\n")
+                fileWriter.append(hourDateFormat.format(Date())).append("\n")
+                fileWriter.append("MuestraFC, TiempoFC, MuestraGSR, TiempoGSR").append("\n")
                 Toast.makeText(this, "Se creó correctmente el registro de las variables.", Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
                 Log.d("Exception_FillWriter", e.toString())
@@ -206,17 +207,22 @@ class Bluno : BlunoLibrary() {
     private fun animation() {
         binding.apply {
             if (CMMateria.selectedItem.toString() != "Selecciona una materia") {
-                controlBluno.isSelected = !controlBluno.isSelected
-                if (controlBluno.isSelected) {
-                    controlBluno.setImageResource(R.drawable.ic_stop_monitoring)
-                    serialSend("Play")
+                if (stateMonitoring) {
+                    stateMonitoring = false
+                    controlBluno.setImageResource(R.drawable.ic_start_monitoring)
+                    serialSend("P")
+                    buttonScanBlunoConected.isEnabled = false
+                    CSRegresar.isEnabled = false
                     exportCSV()
                 } else {
-                    controlBluno.setImageResource(R.drawable.ic_start_monitoring)
-                    serialSend("Stop")
+                    stateMonitoring = true
+                    controlBluno.setImageResource(R.drawable.ic_stop_monitoring)
+                    serialSend("S")
+                    buttonScanBlunoConected.isEnabled = true
+                    CSRegresar.isEnabled = true
                     try {
-                        fileWriter?.append("Fin del registro")
-                        fileWriter?.close()
+                        fileWriter.append("Fin del registro")
+                        fileWriter.close()
                         Toast.makeText(applicationContext, "Se cerró correctmente el registro de las variables.", Toast.LENGTH_SHORT).show()
                     } catch (e: Exception) {
                         Toast.makeText(applicationContext, "Hubo un problema al cerrar el registro de las variables.", Toast.LENGTH_SHORT).show()
@@ -244,7 +250,7 @@ class Bluno : BlunoLibrary() {
 
     private fun back() {
         try {
-            fileWriter?.close()
+            fileWriter.close()
         } catch (e: Exception) {
             Log.d("Cierre de archivo", e.toString())
         }
