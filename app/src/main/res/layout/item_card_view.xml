@@ -7,10 +7,11 @@
     <FrameLayout
         android:id="@+id/container_card"
         android:layout_width="match_parent"
-        android:layout_height="600dp"
+        android:layout_height="0dp"
         android:background="@drawable/shadow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -28,20 +29,30 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Topic"
+        app:layout_constraintBottom_toTopOf="@id/subtitle_scroll_view"
         app:layout_constraintEnd_toEndOf="@id/image_card"
         app:layout_constraintStart_toStartOf="@id/image_card"
         app:layout_constraintTop_toBottomOf="@id/image_card" />
 
-    <TextView
-        android:id="@+id/subtitle_topic_card"
-        style="@style/normalText"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/subtitle_scroll_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="100dp"
-        android:text="subTopic"
+        android:scrollbarThumbVertical="@drawable/scroll"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="@id/container_card"
         app:layout_constraintEnd_toEndOf="@id/image_card"
         app:layout_constraintStart_toStartOf="@id/image_card"
-        app:layout_constraintTop_toBottomOf="@id/title_topic_card" />
+        app:layout_constraintTop_toBottomOf="@id/title_topic_card">
+
+        <TextView
+            android:id="@+id/subtitle_topic_card"
+            style="@style/normalText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="subTopic" />
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

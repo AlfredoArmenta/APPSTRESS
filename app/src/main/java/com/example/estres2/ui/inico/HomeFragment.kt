@@ -63,15 +63,15 @@ class HomeFragment : Fragment() {
 
     private fun setCardView() {
         val cards = listOf(
-                CardView(R.drawable.ic_add_image,
-                        "Título 1",
-                        "Subtítulo 1"),
-                CardView(R.drawable.ic_add_image,
-                        "Título 2",
-                        "Subtítulo 2"),
-                CardView(R.drawable.ic_add_image,
-                        "Título 3",
-                        "Subtítulo 3")
+                CardView(R.drawable.ic_stress,
+                        "ESTRÉS",
+                        "Es una reacción del cuerpo que se manifiesta ante ciertos estímulos, sobretodo cuando nos sometemos a altos niveles de presión; lo cual puede desatar una serie de respuestas tanto psicológicas como fisiológicas. Las consecuencias dervadas de un episodio de estrés se caracterizan por la aparición de alteraciones como fatiga, ansiedad, insomnio, trastornos digestivos, etc."),
+                CardView(R.drawable.ic_ppg,
+                        "FOTOPLETISMOGRAFÍA",
+                        "El principio físico de la PPG está basado en determinar las propiedades ópticas de un área determinada de piel. Para esto, se emite luz infrarroja sobre la piel, la cual es absorbida en mayor o menor cantidad dependiendo de la cantidad del flujo sanguíneo. La luz emitida es reflejada y ésta corresponde con la variación del volumen de sangre."),
+                CardView(R.drawable.ic_gsr,
+                        "RESPUESTA GALVÁNICA DE LA PIEL",
+                        "Cuando se presentan situaciones estresantes, las glándulas sudoríparas de la piel segregan sudor, haciendo que las propiedades eléctricas de la piel varíen. A la reacción provocada por la piel es conocida como Respuesta Galvánica de la Piel (GSR por sus siglas en inglés)")
         )
         binding.apply {
             viewPagerCards.apply {
