@@ -20,7 +20,8 @@
         android:label="Stress"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
+        android:theme="@style/Theme.AppCompat.NoActionBar"
+        android:allowBackup="true">
 
         <activity
             android:name=".MainActivity"

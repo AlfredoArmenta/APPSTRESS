@@ -1,6 +1,11 @@
 package com.example.estres2
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Menu
@@ -173,16 +178,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setNotification(titleNotification: String) {
-        notification = NotificationCompat.Builder(this, CHANNEL_0_ID).apply {
+        Toast.makeText(applicationContext, "Entro a la notificación", Toast.LENGTH_LONG).show()
+        notification = NotificationCompat.Builder(applicationContext, CHANNEL_0_ID).apply {
             setContentTitle(titleNotification)
             setContentText("Leyendo Archivo")
             setSubText("Estimación")
             setSmallIcon(R.drawable.ic_login)
             color = ContextCompat.getColor(applicationContext, R.color.colorPrimary)
-            priority = NotificationCompat.PRIORITY_LOW
+            priority = NotificationCompat.PRIORITY_HIGH
             setProgress(0, 0, true)
         }
-        NotificationManagerCompat.from(this).apply {
+        NotificationManagerCompat.from(applicationContext).apply {
             notify(NOTIFICATION_0, notification.build())
         }
     }
@@ -254,7 +260,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val CHANNEL_0_ID = "Channel_0"
-        const val NOTIFICATION_0 = 0
+        const val CHANNEL_0_ID = "Channel_1"
+        const val NOTIFICATION_0 = 1
     }
 }
