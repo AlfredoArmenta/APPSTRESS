@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        createNotificationChannel()
         initializeObjects()
         setObservers()
     }
@@ -155,6 +156,20 @@ class MainActivity : AppCompatActivity() {
         }
         setupUserInformation()
         requestPermissionExternalStorage(applicationContext, this)
+    }
+
+    private fun createNotificationChannel() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Analysis Notification"
+            val descriptionText = "Notification Description"
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel(CHANNEL_0_ID, name, importance).apply {
+                description = descriptionText
+                titleColor = Color.RED
+            }
+            val notificationManager : NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 
     private fun setupUserInformation() {

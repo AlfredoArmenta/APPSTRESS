@@ -24,18 +24,22 @@ import kotlin.math.ln
 import kotlin.math.min
 
 fun reduceBitmap(context: Context, uri: String?, maxWidth: Float, maxHeight: Float): Bitmap? {
-    return try {
-        val options = BitmapFactory.Options()
-        options.inJustDecodeBounds = true
-        BitmapFactory.decodeStream(context.contentResolver.openInputStream(Uri.parse(uri)), null, options)
-        options.inSampleSize = ceil((options.outWidth / maxWidth).toDouble()).coerceAtLeast(ceil((options.outHeight / maxHeight).toDouble())).toInt()
-        options.inJustDecodeBounds = false
-        BitmapFactory.decodeStream(context.contentResolver.openInputStream(Uri.parse(uri)), null, options)
-    } catch (e: FileNotFoundException) {
-        Toast.makeText(context, "Fichero/recurso no encontrado.", Toast.LENGTH_LONG).show()
-        e.printStackTrace()
-        null
+    if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_DENIED
+    ) {
+        return try {
+            val options = BitmapFactory.Options()
+            options.inJustDecodeBounds = true
+            BitmapFactory.decodeStream(context.contentResolver.openInputStream(Uri.parse(uri)), null, options)
+            options.inSampleSize = ceil((options.outWidth / maxWidth).toDouble()).coerceAtLeast(ceil((options.outHeight / maxHeight).toDouble())).toInt()
+            options.inJustDecodeBounds = false
+            BitmapFactory.decodeStream(context.contentResolver.openInputStream(Uri.parse(uri)), null, options)
+        } catch (e: FileNotFoundException) {
+            Toast.makeText(context, "Fichero/recurso no encontrado.", Toast.LENGTH_LONG).show()
+            e.printStackTrace()
+            null
+        }
     }
+    return null
 }
 
 fun eraseRegister(register: String, context: Context): Boolean {
