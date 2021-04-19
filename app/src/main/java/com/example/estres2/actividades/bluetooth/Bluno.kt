@@ -132,7 +132,11 @@ class Bluno : BlunoLibrary() {
     private fun organize(filter: String) {
         filter.forEach { char ->
             if (char != ',') {
-                fileWriter.append(char)
+                if (char == '!') {
+                    fileWriter.append('0')
+                } else {
+                    fileWriter.append(char.toByte().toInt().minus(34).toString())
+                }
             } else {
                 fileWriter.append(",")
                 index = if (index == 4) {
@@ -237,6 +241,7 @@ class Bluno : BlunoLibrary() {
                     buttonScanBlunoConected.isEnabled = true
                     CSRegresar.isEnabled = true
                     try {
+                        fileWriter.append("\n")
                         fileWriter.append("Fin del registro")
                         fileWriter.close()
                         Toast.makeText(applicationContext, "Se cerró correctmente el registro de las variables.", Toast.LENGTH_SHORT).show()
@@ -266,6 +271,8 @@ class Bluno : BlunoLibrary() {
 
     private fun back() {
         try {
+            fileWriter.append("\n")
+            fileWriter.append("Fin del registro")
             fileWriter.close()
         } catch (e: Exception) {
             Log.d("Cierre de archivo", e.toString())
