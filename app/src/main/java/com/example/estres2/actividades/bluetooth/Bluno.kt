@@ -42,6 +42,7 @@ class Bluno : BlunoLibrary() {
     private var wearablesList: MutableList<Wearable> = ArrayList()
     private lateinit var fileWriter: FileWriter
     private var stateMonitoring: Boolean = true
+    private var index = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -119,8 +120,7 @@ class Bluno : BlunoLibrary() {
         binding.apply {
             serialReveicedText.text = String.format("%s%s", serialReveicedText.text, theString) //append the text into the EditText
             try {
-                fileWriter.append(theString)
-                fileWriter.append("\n")
+                organize(theString.filter { it != '\n' })
                 Log.d("Escritura", "Se escribió correctamente")
             } catch (e: Exception) {
                 Log.d("Escritura", "Ocurrio un error al ecribir")
@@ -129,9 +129,25 @@ class Bluno : BlunoLibrary() {
         }
     }
 
+    private fun organize(filter: String) {
+        filter.forEach { char ->
+            if (char != ',') {
+                fileWriter.append(char)
+            } else {
+                fileWriter.append(",")
+                index = if (index == 4) {
+                    fileWriter.append("\n")
+                    1
+                } else {
+                    index.plus(1)
+                }
+            }
+        }
+    }
+
     private fun setObserves() {
         blunoViewModel.apply {
-            updateWearables.observe(owner = this@Bluno) {
+            updateWearables.observe(this@Bluno) {
                 if (it) {
                     getWearables(context)
                 }
