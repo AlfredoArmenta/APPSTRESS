@@ -42,7 +42,11 @@ class Bluno : BlunoLibrary() {
     private var wearablesList: MutableList<Wearable> = ArrayList()
     private lateinit var fileWriter: FileWriter
     private var stateMonitoring: Boolean = true
-    private var index = 1
+    private var character1 = 0
+    private var character2 = 0
+    private var characterIndex = 0
+    private var finalValue = 0
+    private var cellIndex = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,7 +124,7 @@ class Bluno : BlunoLibrary() {
         binding.apply {
             serialReveicedText.text = String.format("%s%s", serialReveicedText.text, theString) //append the text into the EditText
             try {
-                organize(theString.filter { it != '\n' })
+                organize(theString)
                 Log.d("Escritura", "Se escribió correctamente")
             } catch (e: Exception) {
                 Log.d("Escritura", "Ocurrio un error al ecribir")
@@ -131,20 +135,47 @@ class Bluno : BlunoLibrary() {
 
     private fun organize(filter: String) {
         filter.forEach { char ->
-            if (char != ',') {
-                if (char == '!') {
-                    fileWriter.append('0')
+            if (char != '\n') {
+                if (characterIndex == 0) {
+                    character1 = when (char) {
+                        '!' -> {
+                            0
+                        }
+                        ' ' -> {
+                            93
+                        }
+                        else -> {
+                            char.toByte().toInt().minus(34)
+                        }
+                    }
+                    finalValue = character1
                 } else {
-                    fileWriter.append(char.toByte().toInt().minus(34).toString())
+                    character2 = when (char) {
+                        '!' -> {
+                            0
+                        }
+                        ' ' -> {
+                            93
+                        }
+                        else -> {
+                            char.toByte().toInt().minus(34)
+                        }
+                    }
+                    finalValue = character1*94 + character2
                 }
+                characterIndex++
             } else {
+                fileWriter.append(finalValue.toString())
                 fileWriter.append(",")
-                index = if (index == 4) {
+                cellIndex = if (cellIndex == 4) {
                     fileWriter.append("\n")
                     1
                 } else {
-                    index.plus(1)
+                    cellIndex.plus(1)
                 }
+                character1 = 0
+                character2 = 0
+                characterIndex = 0
             }
         }
     }
