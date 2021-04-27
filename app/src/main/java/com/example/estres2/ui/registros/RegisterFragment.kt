@@ -2,7 +2,6 @@ package com.example.estres2.ui.registros
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.Paint
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
@@ -16,18 +15,20 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.estres2.MainViewModel
 import com.example.estres2.R
-import com.example.estres2.util.UserObject.getObjectBoleta
 import com.example.estres2.almacenamiento.basededatos.DB
 import com.example.estres2.almacenamiento.entidades.registros.UserRegister
 import com.example.estres2.almacenamiento.entidades.usuario.User
 import com.example.estres2.databinding.FragmentRegistersBinding
 import com.example.estres2.util.EntropyObject
-import com.github.mikephil.charting.components.Description
+import com.example.estres2.util.FileCharacteristics
+import com.example.estres2.util.UserObject.getObjectBoleta
+import com.example.estres2.util.normalizer
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import java.io.File
+
 
 class RegisterFragment : Fragment() {
     private val mainViewModel: MainViewModel by activityViewModels()
@@ -114,18 +115,27 @@ class RegisterFragment : Fragment() {
 
         val lineDataSetFC = LineDataSet(EntropyObject.getGraphFC(), "Frecuencia Cardiaca")
         lineDataSetFC.setDrawCircles(false)
-        lineDataSetFC.setValueTextColors(listOf(Color.WHITE))
         lineDataSetFC.color = Color.MAGENTA
         lineDataSetFC.setDrawValues(false)
 
-        val lineDataSetGSR = LineDataSet(EntropyObject.getGraphGSR(), "Respuesta Galvánica de la Piel")
+        val lineDataSetGSR = LineDataSet(EntropyObject.getGraphGSR(), "Ohms")
         lineDataSetGSR.setDrawCircles(false)
         lineDataSetGSR.color = Color.CYAN
-        lineDataSetFC.setDrawValues(false)
+        lineDataSetGSR.setDrawValues(false)
+
+        val lineDataSetNormalizerFC = LineDataSet(normalizer(FileCharacteristics.getFc(), FileCharacteristics.getMaxFc()), "Frecuencia Cardiaca")
+        lineDataSetNormalizerFC.setDrawCircles(false)
+        lineDataSetNormalizerFC.color = Color.MAGENTA
+        lineDataSetNormalizerFC.setDrawValues(false)
+
+        val lineDataSetNormalizerGSR = LineDataSet(normalizer(FileCharacteristics.getGsr(),FileCharacteristics.getMaxGsr()), "Respuesta Galvánica de la Piel")
+        lineDataSetNormalizerGSR.setDrawCircles(false)
+        lineDataSetNormalizerGSR.color = Color.CYAN
+        lineDataSetNormalizerGSR.setDrawValues(false)
 
         lineDataSetFcAndGsr.apply {
-            add(lineDataSetFC)
-            add(lineDataSetGSR)
+            add(lineDataSetNormalizerFC)
+            add(lineDataSetNormalizerGSR)
         }
 
         binding.apply {
@@ -133,10 +143,13 @@ class RegisterFragment : Fragment() {
             FC.apply {
                 clear()
                 setDrawBorders(true)
+                setDrawGridBackground(false)
+                legend.textSize = 16F
+                legend.textColor = ContextCompat.getColor(context, R.color.colorPrimaryText)
                 axisLeft.textColor = ContextCompat.getColor(context, R.color.colorPrimaryText)
                 axisLeft.textSize = 14f
                 axisRight.isEnabled = false
-                xAxis.textColor = Color.WHITE
+                xAxis.textColor = ContextCompat.getColor(context, R.color.colorPrimaryText)
                 xAxis.position = XAxis.XAxisPosition.BOTTOM
                 xAxis.textSize = 14f
                 xAxis.setDrawLabels(true)
@@ -151,10 +164,12 @@ class RegisterFragment : Fragment() {
                 clear()
                 setDrawBorders(true)
                 setDrawGridBackground(false)
+                legend.textSize = 16F
+                legend.textColor = ContextCompat.getColor(context, R.color.colorPrimaryText)
                 axisLeft.textColor = ContextCompat.getColor(context, R.color.colorPrimaryText)
                 axisLeft.textSize = 14f
                 axisRight.isEnabled = false
-                xAxis.textColor = Color.WHITE
+                xAxis.textColor = ContextCompat.getColor(context, R.color.colorPrimaryText)
                 xAxis.position = XAxis.XAxisPosition.BOTTOM
                 xAxis.textSize = 14f
                 xAxis.setDrawLabels(true)
@@ -168,10 +183,12 @@ class RegisterFragment : Fragment() {
                 clear()
                 setDrawBorders(true)
                 setDrawGridBackground(false)
+                legend.textSize = 14F
+                legend.textColor = ContextCompat.getColor(context, R.color.colorPrimaryText)
                 axisLeft.textColor = ContextCompat.getColor(context, R.color.colorPrimaryText)
                 axisLeft.textSize = 14f
                 axisRight.isEnabled = false
-                xAxis.textColor = Color.WHITE
+                xAxis.textColor = ContextCompat.getColor(context, R.color.colorPrimaryText)
                 xAxis.position = XAxis.XAxisPosition.BOTTOM
                 xAxis.textSize = 14f
                 xAxis.setDrawLabels(true)

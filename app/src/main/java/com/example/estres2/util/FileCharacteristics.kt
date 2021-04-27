@@ -4,10 +4,12 @@ object FileCharacteristics {
     lateinit var boleta: String
     lateinit var materia: String
     lateinit var fecha: String
+    lateinit var frecuencia: String
     private var fc = ArrayList<Float>()
-    private var fcTime = ArrayList<Float>()
-    private var gsr: ArrayList<Float> = ArrayList()
-    private var gsrTime: ArrayList<Float> = ArrayList()
+    var fcMax = 0F
+    private var gsr = ArrayList<Float>()
+    var gsrMax = 0F
+
 
     fun setBoletaFile(boletaObject: String) {
         boleta = boletaObject
@@ -39,34 +41,35 @@ object FileCharacteristics {
         return FileCharacteristics::fecha.isInitialized
     }
 
+    fun setFrequency(frecuenciaObject: String) {
+        frecuencia = frecuenciaObject
+    }
+
+    fun getFrequency(): String = frecuencia
+
+    fun isFrequencyInitialized(): Boolean {
+        return  FileCharacteristics::frecuencia.isInitialized
+    }
+
     fun setFc(fcObject: String) {
         fc.add(fcObject.toFloat())
     }
 
     fun getFc(): ArrayList<Float> = fc
 
-    fun setFcTime(fcTimeObject: String) {
-        fcTime.add(fcTimeObject.toFloat())
-    }
-
-    fun getFcTime(): ArrayList<Float> = fcTime
+    fun getMaxFc(): Float = fc.maxOrNull()!!
 
     fun setGsr(gsrObject: String) {
         gsr.add(gsrObject.toFloat())
+        gsrMax = if (gsrObject.toFloat() > fcMax) gsrObject.toFloat() else gsrMax
     }
 
     fun getGsr(): ArrayList<Float> = gsr
 
-    fun setGsrTime(gsrTimeObject: String) {
-        gsrTime.add(gsrTimeObject.toFloat())
-    }
-
-    fun getGsrTime(): ArrayList<Float> = gsrTime
+    fun getMaxGsr(): Float = gsr.maxOrNull()!!
 
     fun resetVariables() {
         fc.clear()
-        fcTime.clear()
         gsr.clear()
-        gsrTime.clear()
     }
 }

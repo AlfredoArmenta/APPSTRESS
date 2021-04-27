@@ -1,6 +1,7 @@
 package com.example.estres2.util
 
 import android.Manifest
+import com.github.mikephil.charting.data.Entry
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
@@ -84,7 +85,7 @@ fun readRegister() {
     EntropyObject.resetVariables()
     FileCharacteristics.resetVariables()
     try {
-        val file = FileReader(File(Environment.getExternalStorageDirectory().toString() + "/Monitoreo" + UserObject.getObjectBoleta().boleta + "/ACC.csv"))
+        val file = FileReader(File(Environment.getExternalStorageDirectory().toString() + "/Monitoreo" + UserObject.getObjectBoleta().boleta + "/" + FileObject.getNameFile()))
         val parse = CSVParserBuilder().withSeparator(',').build()
         val cvsReader = CSVReaderBuilder(file)
                 .withCSVParser(parse)
@@ -107,19 +108,16 @@ fun readRegister() {
                     2 -> {
                         FileCharacteristics.setFechaFile(cell)
                     }
+                    3 -> {
+                        FileCharacteristics.setFrequency(cell)
+                    }
                     else -> {
                         when (j) {
                             0 -> {
                                 FileCharacteristics.setFc(cell)
                             }
                             1 -> {
-                                FileCharacteristics.setFcTime(cell)
-                            }
-                            2 -> {
                                 FileCharacteristics.setGsr(cell)
-                            }
-                            else -> {
-                                FileCharacteristics.setGsrTime(cell)
                             }
                         }
                     }
@@ -134,13 +132,12 @@ fun readRegister() {
         println(" ____________ CSV Read Finished ____________ ")
     }
     setDataGraph()
-//            println("Boleta: $boleta")
-//            println("Materia: $materia")
-//            println("Fecha: $fecha")
-//            println("FC: ${fc.first()} Long: ${fc.size}")
-//            println("FCTIME: Long: ${fcTime.size}")
-//            println("GSR: Long: ${gsr.size}")
-//            println("GSRTIME: Long: ${gsrTime.size}")
+//    println(FileCharacteristics.getBoletaFile())
+//    println(FileCharacteristics.getMateriaFile())
+//    println(FileCharacteristics.getFechaFile())
+//    println(FileCharacteristics.getFrequency())
+//    println("FC: Long: ${FileCharacteristics.getFc().size}")
+//    println("GSR: Long: ${FileCharacteristics.getGsr().size}")
 }
 
 fun sampEn(y: ArrayList<Float>, M: Int, r: Double): Double {
@@ -206,10 +203,20 @@ fun sampEn(y: ArrayList<Float>, M: Int, r: Double): Double {
     return e[2]
 }
 
-fun setDataGraph () {
+fun setDataGraph() {
     val size = FileCharacteristics.getFc().size
     for (i in 0 until size - 1) {
-        EntropyObject.setGraphFC(FileCharacteristics.getFcTime()[i], FileCharacteristics.getFc()[i])
-        EntropyObject.setGraphGSR(FileCharacteristics.getGsrTime()[i], FileCharacteristics.getGsr()[i])
+        EntropyObject.setGraphFC(0.25F * i, FileCharacteristics.getFc()[i])
+        EntropyObject.setGraphGSR(0.25F * i, ((1024 + 2 * FileCharacteristics.getGsr()[i]) * 10000) / (512 - FileCharacteristics.getGsr()[i]))
     }
+}
+
+fun normalizer(signal: ArrayList<Float>, maximum: Float): ArrayList<Entry> {
+    val size = signal.size
+    val normalizerSignal = ArrayList<Entry>()
+
+    for (i in 1 until size -1) {
+        normalizerSignal.add(Entry(0.25F * i,signal[i] / maximum))
+    }
+    return normalizerSignal
 }

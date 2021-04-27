@@ -167,7 +167,7 @@ class Bluno : BlunoLibrary() {
             } else {
                 fileWriter.append(finalValue.toString())
                 fileWriter.append(",")
-                cellIndex = if (cellIndex == 4) {
+                cellIndex = if (cellIndex == 2) {
                     fileWriter.append("\n")
                     1
                 } else {
@@ -245,7 +245,7 @@ class Bluno : BlunoLibrary() {
                 fileWriter.append(userObject.boleta).append("\n")
                 fileWriter.append(binding.CMMateria.selectedItem.toString()).append("\n")
                 fileWriter.append(hourDateFormat.format(Date())).append("\n")
-                fileWriter.append("MuestraFC, TiempoFC, MuestraGSR, TiempoGSR").append("\n")
+                fileWriter.append("4, 4").append("\n")
                 Toast.makeText(this, "Se creó correctmente el registro de las variables.", Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
                 Log.d("Exception_FillWriter", e.toString())

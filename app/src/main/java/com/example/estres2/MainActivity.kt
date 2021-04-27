@@ -70,8 +70,8 @@ class MainActivity : AppCompatActivity() {
             updateNotificationAnalysis.observe(this@MainActivity) { status ->
                 if (status) {
                     setNotification("Analisis")
-                    analysisSampEn(false)
                     binding.appBarMenu.fab.isEnabled = false
+                    analysisSampEn(false)
                     println("Notificación Analisis")
                 }
             }
@@ -79,8 +79,8 @@ class MainActivity : AppCompatActivity() {
             updateNotificationGraph.observe(this@MainActivity) { state ->
                 if (state) {
                     setNotification("Graficación")
-                    graphSampEn()
                     binding.appBarMenu.fab.isEnabled = false
+                    graphSampEn()
                     println("Notificación Gráficar")
                 }
             }
@@ -88,8 +88,8 @@ class MainActivity : AppCompatActivity() {
             updateNotificationAnalysisAndGraph.observe(this@MainActivity) { state ->
                 if (state) {
                     setNotification("Analizando y Graficando")
-                    analysisSampEn(true)
                     binding.appBarMenu.fab.isEnabled = false
+                    analysisSampEn(true)
                     println("Notificación Analisis y Gráficar")
                 }
             }
@@ -254,6 +254,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             mainViewModel.updateGraph(true)
+            binding.appBarMenu.fab.isEnabled = true
         }
     }
 
