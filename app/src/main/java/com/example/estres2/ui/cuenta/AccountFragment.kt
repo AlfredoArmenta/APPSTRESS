@@ -60,7 +60,6 @@ class AccountFragment : Fragment() {
         val adapterSemester = ArrayAdapter(mContext, R.layout.spinner_custom, semester)
         user = getObjectBoleta()
         bd = DB(mContext)
-
         binding.apply {
             CFBoleta.text = user.boleta
             CFNombre.apply {

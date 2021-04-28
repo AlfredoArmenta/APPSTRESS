@@ -35,7 +35,7 @@ fun reduceBitmap(context: Context, uri: String?, maxWidth: Float, maxHeight: Flo
             options.inJustDecodeBounds = false
             BitmapFactory.decodeStream(context.contentResolver.openInputStream(Uri.parse(uri)), null, options)
         } catch (e: FileNotFoundException) {
-            Toast.makeText(context, "Fichero/recurso no encontrado.", Toast.LENGTH_LONG).show()
+            println( "Fichero/recurso no encontrado.")
             e.printStackTrace()
             null
         }

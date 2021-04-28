@@ -47,7 +47,7 @@ class WearableViewHolder(private val viewBinding: ItemWearableBinding) : Recycle
                                         Toast.makeText(viewBinding.root.context, "Se Elimino correctamente el Wearable", Toast.LENGTH_LONG).show()
                                         callbackEraser.updateWearablesList(true)
                                     } else {
-                                        Toast.makeText(viewBinding.root.context, "No se Borro ni madres", Toast.LENGTH_LONG).show()
+                                        Toast.makeText(viewBinding.root.context, "No se elimino el wearable", Toast.LENGTH_LONG).show()
                                     }
                                 }
                                 .setNegativeButton("Cancelar") { _, _ -> }

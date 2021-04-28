@@ -29,7 +29,6 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import java.io.File
 
-
 class RegisterFragment : Fragment() {
     private val mainViewModel: MainViewModel by activityViewModels()
     private var _binding: FragmentRegistersBinding? = null

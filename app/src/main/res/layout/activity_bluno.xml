@@ -41,7 +41,6 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/comenzar_terminar_proceso_bluno"
                 android:src="@drawable/ic_start_icon" />
-
         </LinearLayout>
 
         <TextView
@@ -60,9 +59,7 @@
             android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="@dimen/margin"
             android:scrollbarThumbVertical="@drawable/scroll"
-            android:scrollbars="vertical">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            android:scrollbars="vertical" />
 
         <TextView
             style="@style/normalText"
@@ -74,7 +71,7 @@
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="200dp"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="10dp"
@@ -86,7 +83,6 @@
                 style="@style/subNormalText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-
         </ScrollView>
 
         <Spinner
@@ -103,14 +99,16 @@
             android:autofillHints="yes"
             android:bufferType="editable"
             android:hint="@string/ext_bluno_conectar_send_data"
-            android:inputType="text" />
+            android:inputType="text"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/buttonSerialSend"
             style="@style/buttonStyle"
             android:layout_width="@dimen/button_size_width_extended"
             android:layout_height="@dimen/button_size_height_text"
-            android:text="@string/text_button_bluno_conectar_send_data" />
+            android:text="@string/text_button_bluno_conectar_send_data"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/CSRegresar"
@@ -124,8 +122,7 @@
             style="@style/buttonStyle"
             android:layout_width="@dimen/button_size_width_extended"
             android:layout_height="@dimen/button_size_height_text"
-            android:text="Registro Nuevo" />
-
+            android:text="Registro Nuevo"
+            android:visibility="gone" />
     </LinearLayout>
-
 </ScrollView>

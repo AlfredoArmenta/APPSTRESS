@@ -38,9 +38,9 @@ class Bluno : BlunoLibrary() {
     private lateinit var context: Context
     private lateinit var blue: BluetoothAdapter
     private lateinit var userObject: User
+    private lateinit var fileWriter: FileWriter
     private val blunoViewModel: BlunoViewModel by viewModels()
     private var wearablesList: MutableList<Wearable> = ArrayList()
-    private lateinit var fileWriter: FileWriter
     private var stateMonitoring: Boolean = true
     private var character1 = 0
     private var character2 = 0

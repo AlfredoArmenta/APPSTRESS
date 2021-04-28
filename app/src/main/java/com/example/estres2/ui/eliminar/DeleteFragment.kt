@@ -64,7 +64,7 @@ class DeleteFragment : Fragment() {
                             deleteAccount()
                         }
                         .setNegativeButton("Cancelar") { _, _ ->
-                            Toast.makeText(context, "Se concervo la cuenta", Toast.LENGTH_LONG).show()
+                            println("Se concervo la cuenta")
                         }
                         .show()
             }

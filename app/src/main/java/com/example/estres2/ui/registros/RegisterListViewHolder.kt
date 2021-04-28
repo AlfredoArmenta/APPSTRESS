@@ -3,7 +3,6 @@ package com.example.estres2.ui.registros
 import android.view.ContextThemeWrapper
 import android.view.Gravity
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.estres2.MainViewModel
@@ -37,19 +36,19 @@ class RegisterListViewHolder(private val viewBinding: ItemRegistersBinding) : Re
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.action_analizar -> {
-                        Toast.makeText(viewBinding.root.context, "Analizar", Toast.LENGTH_LONG).show()
+                        println("Analizar")
                         FileObject.setNameFile(register.idRegister)
                         callbackMainViewModel.updateNotificationAnalysis(true)
                         true
                     }
                     R.id.action_graficar -> {
-                        Toast.makeText(viewBinding.root.context, "Gráficar", Toast.LENGTH_LONG).show()
+                        println("Gráficar")
                         FileObject.setNameFile(register.idRegister)
                         callbackMainViewModel.updateNotificationGraph(true)
                         true
                     }
                     R.id.action_ambas -> {
-                        Toast.makeText(viewBinding.root.context, "Gráficar y Analizar", Toast.LENGTH_LONG).show()
+                        println("Gráficar y Analizar")
                         FileObject.setNameFile(register.idRegister)
                         callbackMainViewModel.updateNotificationAnalysisAndGraph(true)
                         true
@@ -58,7 +57,7 @@ class RegisterListViewHolder(private val viewBinding: ItemRegistersBinding) : Re
                         if (eraseRegister(register.idRegister, viewBinding.root.context)) {
                             callbackMainViewModel.updateRegisterList(true)
                         } else {
-                            Toast.makeText(viewBinding.root.context, "No se elimino el registro", Toast.LENGTH_LONG).show()
+                            println("No se elimino el registro")
                         }
                         true
                     }

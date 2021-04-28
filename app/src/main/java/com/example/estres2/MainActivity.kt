@@ -14,7 +14,6 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
@@ -123,10 +122,10 @@ class MainActivity : AppCompatActivity() {
         if (resultCode == RESULT_OK) {
             userData.imagen = data?.dataString!!
             if (db.updateImage(userData)) {
-                Toast.makeText(applicationContext, "Se guardo correctamente la URL de la imagen", Toast.LENGTH_LONG).show()
+                println("Se guardo correctamente la URL de la imagen")
                 userImage.setImageBitmap(reduceBitmap(applicationContext, data.dataString, 512f, 512f))
             } else {
-                Toast.makeText(applicationContext, "Ocurrio un error al guardar la URL de la imagen", Toast.LENGTH_LONG).show()
+                println("Ocurrio un error al guardar la URL de la imagen")
             }
         }
     }
@@ -180,20 +179,20 @@ class MainActivity : AppCompatActivity() {
         userBoleta.text = (userData.boleta)
         when {
             userData.imagen == "" -> {
-                Toast.makeText(applicationContext, "No sea seleccionado una imagen", Toast.LENGTH_LONG).show()
+                println("No sea seleccionado una imagen")
             }
             reduceBitmap(applicationContext, userData.imagen, 512f, 512f) != null -> {
-                Toast.makeText(applicationContext, "Se cargo la imagen correctamente", Toast.LENGTH_LONG).show()
+                println("Se cargo la imagen correctamente")
                 userImage.setImageBitmap(reduceBitmap(applicationContext, userData.imagen, 512f, 512f))
             }
             else -> {
-                Toast.makeText(applicationContext, "La imagen no se encuentra", Toast.LENGTH_LONG).show()
+                println("La imagen no se encuentra")
             }
         }
     }
 
     private fun setNotification(titleNotification: String) {
-        Toast.makeText(applicationContext, "Entro a la notificación", Toast.LENGTH_LONG).show()
+        println("Entro a la notificación")
         notification = NotificationCompat.Builder(applicationContext, CHANNEL_0_ID).apply {
             setContentTitle(titleNotification)
             setContentText("Leyendo Archivo")
