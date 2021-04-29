@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -113,24 +114,40 @@ class RegisterFragment : Fragment() {
         val lineDataSetFcAndGsr = ArrayList<ILineDataSet>()
 
         val lineDataSetFC = LineDataSet(EntropyObject.getGraphFC(), "Frecuencia Cardiaca")
-        lineDataSetFC.setDrawCircles(false)
-        lineDataSetFC.color = Color.MAGENTA
-        lineDataSetFC.setDrawValues(false)
+        lineDataSetFC.apply {
+            setDrawCircles(false)
+            color = Color.MAGENTA
+            formSize = 14F
+            lineWidth = 2F
+            setDrawValues(false)
+        }
 
         val lineDataSetGSR = LineDataSet(EntropyObject.getGraphGSR(), "Ohms")
-        lineDataSetGSR.setDrawCircles(false)
-        lineDataSetGSR.color = Color.CYAN
-        lineDataSetGSR.setDrawValues(false)
+        lineDataSetGSR.apply {
+            setDrawCircles(false)
+            color = Color.CYAN
+            formSize = 14F
+            lineWidth = 2F
+            setDrawValues(false)
+        }
 
         val lineDataSetNormalizerFC = LineDataSet(normalizer(FileCharacteristics.getFc(), FileCharacteristics.getMaxFc()), "Frecuencia Cardiaca")
-        lineDataSetNormalizerFC.setDrawCircles(false)
-        lineDataSetNormalizerFC.color = Color.MAGENTA
-        lineDataSetNormalizerFC.setDrawValues(false)
+        lineDataSetNormalizerFC.apply {
+            setDrawCircles(false)
+            color = Color.MAGENTA
+            formSize = 14F
+            lineWidth = 2F
+            setDrawValues(false)
+        }
 
         val lineDataSetNormalizerGSR = LineDataSet(normalizer(FileCharacteristics.getGsr(),FileCharacteristics.getMaxGsr()), "Respuesta Galvánica de la Piel")
-        lineDataSetNormalizerGSR.setDrawCircles(false)
-        lineDataSetNormalizerGSR.color = Color.CYAN
-        lineDataSetNormalizerGSR.setDrawValues(false)
+        lineDataSetNormalizerGSR.apply {
+            setDrawCircles(false)
+            color = Color.CYAN
+            formSize = 14F
+            lineWidth = 2F
+            setDrawValues(false)
+        }
 
         lineDataSetFcAndGsr.apply {
             add(lineDataSetNormalizerFC)
