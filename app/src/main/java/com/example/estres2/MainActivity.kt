@@ -14,6 +14,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
@@ -46,6 +47,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var userImage: ImageView
     private lateinit var addImageView: ImageButton
     private lateinit var notification: NotificationCompat.Builder
+    private var sampEnFC: Float = 0F
+    private var sampEnGSR: Float = 0F
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -220,12 +223,14 @@ class MainActivity : AppCompatActivity() {
             val fcCoroutine = async(Dispatchers.IO) {
                 println("*****************FC**************************")
                 EntropyObject.setEntropy(sampEn(FileCharacteristics.getFc(), 3, 0.2))
+                sampEnFC = EntropyObject.getEntropy().toFloat()
                 1
             }
 
             val gsrCoroutine = async(Dispatchers.IO) {
                 println("*****************GSR**************************")
                 EntropyObject.setEntropy(sampEn(FileCharacteristics.getGsr(), 3, 0.2))
+                sampEnGSR = EntropyObject.getEntropy().toFloat()
                 1
             }
 
@@ -235,6 +240,8 @@ class MainActivity : AppCompatActivity() {
                     notification.setStyle(NotificationCompat.BigTextStyle().bigText("Análisis completado tu estado actual es: Estresado/no Estresado"))
                     notification.setProgress(0, 0, false)
                     notify(NOTIFICATION_0, notification.build())
+                    Toast.makeText(applicationContext, "SampEn FC = $sampEnFC", Toast.LENGTH_LONG).show()
+                    Toast.makeText(applicationContext, "SampEn GSR = $sampEnGSR", Toast.LENGTH_LONG).show()
                 }
                 mainViewModel.updateGraph(graph)
                 binding.appBarMenu.fab.isEnabled = true
