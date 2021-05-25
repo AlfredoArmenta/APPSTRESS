@@ -17,3 +17,8 @@
 build.gradle
 *.gradle
 .idea/misc.xml
+.idea/codeStyles/Project.xml
+.idea/compiler.xml
+.idea/misc.xml
+.idea/runConfigurations.xml
+.idea/codeStyles/Project.xml

@@ -103,6 +103,19 @@ class Bluno : BlunoLibrary() {
                 connectionStateEnum.isToScan -> {
                     buttonScanBlunoConected.setImageResource(R.drawable.ic_state_scan)
                     controlBluno.isEnabled = false
+                    if(!stateMonitoring) {
+                        stateMonitoring = true
+                        controlBluno.setImageResource(R.drawable.ic_stop_monitoring)
+                        buttonScanBlunoConected.isEnabled = true
+                        CSRegresar.isEnabled = true
+                        try {
+                            fileWriter.close()
+                            Toast.makeText(applicationContext, "Se cerró correctmente el registro de las variables.", Toast.LENGTH_SHORT).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(applicationContext, "Hubo un problema al cerrar el registro de las variables.", Toast.LENGTH_SHORT).show()
+                        }
+                        (controlBluno.drawable as Animatable).start()
+                    }
                 }
                 connectionStateEnum.isScanning -> {
                     buttonScanBlunoConected.setImageResource(R.drawable.ic_state_scanning)
@@ -230,15 +243,10 @@ class Bluno : BlunoLibrary() {
 
     private fun exportCSV() {
         val hourDateFormat: DateFormat = SimpleDateFormat("HH_mm_ss_dd_MM_yyyy")
-        val folder = File(Environment.getExternalStorageDirectory().path + "/Monitoreo" + userObject.boleta)
+        val mainFolder = File(Environment.getExternalStorageDirectory().path + "/Monitoreo" + userObject.boleta)
         val db = DB(context)
-        if (!folder.exists()) {
-            folder.mkdir()
-            Toast.makeText(this, "Se creo la carpeta", Toast.LENGTH_SHORT).show()
-        }
-        println(folder.path)
         Log.d("Hora", hourDateFormat.format(Date()))
-        val file = folder.toString() + "/" + userObject.boleta + "_" + hourDateFormat.format(Date()).trim { it <= ' ' } + ".csv"
+        val file = mainFolder.toString() + "/" + userObject.boleta + "_" + hourDateFormat.format(Date()).trim { it <= ' ' } + ".csv"
         if (db.insertRecord(RegisterFile(userObject.boleta + "_" + hourDateFormat.format(Date()).trim { it <= ' ' } + ".csv", userObject.boleta))) {
             try {
                 fileWriter = FileWriter(file)
@@ -272,8 +280,6 @@ class Bluno : BlunoLibrary() {
                     buttonScanBlunoConected.isEnabled = true
                     CSRegresar.isEnabled = true
                     try {
-                        fileWriter.append("\n")
-                        fileWriter.append("Fin del registro")
                         fileWriter.close()
                         Toast.makeText(applicationContext, "Se cerró correctmente el registro de las variables.", Toast.LENGTH_SHORT).show()
                     } catch (e: Exception) {
@@ -302,8 +308,6 @@ class Bluno : BlunoLibrary() {
 
     private fun back() {
         try {
-            fileWriter.append("\n")
-            fileWriter.append("Fin del registro")
             fileWriter.close()
         } catch (e: Exception) {
             Log.d("Cierre de archivo", e.toString())

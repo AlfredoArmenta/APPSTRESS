@@ -48,6 +48,8 @@ class DB(context: Context) : SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_
         values.put(COLUMNA_USUARIO_SEMESTRE, user.semestre)
         values.put(COLUMNA_USUARIO_PASSWORD, user.password)
         values.put(COLUMNA_USUARIO_IMAGEN, user.imagen)
+        values.put(COLUMNA_USUARIO_BASAL_HR, user.basalHR)
+        values.put(COLUMNA_USUARIO_BASAL_GSR, user.basalGSR)
         insert = this.writableDatabase.insert(TABLA_USUARIO, null, values).toInt()
         this.writableDatabase.close()
         return insert!! >= 0
@@ -67,7 +69,9 @@ class DB(context: Context) : SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_
                                     row.getString(3),
                                     row.getString(4),
                                     row.getString(5),
-                                    row.getString(6)
+                                    row.getString(6),
+                                    row.getString(7),
+                                    row.getString(8)
                             )
                     )
                 } while (row.moveToNext())
@@ -85,7 +89,12 @@ class DB(context: Context) : SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_
         val values = ContentValues()
         values.put(COLUMNA_USUARIO_PASSWORD, Password)
         return when {
-            this.writableDatabase.update(TABLA_USUARIO, values, "$COLUMNA_USUARIO_BOLETA=$Boleta", null) > 0 -> {
+            this.writableDatabase.update(
+                    TABLA_USUARIO,
+                    values,
+                    "$COLUMNA_USUARIO_BOLETA=$Boleta",
+                    null
+            ) > 0 -> {
                 this.writableDatabase.close()
                 true
             }
@@ -97,7 +106,10 @@ class DB(context: Context) : SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_
     }
 
     fun getUser(Boleta: String): User? {
-        row = this.readableDatabase.rawQuery("select *from $TABLA_USUARIO where $COLUMNA_USUARIO_BOLETA = $Boleta", null)
+        row = this.readableDatabase.rawQuery(
+                "select *from $TABLA_USUARIO where $COLUMNA_USUARIO_BOLETA = $Boleta",
+                null
+        )
         when {
             row.count != 0 -> {
                 row.moveToFirst()
@@ -108,7 +120,9 @@ class DB(context: Context) : SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_
                         row.getString(3),
                         row.getString(4),
                         row.getString(5),
-                        row.getString(6)
+                        row.getString(6),
+                        row.getString(7),
+                        row.getString(8)
                 )
             }
         }
@@ -117,7 +131,10 @@ class DB(context: Context) : SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_
     }
 
     fun checkUser(Boleta: String): Boolean {
-        row = this.writableDatabase.rawQuery("select *from $TABLA_USUARIO where $COLUMNA_USUARIO_BOLETA = $Boleta", null)
+        row = this.writableDatabase.rawQuery(
+                "select *from $TABLA_USUARIO where $COLUMNA_USUARIO_BOLETA = $Boleta",
+                null
+        )
         return when {
             row.count != 0 -> {
                 this.readableDatabase.close()
@@ -137,13 +154,21 @@ class DB(context: Context) : SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_
         values.put(COLUMNA_USUARIO_GENERO, user.genero)
         values.put(COLUMNA_USUARIO_SEMESTRE, user.semestre)
         values.put(COLUMNA_USUARIO_PASSWORD, user.password)
-        update = this.writableDatabase.update(TABLA_USUARIO, values, COLUMNA_USUARIO_BOLETA + "=" + user.boleta, null)
+        values.put(COLUMNA_USUARIO_BASAL_HR, user.basalHR)
+        values.put(COLUMNA_USUARIO_BASAL_GSR, user.basalGSR)
+        update = this.writableDatabase.update(
+                TABLA_USUARIO,
+                values,
+                COLUMNA_USUARIO_BOLETA + "=" + user.boleta,
+                null
+        )
         this.writableDatabase.close()
         return update!! >= 0
     }
 
     fun deleteUser(Boleta: String): Boolean {
-        erase = this.writableDatabase.delete(TABLA_USUARIO, "$COLUMNA_USUARIO_BOLETA = $Boleta", null)
+        erase =
+                this.writableDatabase.delete(TABLA_USUARIO, "$COLUMNA_USUARIO_BOLETA = $Boleta", null)
         this.writableDatabase.close()
         return erase!! >= 0
     }
@@ -153,7 +178,12 @@ class DB(context: Context) : SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_
     fun updateImage(user: User): Boolean {
         val values = ContentValues()
         values.put(COLUMNA_USUARIO_IMAGEN, user.imagen)
-        update = this.writableDatabase.update(TABLA_USUARIO, values, """$COLUMNA_USUARIO_BOLETA=${user.boleta}""", null)
+        update = this.writableDatabase.update(
+                TABLA_USUARIO,
+                values,
+                """$COLUMNA_USUARIO_BOLETA=${user.boleta}""",
+                null
+        )
         this.writableDatabase.close()
         return update!! >= 0
     }
@@ -170,7 +200,10 @@ class DB(context: Context) : SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_
     }
 
     fun getWearable(Mac: String): Boolean {
-        row = this.readableDatabase.rawQuery("select *from $TABLA_WEARABLE where $COLUMNA_WEARABLE_MAC = '$Mac' ", null)
+        row = this.readableDatabase.rawQuery(
+                "select *from $TABLA_WEARABLE where $COLUMNA_WEARABLE_MAC = '$Mac' ",
+                null
+        )
         return when {
             row.count != 0 -> {
                 row.moveToFirst()
@@ -204,7 +237,11 @@ class DB(context: Context) : SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_
     }
 
     fun deleteWearable(wearable: String): Boolean {
-        erase = this.writableDatabase.delete(TABLA_WEARABLE, "$COLUMNA_WEARABLE_ID = '$wearable' ", null)
+        erase = this.writableDatabase.delete(
+                TABLA_WEARABLE,
+                "$COLUMNA_WEARABLE_ID = '$wearable' ",
+                null
+        )
         this.writableDatabase.close()
         return erase!! >= 0
     }
@@ -240,7 +277,10 @@ class DB(context: Context) : SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_
     }
 
     fun getRecord(Record: String?): Boolean {
-        row = this.readableDatabase.rawQuery("select $COLUMNA_ARCHIVO_ID from $TABLA_ARCHIVO where $COLUMNA_ARCHIVO_ID = '${Record}' ", null)
+        row = this.readableDatabase.rawQuery(
+                "select $COLUMNA_ARCHIVO_ID from $TABLA_ARCHIVO where $COLUMNA_ARCHIVO_ID = '${Record}' ",
+                null
+        )
         return when {
             row.count != 0 -> {
                 row.moveToFirst()
@@ -261,7 +301,11 @@ class DB(context: Context) : SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_
     }
 
     fun deletedRecordsAndDirectory(Boleta: String): Boolean {
-        erase = writableDatabase.delete(TABLA_ARCHIVO, "$COLUMNA_ARCHIVO_BOLETA_USUARIO = $Boleta", null)
+        erase = writableDatabase.delete(
+                TABLA_ARCHIVO,
+                "$COLUMNA_ARCHIVO_BOLETA_USUARIO = $Boleta",
+                null
+        )
         this.writableDatabase.close()
         return erase!! >= 0
     } // ********************** Fin de la clase DB ************************ //
@@ -284,10 +328,12 @@ class DB(context: Context) : SQLiteOpenHelper(context, NOMBRE_BD, null, VERSION_
         private const val COLUMNA_USUARIO_SEMESTRE = "semestre"
         private const val COLUMNA_USUARIO_PASSWORD = "contraseña"
         private const val COLUMNA_USUARIO_IMAGEN = "imagen"
+        private const val COLUMNA_USUARIO_BASAL_HR = "hr"
+        private const val COLUMNA_USUARIO_BASAL_GSR = "gsr"
 
         // Sentencia SQL para la creación de la tabla Usuario
         private const val CREATE_TABLA_USUARIOS =
-                ("""create table if not exists $TABLA_USUARIO($COLUMNA_USUARIO_BOLETA text primary key, $COLUMNA_USUARIO_NOMBRE text, $COLUMNA_USUARIO_EDAD text, $COLUMNA_USUARIO_GENERO text, $COLUMNA_USUARIO_SEMESTRE text, $COLUMNA_USUARIO_PASSWORD text, $COLUMNA_USUARIO_IMAGEN text);""")
+                ("""create table if not exists $TABLA_USUARIO($COLUMNA_USUARIO_BOLETA text primary key, $COLUMNA_USUARIO_NOMBRE text, $COLUMNA_USUARIO_EDAD text, $COLUMNA_USUARIO_GENERO text, $COLUMNA_USUARIO_SEMESTRE text, $COLUMNA_USUARIO_PASSWORD text, $COLUMNA_USUARIO_IMAGEN text, $COLUMNA_USUARIO_BASAL_HR text, $COLUMNA_USUARIO_BASAL_GSR text);""")
 
         // Nombre de la tabla Wearable
         private const val TABLA_WEARABLE = "wearable"

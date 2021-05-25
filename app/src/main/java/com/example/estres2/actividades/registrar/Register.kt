@@ -3,6 +3,7 @@ package com.example.estres2.actividades.registrar
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Environment
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ import com.example.estres2.almacenamiento.basededatos.DB
 import com.example.estres2.almacenamiento.entidades.usuario.User
 import com.example.estres2.databinding.ActivityRegisterBinding
 import com.example.estres2.util.setIconDrawableAndChangeColor
+import java.io.File
 
 class Register : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -20,6 +22,8 @@ class Register : AppCompatActivity() {
     private var correctNombre: Boolean = false
     private var correctEdad: Boolean = false
     private var correctPassword: Boolean = false
+    private var correctBasalHR: Boolean = false
+    private var correctBasalGSR: Boolean = false
     private lateinit var user: User
     private lateinit var bd: DB
 
@@ -171,6 +175,62 @@ class Register : AppCompatActivity() {
                     }
                 }
             }
+            RBasalHR.apply {
+                startIconDrawable = resources.setIconDrawableAndChangeColor(R.drawable.ic_heart_rate_level, R.color.error_red)
+                editText?.doOnTextChanged { text, _, _, _ ->
+                    correctBasalHR = when {
+                        text.isNullOrEmpty() -> {
+                            editText?.setError(getString(R.string.SinNivelBasalHR), null)
+                            false
+                        }
+                        text.toString() == "." -> {
+                            editText?.setError(getString(R.string.NivelBasalCero), null)
+                            false
+                        }
+                        text.toString().toFloat() == 0F -> {
+                            editText?.setError(getString(R.string.NivelBasalCero), null)
+                            false
+                        }
+                        else -> {
+                            editText?.setError(null, null)
+                            true
+                        }
+                    }
+                    startIconDrawable = if (correctBasalHR) {
+                        resources.setIconDrawableAndChangeColor(R.drawable.ic_heart_rate_level, R.color.correct_green)
+                    } else {
+                        resources.setIconDrawableAndChangeColor(R.drawable.ic_heart_rate_level, R.color.error_red)
+                    }
+                }
+            }
+            RBasalGSR.apply {
+                startIconDrawable = resources.setIconDrawableAndChangeColor(R.drawable.ic_gsr_level, R.color.error_red)
+                editText?.doOnTextChanged { text, _, _, _ ->
+                    correctBasalGSR = when {
+                        text.isNullOrEmpty() -> {
+                            editText?.setError(getString(R.string.SinNivelBasalGSR), null)
+                            false
+                        }
+                        text.toString() == "." -> {
+                            editText?.setError(getString(R.string.NivelBasalCero), null)
+                            false
+                        }
+                        text.toString().toFloat() == 0F -> {
+                            editText?.setError(getString(R.string.NivelBasalCero), null)
+                            false
+                        }
+                        else -> {
+                            editText?.setError(null, null)
+                            true
+                        }
+                    }
+                    startIconDrawable = if (correctBasalGSR) {
+                        resources.setIconDrawableAndChangeColor(R.drawable.ic_gsr_level, R.color.correct_green)
+                    } else {
+                        resources.setIconDrawableAndChangeColor(R.drawable.ic_gsr_level, R.color.error_red)
+                    }
+                }
+            }
             RRegistrar.setOnClickListener {
                 user = User("", "", "", "", "", "", "")
                 bd = DB(applicationContext)
@@ -185,9 +245,15 @@ class Register : AppCompatActivity() {
                 user.semestre = RSemestre.selectedItem.toString()
                 user.password = RPassword.editText?.text.toString()
                 user.imagen = ""
-                if (correctBoleta && correctNombre && correctEdad && binding.RSemestre.selectedItem.toString() != "Selecciona tu semestre actual" && correctPassword) {
+                user.basalHR = RBasalHR.editText?.text.toString()
+                user.basalGSR = RBasalGSR.editText?.text.toString()
+                if (correctBoleta && correctNombre && correctEdad && binding.RSemestre.selectedItem.toString() != "Selecciona tu semestre actual" && correctPassword && correctBasalHR && correctBasalGSR) {
                     if (bd.insertUser(user)) {
                         Toast.makeText(applicationContext, getText(R.string.InicioCorrecto), Toast.LENGTH_SHORT).show()
+                        val mainFolder = File(Environment.getExternalStorageDirectory().path + "/Monitoreo" + user.boleta)
+                        if (!mainFolder.exists()) {
+                            mainFolder.mkdir()
+                        }
                         startActivity(Intent(applicationContext, Login::class.java))
                         finish()
                     } else {

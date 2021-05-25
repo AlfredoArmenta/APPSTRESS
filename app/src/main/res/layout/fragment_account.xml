@@ -135,12 +135,60 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/CFAplicar"
-            style="@style/buttonStyle"
-            android:layout_width="@dimen/button_size_width_text"
-            android:layout_height="@dimen/button_size_height_text"
-            android:text="@string/aplicar" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/CFBasalHR"
+            style="@style/textInputLayoutStyle">
+
+            <EditText
+                style="@style/subTitleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="no"
+                android:enabled="false"
+                android:hint="@string/nivel_basal_hr"
+                android:inputType="numberDecimal" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/CFBasalGSR"
+            style="@style/textInputLayoutStyle">
+
+            <EditText
+                style="@style/subTitleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="no"
+                android:enabled="false"
+                android:hint="@string/nivel_basal_gsr"
+                android:inputType="numberDecimal" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/CFAplicar"
+                style="@style/buttonStyle"
+                android:layout_width="@dimen/button_size_width_text"
+                android:layout_height="@dimen/button_size_height_text"
+                android:text="@string/aplicar" />
+
+            <CheckBox
+                android:id="@+id/CFHabilitarEdicionNivelBasal"
+                style="@style/subNormalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/habilitar_nivel_basal" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

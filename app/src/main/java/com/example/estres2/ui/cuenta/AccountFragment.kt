@@ -1,8 +1,10 @@
 package com.example.estres2.ui.cuenta
 
+import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +32,9 @@ class AccountFragment : Fragment() {
     private var correctNombre: Boolean = true
     private var correctEdad: Boolean = true
     private var correctPassword: Boolean = true
+    private var correctBasalHR: Boolean = false
+    private var correctBasalGSR: Boolean = false
+    private var habilitarEdicion: Boolean = false
     private lateinit var user: User
     private lateinit var bd: DB
     private lateinit var mContext: Context
@@ -182,6 +187,90 @@ class AccountFragment : Fragment() {
                     }
                 }
             }
+            CFBasalHR.apply {
+                editText?.setText(user.basalHR)
+                startIconDrawable = resources.setIconDrawableAndChangeColor(R.drawable.ic_heart_rate_level, R.color.correct_green)
+                editText?.doOnTextChanged { text, _, _, _ ->
+                    correctBasalHR = when {
+                        text.isNullOrEmpty() -> {
+                            editText?.setError(getString(R.string.SinNivelBasalHR), null)
+                            false
+                        }
+                        text.toString() == "." -> {
+                            editText?.setError(getString(R.string.NivelBasalCero), null)
+                            false
+                        }
+                        text.toString().toFloat() == 0F -> {
+                            editText?.setError(getString(R.string.NivelBasalCero), null)
+                            false
+                        }
+                        else -> {
+                            editText?.setError(null, null)
+                            true
+                        }
+                    }
+                    startIconDrawable = if (correctBasalHR) {
+                        resources.setIconDrawableAndChangeColor(R.drawable.ic_heart_rate_level, R.color.correct_green)
+                    } else {
+                        resources.setIconDrawableAndChangeColor(R.drawable.ic_heart_rate_level, R.color.error_red)
+                    }
+                }
+            }
+            CFBasalGSR.apply {
+                editText?.setText(user.basalGSR)
+                startIconDrawable = resources.setIconDrawableAndChangeColor(R.drawable.ic_gsr_level, R.color.correct_green)
+                editText?.doOnTextChanged { text, _, _, _ ->
+                    correctBasalGSR = when {
+                        text.isNullOrEmpty() -> {
+                            editText?.setError(getString(R.string.SinNivelBasalGSR), null)
+                            false
+                        }
+                        text.toString() == "." -> {
+                            editText?.setError(getString(R.string.NivelBasalCero), null)
+                            false
+                        }
+                        text.toString().toFloat() == 0F -> {
+                            editText?.setError(getString(R.string.NivelBasalCero), null)
+                            false
+                        }
+                        else -> {
+                            editText?.setError(null, null)
+                            true
+                        }
+                    }
+                    startIconDrawable = if (correctBasalGSR) {
+                        resources.setIconDrawableAndChangeColor(R.drawable.ic_gsr_level, R.color.correct_green)
+                    } else {
+                        resources.setIconDrawableAndChangeColor(R.drawable.ic_gsr_level, R.color.error_red)
+                    }
+                }
+            }
+            CFHabilitarEdicionNivelBasal.apply {
+                setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) {
+                        AlertDialog.Builder(ContextThemeWrapper(context, R.style.AlertDialogCustom))
+                                .setIcon(R.drawable.ic_porfile)
+                                .setTitle("Habilitar Edición de Nivel Basal")
+                                .setMessage("Si modificas estos campos sin conocimiento u autorización previa se alterarán los resultados, lo que provocará una estimación ERRÓNEA")
+                                .setPositiveButton("Aceptar") { _, _ ->
+                                    habilitarEdicion = true
+                                    CFHabilitarEdicionNivelBasal.isChecked = true
+                                    CFBasalHR.isEnabled = true
+                                    CFBasalGSR.isEnabled = true
+                                }
+                                .setNegativeButton("Cancelar") { _, _ ->
+                                    habilitarEdicion = false
+                                    CFHabilitarEdicionNivelBasal.isChecked = false
+                                    CFBasalHR.isEnabled = false
+                                    CFBasalGSR.isEnabled = false
+                                }
+                                .show()
+                    } else {
+                        CFBasalHR.isEnabled = false
+                        CFBasalGSR.isEnabled = false
+                    }
+                }
+            }
             CFAplicar.setOnClickListener {
                 updateData()
             }
@@ -201,6 +290,8 @@ class AccountFragment : Fragment() {
             }
             user.semestre = CFSemestre.selectedItem.toString()
             user.password = CFPassword.editText?.text.toString()
+            user.basalHR = CFBasalHR.editText?.text.toString()
+            user.basalGSR = CFBasalGSR.editText?.text.toString()
             user.imagen = user.imagen
             if (correctNombre && correctEdad && binding.CFSemestre.selectedItem.toString() != "Selecciona tu semestre actual" && correctPassword) {
                 if (bd.updateUser(user)) {

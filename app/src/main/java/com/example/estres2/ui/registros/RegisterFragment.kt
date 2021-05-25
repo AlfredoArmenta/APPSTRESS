@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -23,6 +22,7 @@ import com.example.estres2.databinding.FragmentRegistersBinding
 import com.example.estres2.util.EntropyObject
 import com.example.estres2.util.FileCharacteristics
 import com.example.estres2.util.UserObject.getObjectBoleta
+import com.example.estres2.util.eraseRegister
 import com.example.estres2.util.normalizer
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.LineData
@@ -113,7 +113,7 @@ class RegisterFragment : Fragment() {
 
         val lineDataSetFcAndGsr = ArrayList<ILineDataSet>()
 
-        val lineDataSetFC = LineDataSet(EntropyObject.getGraphFC(), "Frecuencia Cardiaca")
+        val lineDataSetFC = LineDataSet(EntropyObject.getGraphFC(), "PPM")
         lineDataSetFC.apply {
             setDrawCircles(false)
             color = Color.MAGENTA
@@ -140,7 +140,7 @@ class RegisterFragment : Fragment() {
             setDrawValues(false)
         }
 
-        val lineDataSetNormalizerGSR = LineDataSet(normalizer(FileCharacteristics.getGsr(),FileCharacteristics.getMaxGsr()), "Respuesta Galvánica de la Piel")
+        val lineDataSetNormalizerGSR = LineDataSet(normalizer(FileCharacteristics.getGsr(), FileCharacteristics.getMaxGsr()), "Respuesta Galvánica de la Piel")
         lineDataSetNormalizerGSR.apply {
             setDrawCircles(false)
             color = Color.CYAN
@@ -249,8 +249,13 @@ class RegisterFragment : Fragment() {
         if (folder.exists() && !folder.listFiles().isNullOrEmpty()) {
             folder.listFiles().also {
                 if (!it.isNullOrEmpty()) {
-                    for (file in (it)) if (file.path.endsWith(".csv") && db.getRecord(file.name))
-                        item.add(file.name)
+                    for (file in (it)) if (file.path.endsWith(".csv") && db.getRecord(file.name)) {
+                        if (file.length() > 0) {
+                            item.add(file.name)
+                        } else {
+                            eraseRegister(file.name, mContext)
+                        }
+                    }
                 }
             }
             return item

@@ -24,6 +24,8 @@ class AdapterUsuarios(var context: Context, var listaUsers: List<User>
         holder.MGenero.text = String.format("Genero: %s", listaUsers[position].genero)
         holder.MSemestre.text = String.format("Semestre: %s", listaUsers[position].semestre)
         holder.MContraseña.text = String.format("Contraseña: %s", listaUsers[position].password)
+        holder.MBasalHR.text = String.format("Nivel Basal HR: %s", listaUsers[position].basalHR)
+        holder.MBasalGSR.text = String.format("Nivel Basal GSR: %s", listaUsers[position].basalGSR)
     }
 
     override fun getItemCount(): Int {
@@ -38,6 +40,8 @@ class AdapterUsuarios(var context: Context, var listaUsers: List<User>
         var MGenero: TextView
         var MSemestre: TextView
         var MContraseña: TextView
+        var MBasalHR: TextView
+        var MBasalGSR: TextView
 
         // En esta función nos permite identificar e interlazar la parte logíca con la parte visual
         init {
@@ -47,6 +51,8 @@ class AdapterUsuarios(var context: Context, var listaUsers: List<User>
             MGenero = itemView.findViewById(R.id.mgenero)
             MSemestre = itemView.findViewById(R.id.msemestre)
             MContraseña = itemView.findViewById(R.id.mcontraseña)
+            MBasalHR = itemView.findViewById(R.id.m_basal_hr)
+            MBasalGSR = itemView.findViewById(R.id.m_basal_gsr)
         }
     } // ********************** Fin de la clase ListaUsuario ************************ //
 }

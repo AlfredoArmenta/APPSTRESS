@@ -49,4 +49,18 @@
         android:layout_weight="30"
         android:hint="@string/contrasena" />
 
+    <TextView
+        android:id="@+id/m_basal_hr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="70"
+        android:hint="@string/nivel_basal_hr" />
+
+    <TextView
+        android:id="@+id/m_basal_gsr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="30"
+        android:hint="@string/nivel_basal_gsr" />
+
 </LinearLayout>

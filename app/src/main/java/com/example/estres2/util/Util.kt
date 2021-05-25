@@ -50,12 +50,12 @@ fun eraseRegister(register: String, context: Context): Boolean {
         folder.listFiles()?.iterator()?.forEach {
             if (it.name == register && db.deletedRecord(it.name)) {
                 it.delete()
-                Toast.makeText(context, "Se elimino el registro correctamente.", Toast.LENGTH_LONG).show()
+                 println("Se elimino el registro correctamente.") //Toast.makeText(context, "Se elimino el registro correctamente.", Toast.LENGTH_LONG).show()
                 return true
             }
         }
     }
-    Toast.makeText(context, "No existe la carpeta del usuario", Toast.LENGTH_LONG).show()
+    println("No existe la carpeta del usuario") //Toast.makeText(context, "No existe la carpeta del usuario", Toast.LENGTH_LONG).show()
     return false
 }
 

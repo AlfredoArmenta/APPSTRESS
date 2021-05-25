@@ -2,6 +2,7 @@ package com.example.estres2.actividades.iniciosesion
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Environment
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
@@ -15,6 +16,8 @@ import com.example.estres2.almacenamiento.basededatos.DB
 import com.example.estres2.almacenamiento.entidades.usuario.User
 import com.example.estres2.databinding.ActivityLoginBinding
 import com.example.estres2.util.setIconDrawableAndChangeColor
+import java.io.File
+import java.io.FileWriter
 
 class Login : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -34,7 +37,10 @@ class Login : AppCompatActivity() {
     private fun initializeObjects() {
         binding.apply {
             User.apply {
-                startIconDrawable = resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_edit, R.color.error_red)
+                startIconDrawable = resources.setIconDrawableAndChangeColor(
+                    android.R.drawable.ic_menu_edit,
+                    R.color.error_red
+                )
                 editText?.doOnTextChanged { text, _, _, _ ->
                     correctBoleta = when {
                         text.isNullOrEmpty() -> {
@@ -51,14 +57,23 @@ class Login : AppCompatActivity() {
                         }
                     }
                     startIconDrawable = if (correctBoleta) {
-                        resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_edit, R.color.correct_green)
+                        resources.setIconDrawableAndChangeColor(
+                            android.R.drawable.ic_menu_edit,
+                            R.color.correct_green
+                        )
                     } else {
-                        resources.setIconDrawableAndChangeColor(android.R.drawable.ic_menu_edit, R.color.error_red)
+                        resources.setIconDrawableAndChangeColor(
+                            android.R.drawable.ic_menu_edit,
+                            R.color.error_red
+                        )
                     }
                 }
             }
             Password.apply {
-                startIconDrawable = resources.setIconDrawableAndChangeColor(android.R.drawable.ic_lock_idle_lock, R.color.error_red)
+                startIconDrawable = resources.setIconDrawableAndChangeColor(
+                    android.R.drawable.ic_lock_idle_lock,
+                    R.color.error_red
+                )
                 editText?.doOnTextChanged { text, _, _, _ ->
                     correctPassword = when {
                         text.isNullOrEmpty() -> {
@@ -66,7 +81,10 @@ class Login : AppCompatActivity() {
                             false
                         }
                         text.length !in 8..15 -> {
-                            editText?.setError(getString(R.string.Longitud_de_8_15_Caracteres), null)
+                            editText?.setError(
+                                getString(R.string.Longitud_de_8_15_Caracteres),
+                                null
+                            )
                             false
                         }
                         else -> {
@@ -75,37 +93,58 @@ class Login : AppCompatActivity() {
                         }
                     }
                     startIconDrawable = if (correctPassword) {
-                        resources.setIconDrawableAndChangeColor(android.R.drawable.ic_lock_idle_lock, R.color.correct_green)
+                        resources.setIconDrawableAndChangeColor(
+                            android.R.drawable.ic_lock_idle_lock,
+                            R.color.correct_green
+                        )
                     } else {
-                        resources.setIconDrawableAndChangeColor(android.R.drawable.ic_lock_idle_lock, R.color.error_red)
+                        resources.setIconDrawableAndChangeColor(
+                            android.R.drawable.ic_lock_idle_lock,
+                            R.color.error_red
+                        )
                     }
                 }
             }
             Loggin.setOnClickListener {
                 if (correctBoleta && correctPassword) {
                     bd = DB(applicationContext)
-                    bd.getUser(User.editText?.text.toString())?.let { userIt -> setObjectBoleta(userIt) }
+                    bd.getUser(User.editText?.text.toString())
+                        ?.let { userIt -> setObjectBoleta(userIt) }
                     if (isInitialized()) {
                         when (Password.editText?.text.toString()) {
                             getObjectBoleta().password -> {
-                                Toast.makeText(applicationContext, getText(R.string.InicioSesion), Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    applicationContext,
+                                    getText(R.string.InicioSesion),
+                                    Toast.LENGTH_SHORT
+                                ).show()
                                 setNextActivity(Intent(this@Login, MainActivity::class.java))
                             }
                             else -> {
-                                Toast.makeText(applicationContext, getText(R.string.ErrorContraseña), Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    applicationContext,
+                                    getText(R.string.ErrorContraseña),
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
                     } else {
-                        Toast.makeText(applicationContext, getText(R.string.BoletaNoRegistrada), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            applicationContext,
+                            getText(R.string.BoletaNoRegistrada),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 } else {
-                    Toast.makeText(applicationContext, if (!correctBoleta) {
-                        getString(R.string.ErrorBoleta)
-                    } else if (!correctPassword) {
-                        getString(R.string.ErrorContraseña)
-                    } else {
-                        ""
-                    }, Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        applicationContext, if (!correctBoleta) {
+                            getString(R.string.ErrorBoleta)
+                        } else if (!correctPassword) {
+                            getString(R.string.ErrorContraseña)
+                        } else {
+                            ""
+                        }, Toast.LENGTH_LONG
+                    ).show()
                 }
             }
             ForgotPassword.setOnClickListener {
@@ -132,30 +171,58 @@ class Login : AppCompatActivity() {
     }
 
     private fun UsuariosFake() {
+        // Eliminar cuando ya se tenga lista la app
+        var fileWriter: FileWriter
         val bd = DB(applicationContext)
-        user = User("2015640017",
-                "Alfredo Armenta Espinosa",
-                "24",
-                "Masculino",
-                "12",
-                "Politecnico12@",
-                "")
+        user = User(
+            "2015640017",
+            "Alfredo Armenta Espinosa",
+            "24",
+            "Masculino",
+            "12",
+            "Politecnico12@",
+            "",
+            "0.25",
+            "0.34"
+        )
+        var mainFolder = File(Environment.getExternalStorageDirectory().path + "/Monitoreo" + user.boleta)
+        if (!mainFolder.exists()) {
+            mainFolder.mkdir()
+        }
         bd.insertUser(user)
-        user = User("2015640000",
-                "Fulanito Fulano Fulanote",
-                "24",
-                "Masculino",
-                "12",
-                "Politecnico12@",
-                "")
+
+        user = User(
+            "2015640000",
+            "Fulanito Fulano Fulanote",
+            "24",
+            "Masculino",
+            "12",
+            "Politecnico12@",
+            "",
+            "0.2",
+            "0.15"
+        )
+        mainFolder = File(Environment.getExternalStorageDirectory().path + "/Monitoreo" + user.boleta)
+        if (!mainFolder.exists()) {
+            mainFolder.mkdir()
+        }
         bd.insertUser(user)
-        user = User("2015640408",
-                "Efraín Villegas Sánchez",
-                "24",
-                "Masculino",
-                "12",
-                "Tru\$tn01",
-                "")
+
+        user = User(
+            "2015640408",
+            "Efraín Villegas Sánchez",
+            "24",
+            "Masculino",
+            "12",
+            "Tru\$tn01",
+            "",
+            "0.34",
+            "0.5"
+        )
+        mainFolder = File(Environment.getExternalStorageDirectory().path + "/Monitoreo" + user.boleta)
+        if (!mainFolder.exists()) {
+            mainFolder.mkdir()
+        }
         bd.insertUser(user)
     }
 }
