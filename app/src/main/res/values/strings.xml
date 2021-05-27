@@ -134,7 +134,7 @@
     <string name="la_contrasena_debe_contener">La contraseña debe contener:</string>
     <string name="nivel_basal_hr">Nivel Basal HR</string>
     <string name="nivel_basal_gsr">Nivel Basal GSR</string>
-    <string name="habilitar_nivel_basal">Habilidar Edición Nivel Basal</string>
+    <string name="habilitar_nivel_basal">Habilitar Edición Nivel Basal</string>
     <string name="cancelar">Cancelar</string>
     <string name="aplicar">Aplicar</string>
     <string name="eliminar_cuenta">Eliminar Cuenta</string>
