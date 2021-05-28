@@ -251,7 +251,7 @@ class AccountFragment : Fragment() {
                         AlertDialog.Builder(ContextThemeWrapper(context, R.style.AlertDialogCustom))
                                 .setIcon(R.drawable.ic_porfile)
                                 .setTitle("Habilitar Edición de Nivel Basal")
-                                .setMessage("Si modificas estos campos sin conocimiento u autorización previa se alterarán los resultados, lo que provocará una estimación ERRÓNEA")
+                                .setMessage("Si modificas estos campos sin conocimiento o autorización previa se alterarán los resultados, lo que provocará una estimación ERRÓNEA")
                                 .setPositiveButton("Aceptar") { _, _ ->
                                     habilitarEdicion = true
                                     CFHabilitarEdicionNivelBasal.isChecked = true
@@ -297,10 +297,10 @@ class AccountFragment : Fragment() {
                 if (bd.updateUser(user)) {
                     setObjectBoleta(user)
                     mainViewModel.updateUserDataFunc(true)
-                    Toast.makeText(context, "Se actualizo correctamente.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Se actualizó correctamente.", Toast.LENGTH_SHORT).show()
                     setNotification()
                 } else {
-                    Toast.makeText(context, "Ocurrio un error al actualizar.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Ocurrió un error al actualizar.", Toast.LENGTH_SHORT).show()
                 }
             }
         }

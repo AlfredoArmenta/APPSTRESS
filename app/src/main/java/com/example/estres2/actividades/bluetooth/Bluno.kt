@@ -140,7 +140,7 @@ class Bluno : BlunoLibrary() {
                 organize(theString)
                 Log.d("Escritura", "Se escribió correctamente")
             } catch (e: Exception) {
-                Log.d("Escritura", "Ocurrio un error al ecribir")
+                Log.d("Escritura", "Ocurrió un error al ecribir")
             }
             (serialReveicedText.parent as ScrollView).fullScroll(View.FOCUS_DOWN) //The Serial data from the BLUNO may be sub-packaged, so using a buffer to hold the String is a good choice.
         }
@@ -206,10 +206,10 @@ class Bluno : BlunoLibrary() {
     private fun initializeObjects() {
         userObject = getObjectBoleta()
         serialBegin(115200) //set the Uart Baudrate on BLE chip to 115200
-        val learningUnit = arrayOf("Selecciona una materia", "Líneas de Transmisión y Antenas", "Teoria de la Informacion",
-                "Teoria de las Comunicaciones", "Variable Compleja", "Protocolos de Internet", "Comunicaciones Digitales",
-                "Sistemas Distribuidos", "Metodologia", "Sistemas Celulares", "Multimedia", "Señales y Sistemas", "Probabilidad",
-                "Programacion de Dispositivos Moviles", "PT1", "PT2")
+        val learningUnit = arrayOf("Selecciona una materia", "Líneas de Transmisión y Antenas", "Teoría de la Información",
+                "Teoría de las Comunicaciones", "Variable Compleja", "Protocolos de Internet", "Comunicaciones Digítales",
+                "Sistemas Distribuidos", "Metodología", "Sistemas Celulares", "Multimedia", "Señales y Sistemas", "Probabilidad",
+                "Programación de Dispositivos Móviles", "PT1", "PT2")
         val adapterUnit = ArrayAdapter(this, R.layout.spinner_custom, learningUnit)
         getWearables(this)
 
@@ -259,7 +259,7 @@ class Bluno : BlunoLibrary() {
                 Log.d("Exception_FillWriter", e.toString())
             }
         } else {
-            Toast.makeText(this, "No se inserto correctamente el registro a la base de datos", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "No se insertó correctamente el registro a la base de datos", Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -71,10 +71,10 @@ class MainActivity : AppCompatActivity() {
             }
             updateNotificationAnalysis.observe(this@MainActivity) { status ->
                 if (status) {
-                    setNotification("Analisis")
+                    setNotification("Análisis")
                     binding.appBarMenu.fab.isEnabled = false
                     analysisSampEn(false)
-                    println("Notificación Analisis")
+                    println("Notificación Análisis")
                 }
             }
 
@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
                     setNotification("Analizando y Graficando")
                     binding.appBarMenu.fab.isEnabled = false
                     analysisSampEn(true)
-                    println("Notificación Analisis y Gráficar")
+                    println("Notificación Análisis y Gráficar")
                 }
             }
         }
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_Cerrar_Sesión -> {
-                println("Se puchurro la opción de cerrar sesión")
+                println("Se puchurró la opción de cerrar sesión")
                 backLogging()
                 true
             }
@@ -125,10 +125,10 @@ class MainActivity : AppCompatActivity() {
         if (resultCode == RESULT_OK) {
             userData.imagen = data?.dataString!!
             if (db.updateImage(userData)) {
-                println("Se guardo correctamente la URL de la imagen")
+                println("Se guardó correctamente la URL de la imagen")
                 userImage.setImageBitmap(reduceBitmap(applicationContext, data.dataString, 512f, 512f))
             } else {
-                println("Ocurrio un error al guardar la URL de la imagen")
+                println("Ocurrió un error al guardar la URL de la imagen")
             }
         }
     }
@@ -185,7 +185,7 @@ class MainActivity : AppCompatActivity() {
                 println("No sea seleccionado una imagen")
             }
             reduceBitmap(applicationContext, userData.imagen, 512f, 512f) != null -> {
-                println("Se cargo la imagen correctamente")
+                println("Se cargó la imagen correctamente")
                 userImage.setImageBitmap(reduceBitmap(applicationContext, userData.imagen, 512f, 512f))
             }
             else -> {
@@ -195,7 +195,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setNotification(titleNotification: String) {
-        println("Entro a la notificación")
+        println("Entró a la notificación")
         notification = NotificationCompat.Builder(applicationContext, CHANNEL_0_ID).apply {
             setContentTitle(titleNotification)
             setContentText("Leyendo Archivo")

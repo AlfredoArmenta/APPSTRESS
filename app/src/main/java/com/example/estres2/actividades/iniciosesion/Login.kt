@@ -172,7 +172,6 @@ class Login : AppCompatActivity() {
 
     private fun UsuariosFake() {
         // Eliminar cuando ya se tenga lista la app
-        var fileWriter: FileWriter
         val bd = DB(applicationContext)
         user = User(
             "2015640017",

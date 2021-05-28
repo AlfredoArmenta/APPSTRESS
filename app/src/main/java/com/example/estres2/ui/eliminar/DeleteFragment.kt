@@ -64,7 +64,7 @@ class DeleteFragment : Fragment() {
                             deleteAccount()
                         }
                         .setNegativeButton("Cancelar") { _, _ ->
-                            println("Se concervo la cuenta")
+                            println("Se conservó la cuenta")
                         }
                         .show()
             }
@@ -97,7 +97,7 @@ class DeleteFragment : Fragment() {
 
     private fun deleteUser() {
         if (bd.deleteUser(user.boleta)) {
-            Toast.makeText(mContext, "Se elimino el usuario con boleta: " + user.boleta + " y con nombre: " + user.nombre + ".", Toast.LENGTH_LONG).show()
+            Toast.makeText(mContext, "Se eliminó el usuario con boleta: " + user.boleta + " y con nombre: " + user.nombre + ".", Toast.LENGTH_LONG).show()
         } else {
             Toast.makeText(mContext, "No se pudo eliminar el usuario con boleta: " + user.boleta + " y con nombre: " + user.nombre + ".", Toast.LENGTH_LONG).show()
         }

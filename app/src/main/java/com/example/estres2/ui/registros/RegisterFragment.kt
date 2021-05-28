@@ -62,7 +62,7 @@ class RegisterFragment : Fragment() {
         mainViewModel.apply {
             updateRegisters.observe(viewLifecycleOwner) {
                 if (it) {
-                    println("Se actualizo el estado del observador: $it")
+                    println("Se actualizó el estado del observador: $it")
                     showRegister()
                 }
             }
@@ -131,7 +131,7 @@ class RegisterFragment : Fragment() {
             setDrawValues(false)
         }
 
-        val lineDataSetNormalizerFC = LineDataSet(normalizer(FileCharacteristics.getFc(), FileCharacteristics.getMaxFc()), "Frecuencia Cardiaca")
+        val lineDataSetNormalizerFC = LineDataSet(normalizer(FileCharacteristics.getFc(), FileCharacteristics.getMaxFc()), "Frecuencia Cardíaca")
         lineDataSetNormalizerFC.apply {
             setDrawCircles(false)
             color = Color.MAGENTA
@@ -225,8 +225,8 @@ class RegisterFragment : Fragment() {
                 lRegister.add(UserRegister(element, R.drawable.ic_options_register))
             }
         } else {
-            Toast.makeText(mContext, "Carpeta Vacia", Toast.LENGTH_LONG).show()
-            lRegister.add(UserRegister("Carpeta Vacia", R.drawable.ic_not_registered))
+            Toast.makeText(mContext, "Carpeta Vacía", Toast.LENGTH_LONG).show()
+            lRegister.add(UserRegister("Carpeta Vacía", R.drawable.ic_not_registered))
         }
         val itemDecoration = DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL)
         ContextCompat.getDrawable(mContext, R.drawable.divider)?.let {

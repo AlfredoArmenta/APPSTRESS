@@ -49,7 +49,7 @@
             <TextView
                 android:id="@+id/text_fc"
                 style="@style/subNormalText"
-                android:text="Frecuencia Cardiaca"
+                android:text="Frecuencia Cardíaca"
                 android:textAlignment="center"
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@id/FC"
