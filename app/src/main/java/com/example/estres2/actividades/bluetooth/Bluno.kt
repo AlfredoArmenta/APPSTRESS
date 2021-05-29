@@ -1,9 +1,13 @@
 package com.example.estres2.actividades.bluetooth
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.drawable.Animatable
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.os.SystemClock
@@ -13,7 +17,9 @@ import android.widget.ArrayAdapter
 import android.widget.ScrollView
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.observe
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.estres2.actividades.bluetooth.adapters.AdapterWearable
 import com.example.estres2.MainActivity
@@ -33,6 +39,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+@Suppress("DEPRECATION")
 class Bluno : BlunoLibrary() {
     private lateinit var binding: ActivityBlunoBinding
     private lateinit var context: Context
@@ -47,6 +54,7 @@ class Bluno : BlunoLibrary() {
     private var characterIndex = 0
     private var finalValue = 0
     private var cellIndex = 1
+    private lateinit var notification: NotificationCompat.Builder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +62,7 @@ class Bluno : BlunoLibrary() {
         setContentView(binding.root)
         context = applicationContext
         setObserves()
+        createNotificationChannel()
         initializeObjects()
         requestPermissionBluetooth(context, this)
         onCreateProcess() //onCreate Process by BlunoLibrary
@@ -94,6 +103,7 @@ class Bluno : BlunoLibrary() {
                 connectionStateEnum.isConnected -> {
                     buttonScanBlunoConected.setImageResource(R.drawable.ic_state_connect)
                     controlBluno.isEnabled = true
+                    blunoViewModel.showNotificationCommunicationIsConnected(true)
                 }
                 connectionStateEnum.isConnecting -> {
                     blunoViewModel.updateWearablesList(true)
@@ -108,14 +118,10 @@ class Bluno : BlunoLibrary() {
                         controlBluno.setImageResource(R.drawable.ic_stop_monitoring)
                         buttonScanBlunoConected.isEnabled = true
                         CSRegresar.isEnabled = true
-                        try {
-                            fileWriter.close()
-                            Toast.makeText(applicationContext, "Se cerró correctmente el registro de las variables.", Toast.LENGTH_SHORT).show()
-                        } catch (e: Exception) {
-                            Toast.makeText(applicationContext, "Hubo un problema al cerrar el registro de las variables.", Toast.LENGTH_SHORT).show()
-                        }
+                        closeFile()
                         (controlBluno.drawable as Animatable).start()
                     }
+                    blunoViewModel.showNotificationCommunicationIsConnected(false)
                 }
                 connectionStateEnum.isScanning -> {
                     buttonScanBlunoConected.setImageResource(R.drawable.ic_state_scanning)
@@ -145,6 +151,9 @@ class Bluno : BlunoLibrary() {
             (serialReveicedText.parent as ScrollView).fullScroll(View.FOCUS_DOWN) //The Serial data from the BLUNO may be sub-packaged, so using a buffer to hold the String is a good choice.
         }
     }
+
+    // Se anula el botón que nos regresa
+    override fun onBackPressed() {}
 
     private fun organize(filter: String) {
         filter.forEach { char ->
@@ -201,6 +210,15 @@ class Bluno : BlunoLibrary() {
                 }
             }
         }
+        blunoViewModel.apply {
+            showNotificationCommunicationIsConnected.observe(this@Bluno) {
+                if (it) {
+                    setNotification("Conectado")
+                } else {
+                    setNotification("Desconectado")
+                }
+            }
+        }
     }
 
     private fun initializeObjects() {
@@ -242,7 +260,7 @@ class Bluno : BlunoLibrary() {
     }
 
     private fun exportCSV() {
-        val hourDateFormat: DateFormat = SimpleDateFormat("HH_mm_ss_dd_MM_yyyy")
+        val hourDateFormat: DateFormat = SimpleDateFormat("HH_mm_ss_dd_MM_yyyy", Locale.US)
         val mainFolder = File(Environment.getExternalStorageDirectory().path + "/Monitoreo" + userObject.boleta)
         val db = DB(context)
         Log.d("Hora", hourDateFormat.format(Date()))
@@ -259,7 +277,7 @@ class Bluno : BlunoLibrary() {
                 Log.d("Exception_FillWriter", e.toString())
             }
         } else {
-            Toast.makeText(this, "No se insertó correctamente el registro a la base de datos", Toast.LENGTH_SHORT).show()
+            println("No se insertó correctamente el registro a la base de datos.") //Toast.makeText(this, "No se insertó correctamente el registro a la base de datos", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -279,12 +297,7 @@ class Bluno : BlunoLibrary() {
                     serialSend("S")
                     buttonScanBlunoConected.isEnabled = true
                     CSRegresar.isEnabled = true
-                    try {
-                        fileWriter.close()
-                        Toast.makeText(applicationContext, "Se cerró correctmente el registro de las variables.", Toast.LENGTH_SHORT).show()
-                    } catch (e: Exception) {
-                        Toast.makeText(applicationContext, "Hubo un problema al cerrar el registro de las variables.", Toast.LENGTH_SHORT).show()
-                    }
+                    closeFile()
                 }
                 (controlBluno.drawable as Animatable).start()
             } else {
@@ -306,16 +319,52 @@ class Bluno : BlunoLibrary() {
         }
     }
 
-    private fun back() {
+    private fun createNotificationChannel() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Analysis Notification"
+            val descriptionText = "Notification Description"
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel(CHANNEL_0_ID, name, importance).apply {
+                description = descriptionText
+                titleColor = Color.RED
+            }
+            val notificationManager : NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun setNotification(contentNotification: String) {
+        println("Entró a la notificación")
+        notification = NotificationCompat.Builder(applicationContext, CHANNEL_0_ID).apply {
+            setContentTitle("Estado Conexión")
+            setContentText(contentNotification)
+            setSubText("Conexión")
+            setSmallIcon(R.drawable.ic_state_scan)
+            color = ContextCompat.getColor(applicationContext, R.color.colorPrimary)
+            priority = NotificationCompat.PRIORITY_HIGH
+        }
+        NotificationManagerCompat.from(applicationContext).apply {
+            notify(NOTIFICATION_0, notification.build())
+        }
+    }
+
+    private fun closeFile() {
         try {
             fileWriter.close()
+            println("Se cerró correctmente el registro de las variables.") //Toast.makeText(applicationContext, "Se cerró correctmente el registro de las variables.", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
-            Log.d("Cierre de archivo", e.toString())
+            println("Hubo un problema al cerrar el registro de las variables.") //Toast.makeText(applicationContext, "Hubo un problema al cerrar el registro de las variables.", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun back() {
+        closeFile()
         startActivity(Intent(this@Bluno, MainActivity::class.java))
         finish()
     }
 
-    // Se anula el botón que nos regresa
-    override fun onBackPressed() {}
+    companion object {
+        const val CHANNEL_0_ID = "Channel_1"
+        const val NOTIFICATION_0 = 1
+    }
 }

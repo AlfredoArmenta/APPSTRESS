@@ -7,28 +7,22 @@ import androidx.lifecycle.ViewModel
 class MainViewModel : ViewModel() {
 
     private var _updateUserData = MutableLiveData<Boolean>()
-    val updateUserData: LiveData<Boolean>
-        get() = _updateUserData
+    val updateUserData: LiveData<Boolean> get() = _updateUserData
 
     private var _updateRegisters: MutableLiveData<Boolean> = MutableLiveData()
-    val updateRegisters: LiveData<Boolean>
-        get() = _updateRegisters
+    val updateRegisters: LiveData<Boolean> get() = _updateRegisters
 
     private var _updateNotificationAnalysis = MutableLiveData<Boolean>()
-    val updateNotificationAnalysis: LiveData<Boolean>
-        get() = _updateNotificationAnalysis
+    val updateNotificationAnalysis: LiveData<Boolean> get() = _updateNotificationAnalysis
 
     private var _updateNotificationGraph: MutableLiveData<Boolean> = MutableLiveData()
-    val updateNotificationGraph: LiveData<Boolean>
-        get() = _updateNotificationGraph
+    val updateNotificationGraph: LiveData<Boolean> get() = _updateNotificationGraph
 
     private var _updateNotificationAnalysisAndGraph: MutableLiveData<Boolean> = MutableLiveData()
-    val updateNotificationAnalysisAndGraph: LiveData<Boolean>
-        get() = _updateNotificationAnalysisAndGraph
+    val updateNotificationAnalysisAndGraph: LiveData<Boolean> get() = _updateNotificationAnalysisAndGraph
 
     private var _stateGraph: MutableLiveData<Boolean> = MutableLiveData()
-    val stateGraph: LiveData<Boolean>
-        get() = _stateGraph
+    val stateGraph: LiveData<Boolean> get() = _stateGraph
 
     fun updateUserDataFunc(update: Boolean) {
         _updateUserData.value = update
