@@ -31,7 +31,6 @@ class Login : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initializeObjects()
-        UsuariosFake()
     }
 
     private fun initializeObjects() {
@@ -155,73 +154,10 @@ class Login : AppCompatActivity() {
                 setNextActivity(Intent(this@Login, Register::class.java))
                 finish()
             }
-
-            MostrarArchivo.setOnClickListener {
-                setNextActivity(Intent(this@Login, MostrarArchivos::class.java))
-            }
-
-            MostrarUsuario.setOnClickListener {
-                setNextActivity(Intent(this@Login, MostrarUsuarios::class.java))
-            }
         }
     }
 
     private fun setNextActivity(nextActivity: Intent) {
         startActivity(nextActivity)
-    }
-
-    private fun UsuariosFake() {
-        // Eliminar cuando ya se tenga lista la app
-        val bd = DB(applicationContext)
-        user = User(
-            "2015640017",
-            "Alfredo Armenta Espinosa",
-            "24",
-            "Masculino",
-            "12",
-            "Politecnico12@",
-            "",
-            "0.25",
-            "0.34"
-        )
-        var mainFolder = File(Environment.getExternalStorageDirectory().path + "/Monitoreo" + user.boleta)
-        if (!mainFolder.exists()) {
-            mainFolder.mkdir()
-        }
-        bd.insertUser(user)
-
-        user = User(
-            "2015640000",
-            "Fulanito Fulano Fulanote",
-            "24",
-            "Masculino",
-            "12",
-            "Politecnico12@",
-            "",
-            "0.2",
-            "0.15"
-        )
-        mainFolder = File(Environment.getExternalStorageDirectory().path + "/Monitoreo" + user.boleta)
-        if (!mainFolder.exists()) {
-            mainFolder.mkdir()
-        }
-        bd.insertUser(user)
-
-        user = User(
-            "2015640408",
-            "Efraín Villegas Sánchez",
-            "24",
-            "Masculino",
-            "12",
-            "Tru\$tn01",
-            "",
-            "0.34",
-            "0.5"
-        )
-        mainFolder = File(Environment.getExternalStorageDirectory().path + "/Monitoreo" + user.boleta)
-        if (!mainFolder.exists()) {
-            mainFolder.mkdir()
-        }
-        bd.insertUser(user)
     }
 }
