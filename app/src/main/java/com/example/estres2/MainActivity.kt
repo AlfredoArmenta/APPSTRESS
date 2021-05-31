@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
 
             updateNotificationAnalysisAndGraph.observe(this@MainActivity) { state ->
                 if (state) {
-                    setNotification("Analizando y Graficando")
+                    setNotification("Análisis y Grafición")
                     binding.appBarMenu.fab.isEnabled = false
                     analysisSampEn(true)
                     println("Notificación Análisis y Gráficar")
