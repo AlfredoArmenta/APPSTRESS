@@ -1,9 +1,11 @@
 package com.example.estres2.ui.registros
 
+import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Environment
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -86,6 +88,13 @@ class RegisterFragment : Fragment() {
                         textFcgsr.visibility = View.GONE
                         textTimeFcgsr.visibility = View.GONE
                     }
+                }
+            }
+            alertDialogStateStress.observe(viewLifecycleOwner) { stateStress ->
+                if (stateStress) {
+                    setAlertDialog()
+                    println("Alert Dialog")
+                    mainViewModel.updateAlertDialogStateStress(false)
                 }
             }
         }
@@ -263,5 +272,16 @@ class RegisterFragment : Fragment() {
             Toast.makeText(mContext, "No existe la carpeta del usuario", Toast.LENGTH_LONG).show()
         }
         return item
+    }
+
+    private fun setAlertDialog() {
+        AlertDialog.Builder(ContextThemeWrapper(context, R.style.AlertDialogCustom))
+            .setIcon(R.drawable.ic_alert_stress)
+            .setTitle("Se ha detectado un episodio de estrés.")
+            .setMessage(
+                "Es recomendable que te tomes algo de tiempo libre y realices alguna actividad que te guste, por ejemplo:\n" +
+                        "- Caminar.\n- Hacer ejercicio.\n- Leer\n- Escuchar música.\n- Ver algún programa o serie.\n- Dormir."
+            )
+            .show()
     }
 }

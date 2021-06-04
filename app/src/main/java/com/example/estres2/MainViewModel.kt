@@ -24,6 +24,9 @@ class MainViewModel : ViewModel() {
     private var _stateGraph: MutableLiveData<Boolean> = MutableLiveData()
     val stateGraph: LiveData<Boolean> get() = _stateGraph
 
+    private var _alertDialogStateStress = MutableLiveData<Boolean>()
+    val alertDialogStateStress: LiveData<Boolean> get() = _alertDialogStateStress
+
     fun updateUserDataFunc(update: Boolean) {
         _updateUserData.value = update
     }
@@ -48,11 +51,18 @@ class MainViewModel : ViewModel() {
         _stateGraph.value = update
     }
 
+    fun updateAlertDialogStateStress(update: Boolean) {
+        if (_alertDialogStateStress.value != update) {
+            _alertDialogStateStress.value = update
+        }
+    }
+
     init {
         _updateUserData.value = false
         _updateNotificationAnalysis.value = false
         _updateNotificationGraph.value = false
         _updateNotificationAnalysisAndGraph.value = false
         _stateGraph.value = false
+        _alertDialogStateStress.value = false
     }
 }

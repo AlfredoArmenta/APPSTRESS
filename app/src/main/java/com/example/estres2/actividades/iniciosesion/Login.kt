@@ -2,7 +2,6 @@ package com.example.estres2.actividades.iniciosesion
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
@@ -16,15 +15,12 @@ import com.example.estres2.almacenamiento.basededatos.DB
 import com.example.estres2.almacenamiento.entidades.usuario.User
 import com.example.estres2.databinding.ActivityLoginBinding
 import com.example.estres2.util.setIconDrawableAndChangeColor
-import java.io.File
-import java.io.FileWriter
 
 class Login : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private var correctBoleta: Boolean = false
     private var correctPassword: Boolean = false
     private lateinit var bd: DB
-    private lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,8 +103,9 @@ class Login : AppCompatActivity() {
             Loggin.setOnClickListener {
                 if (correctBoleta && correctPassword) {
                     bd = DB(applicationContext)
-                    bd.getUser(User.editText?.text.toString())
-                        ?.let { userIt -> setObjectBoleta(userIt) }
+                    bd.getUser(User.editText?.text.toString())?.let { userIt ->
+                        setObjectBoleta(userIt)
+                    }
                     if (isInitialized()) {
                         when (Password.editText?.text.toString()) {
                             getObjectBoleta().password -> {

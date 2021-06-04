@@ -1,20 +1,22 @@
 package com.example.estres2
 
+import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.ContextThemeWrapper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
@@ -47,6 +49,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var userImage: ImageView
     private lateinit var addImageView: ImageButton
     private lateinit var notification: NotificationCompat.Builder
+    private var actualState: String = ""
+    private var basalSampEnFC: Float = 0F
+    private var basalSampEnGSR: Float = 0F
     private var sampEnFC: Float = 0F
     private var sampEnGSR: Float = 0F
 
@@ -77,7 +82,6 @@ class MainActivity : AppCompatActivity() {
                     println("Notificación Análisis")
                 }
             }
-
             updateNotificationGraph.observe(this@MainActivity) { state ->
                 if (state) {
                     setNotification("Graficación")
@@ -86,7 +90,6 @@ class MainActivity : AppCompatActivity() {
                     println("Notificación Gráficar")
                 }
             }
-
             updateNotificationAnalysisAndGraph.observe(this@MainActivity) { state ->
                 if (state) {
                     setNotification("Análisis y Grafición")
@@ -211,6 +214,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun analysisSampEn(graph: Boolean) {
+        basalSampEnFC = getFourDecimals(userData.basalHR.toFloat())
+        basalSampEnGSR = getFourDecimals(userData.basalGSR.toFloat())
         lifecycleScope.launch(context = Dispatchers.Main) {
             withContext(context = Dispatchers.IO) {
                 readRegister()
@@ -223,27 +228,46 @@ class MainActivity : AppCompatActivity() {
             val fcCoroutine = async(Dispatchers.IO) {
                 println("*****************FC**************************")
                 EntropyObject.setEntropy(sampEn(FileCharacteristics.getFc(), 3, 0.2))
-                sampEnFC = EntropyObject.getEntropy().toFloat()
+                sampEnFC = getFourDecimals(EntropyObject.getEntropy().toFloat())
                 1
             }
 
             val gsrCoroutine = async(Dispatchers.IO) {
                 println("*****************GSR**************************")
                 EntropyObject.setEntropy(sampEn(FileCharacteristics.getGsr(), 3, 0.2))
-                sampEnGSR = EntropyObject.getEntropy().toFloat()
+                sampEnGSR = getFourDecimals(EntropyObject.getEntropy().toFloat())
                 1
             }
-
             if ((fcCoroutine.await() + gsrCoroutine.await()) >= 0) {
                 NotificationManagerCompat.from(applicationContext).apply {
                     notification.setContentText("Análisis terminado")
-                    notification.setStyle(NotificationCompat.BigTextStyle().bigText("Análisis completado tu estado actual es: Estresado/no Estresado"))
+                    println(" ******** SampEn FC = $basalSampEnFC || SampEn GSR = $basalSampEnGSR ********** ")
+
+                    actualState =
+                        when {
+                            basalSampEnFC < sampEnFC || basalSampEnGSR < sampEnGSR -> {
+                                "ESTRESADO"
+                            }
+                            else -> {
+                                "NO ESTRESADO"
+                            }
+                        }
+                    notification.setStyle(
+                        NotificationCompat.BigTextStyle()
+                            .bigText(
+                                "De acuerdo a la estimación tu estado actual es: $actualState\n" +
+                                        "\nNivel basal (Referencia)               Nivel  basal actual (Registro)\n" +
+                                        "SampEn FC = $basalSampEnFC                    SampEn FC = ${sampEnFC}\n" +
+                                        "SampEn GSR = $basalSampEnGSR                 SampEn GSR = $sampEnGSR"
+                            )
+                    )
                     notification.setProgress(0, 0, false)
                     notify(NOTIFICATION_0, notification.build())
-                    Toast.makeText(applicationContext, "SampEn FC = $sampEnFC", Toast.LENGTH_LONG).show()
-                    Toast.makeText(applicationContext, "SampEn GSR = $sampEnGSR", Toast.LENGTH_LONG).show()
                 }
-                mainViewModel.updateGraph(graph)
+                mainViewModel.apply {
+                    updateGraph(graph)
+                    updateAlertDialogStateStress(actualState == "ESTRESADO")
+                }
                 binding.appBarMenu.fab.isEnabled = true
             }
         }
@@ -275,6 +299,8 @@ class MainActivity : AppCompatActivity() {
         intent.type = "image/"
         startActivityForResult(Intent.createChooser(intent, "Seleccione la aplicación"), 10)
     }
+
+    private fun getFourDecimals(value: Float): Float = "%.4f".format(value).toFloat()
 
     private fun backLogging() {
         startActivity(Intent(this@MainActivity, Login::class.java))
